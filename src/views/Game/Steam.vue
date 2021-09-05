@@ -13,9 +13,22 @@ interface Role {
   name: string;
   blood: number;
 }
+interface Point {
+  x: number;
+  y: number;
+  actualX: number;
+  actualY: number;
+}
 export default defineComponent({
   name: 'Steam',
   setup () {
+    const colors = ['orange', 'black', 'rgb(38,47,49)', 'rgb(222,235,242)', 'rgb(156,189,202)']
+    const moveInfo: Point = {
+      x: 0,
+      y: 0,
+      actualX: 0,
+      actualY: 0
+    }
     const person: Role = reactive({
       name: 'tony',
       blood: 100
@@ -27,19 +40,23 @@ export default defineComponent({
       radius: number;
       dx: number;
       dy: number;
-      constructor (x: number, y: number, radius: number, dx: number, dy: number) {
+      color: string;
+      constructor (x: number, y: number, radius: number, dx: number, dy: number, color: string) {
         this.x = x
         this.y = y
         this.radius = radius
         this.dx = dx
         this.dy = dy
+        this.color = color
       }
 
       draw () {
+        c.strokeStyle = 'white'
+        c.fillStyle = this.color
         c.beginPath()
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-        c.strokeStyle = 'green'
         c.stroke()
+        c.fill()
       }
 
       update () {
@@ -51,59 +68,57 @@ export default defineComponent({
         }
         this.x += this.dx
         this.y += this.dy
+        if (Math.abs(this.x - moveInfo.actualX) < 5 && Math.abs(this.y - moveInfo.actualY) < 5) {
+          this.radius += 10
+        }
         this.draw()
       }
     }
     const cirArr = [] as any
-    for (let i = 0; i < 200; i++) {
-      cirArr.push(new Cir(Math.random() * 360, Math.random() * 520, 10, Math.random() * 5, Math.random() * 5))
+    const randomArea = (arr: number[]) => {
+      return Math.random() * (arr[1] - arr[0]) + arr[0]
     }
+    for (let i = 0; i < 200; i++) {
+      cirArr.push(new Cir(randomArea([10, 350]), randomArea([10, 510]), randomArea([1, 10]), Math.random() * 10, Math.random() * 10, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
+    }
+
     let x = 10
     let y = 10
     const d = 10
-    // function Circle (this: any, x: number, y: number, radius: number, dx: number, dy: number, c: any) {
-    //   this.x = x
-    //   this.y = y
-    //   this.radius = radius
-    //   this.dx = dx
-    //   this.dy = dy
-    //   this.draw = function () {
-    //     c.beginPath()
-    //     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-    //     c.strokeStyle = 'blue'
-    //     c.stroke()
-    //   }
-    //   this.update = function () {
-    //     if (this.x + this.radius > 360 || this.x - this.radius < 0) {
-    //       this.dx = -this.dx
-    //     }
-    //     if (this.y + this.radius > 520 || this.y - this.radius < 0) {
-    //       this.dy = -this.dy
-    //     }
-    //     this.x += this.dx
-    //     this.y += this.dy
-    //   }
-    // }
     const drawR = (x: number, y: number) => {
       c.clearRect(0, 0, 360, 520)
+      // fillRect绘制有填充色的矩形
+      c.fillStyle = 'black'
+      c.strokeStyle = 'red'
       c.fillRect(x, y, 20, 20)
-      c.strokeStyle = 'black'
-      c.stroke()
+      // strokeRect绘制有边框色的矩形框
+      // c.strokeStyle = 'red'
+      // c.strokeRect(x + 100, y + 100, 20, 20)
+
+      log('++++++++++++++++++++++')
+      // c.stroke()
     }
-    const test = new Cir(10, 10, 10, 1, 1)
     const drawCircle = () => {
       // do something
       requestAnimationFrame(drawCircle)
       c.clearRect(0, 0, 360, 520)
-
       for (let i = 0; i < cirArr.length; i++) {
         cirArr[i].update()
       }
     }
     const initCanvas = () => {
       const canvas: any = document.querySelector('canvas')
+      log(canvas.getBoundingClientRect())
+
       c = canvas.getContext('2d')
-      drawR(x, y)
+      // drawR(x, y)
+      canvas.onmousemove = (e: any) => {
+        // log('111', canvas.getBoundingClientRect())
+        moveInfo.x = e.x
+        moveInfo.y = e.y
+        moveInfo.actualX = moveInfo.x - canvas.getBoundingClientRect().left
+        moveInfo.actualY = moveInfo.y - canvas.getBoundingClientRect().top
+      }
       drawCircle()
     }
     const movePerson = (action: string) => {

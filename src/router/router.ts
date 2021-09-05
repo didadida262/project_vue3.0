@@ -7,6 +7,7 @@ import BeautifulNewWorld from '../views/BeautifulNewWorld.vue'
 import Diary from '../views/Diary.vue'
 import Video from '../views/Video.vue'
 import TestPage from '../views/TestPage.vue'
+import Imagemark from '../views/Imagemark.vue'
 import Game from '../views/Game/Game.vue'
 import Steam from '../views/Game/Steam.vue'
 import { log } from '../weapons/index'
@@ -51,11 +52,6 @@ const router = createRouter({
       component: Video
     },
     {
-      path: '/testpage',
-      name: 'Testpage',
-      component: TestPage
-    },
-    {
       path: '/game',
       name: 'Game',
       component: Game,
@@ -66,20 +62,26 @@ const router = createRouter({
           component: Steam
         }
       ]
+    },
+    {
+      path: '/testpage',
+      name: 'Testpage',
+      component: TestPage
+    },
+    {
+      path: '/imgmark',
+      name: 'Imagemark',
+      component: Imagemark
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   const userInfo = localStorage.userInfo
-  log('----router---')
-  log('to.name:', to.name)
   if (to.name !== 'Login' && userInfo === '{}') {
-    log('未登录')
     next({ path: '/login' })
   } else {
     if (userInfo !== '{}') {
-      log('已登录')
       store.commit('login', userInfo)
     }
     next()

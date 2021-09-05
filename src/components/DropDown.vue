@@ -10,6 +10,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 import useClickOutside from '../hooks/useClickOutside'
+import { log } from '../weapons/index'
 
 export default defineComponent({
   name: 'DropDown',
@@ -23,7 +24,10 @@ export default defineComponent({
     const isOpen = ref(false)
     const dropdownRef = ref<null | HTMLElement>(null)
     const isClickOutside = useClickOutside(dropdownRef)
+    // 只执行一次
+    log('isClickOutside111:', isClickOutside.value)
     watch(isClickOutside, () => {
+      log('isClickOutside:', isClickOutside)
       if (isOpen.value && isClickOutside.value) {
         isOpen.value = false
       }

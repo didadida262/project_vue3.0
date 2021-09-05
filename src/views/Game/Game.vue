@@ -18,12 +18,14 @@
 
 <script lang="ts">
 import router from '@/router/router'
-import { defineComponent, ref } from 'vue'
+import { watch, defineComponent, ref, reactive } from 'vue'
 import { log } from '../../weapons/index'
+import { onBeforeRouteUpdate } from 'vue-router'
 
 export default defineComponent({
   name: 'Game',
   setup () {
+    log('game')
     // eslint-disable-next-line prefer-const
     let indexFlag = ref(true)
     const enterGame = () => {
@@ -32,6 +34,15 @@ export default defineComponent({
       router.push('/game/steam')
       // initCanvas()
     }
+    log('router:', router)
+    // watch(router, () => {
+    //   log('路有变化')
+    // })
+    onBeforeRouteUpdate(to => {
+      if (to.name === 'Game') {
+        indexFlag.value = true
+      }
+    })
     const options = () => {
       log('options')
     }
