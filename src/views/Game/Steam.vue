@@ -23,6 +23,8 @@ export default defineComponent({
   name: 'Steam',
   setup () {
     const colors = ['orange', 'black', 'rgb(38,47,49)', 'rgb(222,235,242)', 'rgb(156,189,202)']
+    const minRadius = 10
+    const maxRadius = 50
     const moveInfo: Point = {
       x: 0,
       y: 0,
@@ -34,6 +36,13 @@ export default defineComponent({
       blood: 100
     })
     let c: CanvasRenderingContext2D
+    // 计算绝对距离
+    const absDistance = (pointOne: number[], pointTwo: number[]) => {
+      return Math.sqrt(Math.pow(pointTwo[0] - pointOne[0], 2) + Math.pow(pointTwo[1] - pointOne[1], 2))
+    }
+    const randomArea = (arr: number[]) => {
+      return Math.random() * (arr[1] - arr[0]) + arr[0]
+    }
     class Cir {
       x: number;
       y: number;
@@ -68,18 +77,24 @@ export default defineComponent({
         }
         this.x += this.dx
         this.y += this.dy
-        if (Math.abs(this.x - moveInfo.actualX) < 5 && Math.abs(this.y - moveInfo.actualY) < 5) {
-          this.radius += 10
+        // if (Math.abs(this.x - moveInfo.actualX) < 5 && Math.abs(this.y - moveInfo.actualY) < 5) {
+        if (absDistance([this.x, this.y], [moveInfo.actualX, moveInfo.actualY]) < this.radius) {
+          if (this.radius < maxRadius) {
+            this.radius += 3
+          }
+        } else if (this.radius > minRadius) {
+          this.radius -= 3
         }
         this.draw()
       }
     }
     const cirArr = [] as any
-    const randomArea = (arr: number[]) => {
-      return Math.random() * (arr[1] - arr[0]) + arr[0]
-    }
-    for (let i = 0; i < 200; i++) {
-      cirArr.push(new Cir(randomArea([10, 350]), randomArea([10, 510]), randomArea([1, 10]), Math.random() * 10, Math.random() * 10, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
+
+    for (let i = 0; i < 500; i++) {
+      // 随机半径
+      cirArr.push(new Cir(randomArea([10, 350]), randomArea([10, 510]), randomArea([1, 10]), Math.random() * 1, Math.random() * 1, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
+      // 半径加速度写死
+      // cirArr.push(new Cir(randomArea([10, 350]), randomArea([10, 510]), 5, 2, 2, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
     }
 
     let x = 10
@@ -95,7 +110,6 @@ export default defineComponent({
       // c.strokeStyle = 'red'
       // c.strokeRect(x + 100, y + 100, 20, 20)
 
-      log('++++++++++++++++++++++')
       // c.stroke()
     }
     const drawCircle = () => {
@@ -108,11 +122,10 @@ export default defineComponent({
     }
     const initCanvas = () => {
       const canvas: any = document.querySelector('canvas')
-      log(canvas.getBoundingClientRect())
-
       c = canvas.getContext('2d')
       // drawR(x, y)
       canvas.onmousemove = (e: any) => {
+        log('move')
         // log('111', canvas.getBoundingClientRect())
         moveInfo.x = e.x
         moveInfo.y = e.y
@@ -173,7 +186,8 @@ export default defineComponent({
       cirArr,
       initCanvas,
       drawR,
-      drawCircle
+      drawCircle,
+      absDistance
     }
   }
 

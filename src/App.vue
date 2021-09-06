@@ -66,7 +66,7 @@ export default defineComponent({
     const flag = true
     const store = useStore()
     const isLogin = computed(() => {
-      log('-------app----------')
+      log('-------APP----------')
       return store.state.user.isLogin
     })
     const loading = computed(() => store.state.loading)

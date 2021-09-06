@@ -25,20 +25,19 @@ import { onBeforeRouteUpdate } from 'vue-router'
 export default defineComponent({
   name: 'Game',
   setup () {
-    log('game')
     // eslint-disable-next-line prefer-const
-    let indexFlag = ref(true)
+    let indexFlag = ref(Boolean(window.location.pathname === '/game'))
     const enterGame = () => {
       log('enterGame')
       indexFlag.value = false
       router.push('/game/steam')
       // initCanvas()
     }
-    log('router:', router)
     // watch(router, () => {
     //   log('路有变化')
     // })
     onBeforeRouteUpdate(to => {
+      log('---------------')
       if (to.name === 'Game') {
         indexFlag.value = true
       }
