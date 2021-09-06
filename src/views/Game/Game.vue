@@ -2,9 +2,8 @@
   <div class="game">
     <!-- 游戏首页 -->
     <div class="index" v-if="indexFlag">
-      <h2 style="color: red">双人打僵尸</h2>
-      <button type="button" class="btn btn-primary btn-lg but" @click="enterGame">进入游戏</button>
-      <button type="button" class="btn btn-secondary btn-lg but" @click="options">选项</button>
+      <button type="button" class="btn btn-primary btn-lg but" @click="enterGame">效果</button>
+      <button type="button" class="btn btn-secondary btn-lg but" @click="gameJiang">双人打僵尸</button>
     </div>
     <router-view></router-view>
     <!-- 进入游戏 -->
@@ -33,6 +32,11 @@ export default defineComponent({
       router.push('/game/steam')
       // initCanvas()
     }
+    const gameJiang = () => {
+      log('gameJiang')
+      indexFlag.value = false
+      router.push('/game/zombie')
+    }
     // watch(router, () => {
     //   log('路有变化')
     // })
@@ -48,7 +52,8 @@ export default defineComponent({
     return {
       indexFlag,
       enterGame,
-      options
+      options,
+      gameJiang
     }
   }
 })

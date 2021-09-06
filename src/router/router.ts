@@ -10,6 +10,7 @@ import TestPage from '../views/TestPage.vue'
 import Imagemark from '../views/Imagemark.vue'
 import Game from '../views/Game/Game.vue'
 import Steam from '../views/Game/Steam.vue'
+import Zombie from '../views/Game/Zombie.vue'
 import { log } from '../weapons/index'
 const routerHitory = createWebHistory()
 const router = createRouter({
@@ -60,6 +61,11 @@ const router = createRouter({
           path: 'steam',
           name: 'Steam',
           component: Steam
+        },
+        {
+          path: 'zombie',
+          name: 'Zombie',
+          component: Zombie
         }
       ]
     },

@@ -97,8 +97,8 @@ export default defineComponent({
       // cirArr.push(new Cir(randomArea([10, 350]), randomArea([10, 510]), 5, 2, 2, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
     }
 
-    let x = 10
-    let y = 10
+    const x = 10
+    const y = 10
     const d = 10
     const drawR = (x: number, y: number) => {
       c.clearRect(0, 0, 360, 520)
@@ -133,50 +133,6 @@ export default defineComponent({
         moveInfo.actualY = moveInfo.y - canvas.getBoundingClientRect().top
       }
       drawCircle()
-    }
-    const movePerson = (action: string) => {
-      // 获取任务坐标，执行对应行为
-      // const people: any = document.getElementById('role')
-      switch (action) {
-        case 'up':
-          drawR(x, y -= d)
-          // people.style.top = Number(people.style.top.slice(0, -2)) - 10 + 'px'
-          break
-        case 'right':
-          drawR(x += d, y)
-          // people.style.left = Number(people.style.left.slice(0, -2)) + 10 + 'px'
-          break
-        case 'bottom':
-          drawR(x, y += d)
-          // people.style.top = Number(people.style.top.slice(0, -2)) + 10 + 'px'
-          break
-        case 'left':
-          drawR(x -= d, y)
-          // people.style.left = Number(people.style.left.slice(0, -2)) - 10 + 'px'
-      }
-      // log('-------people----:', people)
-      // log('clientHeight:', people.clientHeight)
-      // log('clientWidth:', people.clientWidth)
-      // log('-------action----:', action)
-      // log('people.style.left:', people.style.left)
-    }
-    document.onkeydown = (e) => {
-      log('--key-----:', e.which)
-      const target = Number(e.which)
-      switch (target) {
-        case 37:
-          movePerson('left')
-          break
-        case 38:
-          movePerson('up')
-          break
-        case 39:
-          movePerson('right')
-          break
-        case 40:
-          movePerson('bottom')
-          break
-      }
     }
     onMounted(() => {
       initCanvas()
