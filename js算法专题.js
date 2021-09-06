@@ -410,13 +410,13 @@
   //   return arr
   // }
   
-  const quickSort = (arr) => {
-    if(arr.length === 0 || arr.length === 1) return arr
-    let pivot = arr[0]
-    let gerater = arr.slice(1).filter(item => item >= pivot)
-    let lesser = arr.slice(1).filter(item => item < pivot)
-    return quickSort(lesser).concat(pivot, quickSort(gerater))
-  }
-  const arr = [2,3,7,5,6,7,8,6]
-  // console.log(bubble(arr))
-  console.log('asdasd',quickSort(arr))
+  // const quickSort = (arr) => {
+  //   if(arr.length === 0 || arr.length === 1) return arr
+  //   let pivot = arr[0]
+  //   let gerater = arr.slice(1).filter(item => item >= pivot)
+  //   let lesser = arr.slice(1).filter(item => item < pivot)
+  //   return quickSort(lesser).concat(pivot, quickSort(gerater))
+  // }
+  // const arr = [2,3,7,5,6,7,8,6]
+  // // console.log(bubble(arr))
+  // console.log('asdasd',quickSort(arr))
