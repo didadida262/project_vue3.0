@@ -23,18 +23,17 @@ export default defineComponent({
   setup () {
     const ammuniRes = [] as any
     let c: CanvasRenderingContext2D
+    let frameObj = requestAnimationFrame(() => { log('kaishi') })
     class Ammunition {
       x: number;
       y: number;
       step: number;
       radius: number;
-      index: number;
-      constructor (x: number, y: number, step: number, radius: number, index: number) {
+      constructor (x: number, y: number, step: number, radius: number) {
         this.x = x
         this.y = y
         this.step = step
         this.radius = radius
-        this.index = index
       }
 
       draw () {
@@ -47,12 +46,12 @@ export default defineComponent({
       }
 
       update () {
-        this.y -= this.step
         // 如果越界，消除
         if (this.y <= 0) {
           log('1')
-          ammuniRes.splice(this.index, 1)
+          ammuniRes.shift()
         } else {
+          this.y -= this.step
           log('2')
           this.draw()
         }
@@ -67,48 +66,52 @@ export default defineComponent({
       diretion: ''
     }
     // let test = new Ammunition(role.x + 10, role.y - 10, 3, 10)
-    const drawRole = (x: number, y: number) => {
+    const drawRole = () => {
       // if (x === 0 || x === 400 || y === 0 || y === 800) return
       c.clearRect(0, 0, 400, 800)
       c.fillStyle = 'black'
-      c.fillRect(x, y, 20, 20)
+      c.fillRect(role.x, role.y, 20, 20)
     }
     const drawShot = () => {
+      cancelAnimationFrame(frameObj)
       // 射击动作
-      requestAnimationFrame(drawShot)
-      c.clearRect(0, 0, 400, role.y)
+      c.clearRect(0, 0, 400, 800)
+      drawRole()
       for (let i = 0; i < ammuniRes.length; i++) {
         ammuniRes[i].update()
       }
-      log('ammuniRes', ammuniRes.length)
-      log('=====================')
+      frameObj = requestAnimationFrame(drawShot)
     }
-    const movePerson = (action: string) => {
+    const roleAction = (action: string) => {
       // 获取任务坐标，执行对应行为
       // const people: any = document.getElementById('role')
       switch (action) {
         case 'up':
           role.diretion = 'up'
-          drawRole(role.x, role.y -= role.step)
+          role.y -= role.step
+          drawRole()
           // people.style.top = Number(people.style.top.slice(0, -2)) - 10 + 'px'
           break
         case 'right':
           role.diretion = 'right'
-          drawRole(role.x += role.step, role.y)
+          role.x += role.step
+          drawRole()
           // people.style.left = Number(people.style.left.slice(0, -2)) + 10 + 'px'
           break
         case 'bottom':
           role.diretion = 'bottom'
-          drawRole(role.x, role.y += role.step)
+          role.y += role.step
+          drawRole()
           // people.style.top = Number(people.style.top.slice(0, -2)) + 10 + 'px'
           break
         case 'left':
           role.diretion = 'left'
-          drawRole(role.x -= role.step, role.y)
+          role.x -= role.step
+          drawRole()
           break
         case 'shot':
           // eslint-disable-next-line no-case-declarations
-          const am = new Ammunition(role.x + 10, role.y - 10, 3, 10, ammuniRes.length)
+          const am = new Ammunition(role.x + 10, role.y - 10, 3, 10)
           ammuniRes.push(am)
           drawShot()
       }
@@ -117,26 +120,26 @@ export default defineComponent({
       const target = Number(e.which)
       switch (target) {
         case 37:
-          movePerson('left')
+          roleAction('left')
           break
         case 38:
-          movePerson('up')
+          roleAction('up')
           break
         case 39:
-          movePerson('right')
+          roleAction('right')
           break
         case 40:
-          movePerson('bottom')
+          roleAction('bottom')
           break
         case 32:
-          movePerson('shot')
+          roleAction('shot')
           break
       }
     }
     const initCanvas = () => {
       const canvas: any = document.getElementsByClassName('canvas')[0]
       c = canvas.getContext('2d')
-      drawRole(role.x, role.y)
+      drawRole()
     }
     log('zombie')
     onMounted(() => {
@@ -145,8 +148,9 @@ export default defineComponent({
     return {
       initCanvas,
       drawRole,
-      movePerson,
-      drawShot
+      roleAction,
+      drawShot,
+      frameObj
     }
   }
 })
