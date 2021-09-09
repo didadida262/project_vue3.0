@@ -420,3 +420,25 @@
   // const arr = [2,3,7,5,6,7,8,6]
   // // console.log(bubble(arr))
   // console.log('asdasd',quickSort(arr))
+
+
+
+let p1 = new Promise((resolve, reject) => {
+  resolve(43)
+})
+p1.then((val) => {
+  console.log('val:', val)
+})
+
+const test = () => {
+  return 'test'
+}
+async testSync () {
+ 
+  let test = await test();
+  console.log("执行完毕");  //
+ }
+  
+  
+ //调用这个异步函数跟普通函数一样；
+ testSync();
