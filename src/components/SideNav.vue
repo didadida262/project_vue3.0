@@ -1,35 +1,38 @@
 <template>
   <div class="SideNav">
-    <ul class="nav flex-column" style="text-align: center" @click="handleClick">
-      <li class="nav-item dropdown-item">
-        <a class="nav-link" aria-current="page" href="#" style="color: black" label="home">封面</a>
-      </li>
-      <li class="nav-item dropdown-item">
-        <a class="nav-link" href="#" style="color: black" label="diary">闲谈杂记</a>
-      </li>
-      <li class="nav-item dropdown-item">
-        <a class="nav-link" href="#" style="color: black" label="video">video</a>
-      </li>
-      <li class="nav-item dropdown-item">
-        <a class="nav-link" href="#" style="color: black" label="game">Game</a>
-      </li>
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" @click="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </div>
-      </li> -->
-      <li class="nav-item dropdown-item">
-        <a class="nav-link" href="#" style="color: black" label="testpage">test</a>
-      </li>
-      <li class="nav-item dropdown-item">
-        <a class="nav-link" href="#" style="color: black" label="imgmark">Imgmark</a>
-      </li>
-    </ul>
+    <a-menu
+      style="width: 256px"
+      :default-selected-keys="['1']"
+      mode="inline"
+      @click="handleClick"
+    >
+      <a-menu-item key="home">
+        <span>Home</span>
+      </a-menu-item>
+      <a-menu-item key="diary">
+        <span>Diary</span>
+      </a-menu-item>
+      <a-menu-item key="video">
+        <span>Video</span>
+      </a-menu-item>
+      <a-sub-menu key="game" title="Game">
+        <a-menu-item key="game/steam">
+          <span>steam</span>
+        </a-menu-item>
+        <a-menu-item key="game/zombie">
+          <span>zombie</span>
+        </a-menu-item>
+      </a-sub-menu>
+      <a-menu-item key="testpage">
+          <span>testpage</span>
+      </a-menu-item>
+      <a-menu-item key="imgmark">
+          <span>imgmark</span>
+      </a-menu-item>
+      <a-menu-item key="salary">
+          <span>salary</span>
+      </a-menu-item>
+    </a-menu>
   </div>
 </template>
 
@@ -40,17 +43,21 @@ import { log } from '../weapons/index'
 export default defineComponent({
   name: 'SideNav',
   setup () {
-    const handleClick = (e: MouseEvent) => {
-      const label = (e.target as HTMLElement).getAttribute('label')
-      log('label:', label)
-      router.push(`/${label}`)
+    const handleClick = (e: any) => {
+      // const label = (e.target as HTMLElement).getAttribute('label')
+      log('e:', e)
+      router.push(`/${e.key}`)
     }
     const dropdown = (e: any) => {
       log('============', e)
     }
+    const titleClick = (e: any) => {
+      log('e:', e)
+    }
     return {
       handleClick,
-      dropdown
+      dropdown,
+      titleClick
     }
   }
 })
@@ -58,8 +65,8 @@ export default defineComponent({
 
 <style>
   .SideNav {
-    width: 190px;
-    height: 80vh;
+    /* width: 190px; */
+    /* height: 80vh; */
     border: 1px solid gainsboro;
     border-bottom: 0px;
     margin-right: 10px;

@@ -423,22 +423,48 @@
 
 
 
-let p1 = new Promise((resolve, reject) => {
-  resolve(43)
-})
-p1.then((val) => {
-  console.log('val:', val)
-})
+// let p1 = new Promise((resolve, reject) => {
+//   resolve(43)
+// })
+// p1.then((val) => {
+//   console.log('val:', val)
+// })
 
-const test = () => {
-  return 'test'
-}
-async testSync () {
+// const test = () => {
+//   return 'test'
+// }
+// async testSync () {
  
-  let test = await test();
-  console.log("执行完毕");  //
- }
+//   let test = await test();
+//   console.log("执行完毕");  //
+//  }
   
   
- //调用这个异步函数跟普通函数一样；
- testSync();
+//  //调用这个异步函数跟普通函数一样；
+//  testSync();
+
+
+
+const arr = [1, 2, 3]
+const p = []
+const res = []
+const visited = new Array(arr.length).fill(false)
+const f = (p) => {
+  if (p.length === arr.length) {
+    if (res.findIndex(item => JSON.stringify(item) === JSON.stringify(p)) < 0) {
+      res.push([...p])
+      return
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (!visited[i]) {
+      p.push(arr[i])
+      visited[i] = true
+      f(p)
+      p.pop()
+      visited[i] = false
+    }
+  }
+}
+f(p)
+console.log('res:', res)

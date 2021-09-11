@@ -11,6 +11,7 @@ import Imagemark from '../views/Imagemark.vue'
 import Game from '../views/Game/Game.vue'
 import Steam from '../views/Game/Steam.vue'
 import Zombie from '../views/Game/Zombie.vue'
+import Salary from '../views/Salary.vue'
 import { log } from '../weapons/index'
 const routerHitory = createWebHistory()
 const router = createRouter({
@@ -30,18 +31,18 @@ const router = createRouter({
       name: 'Login',
       component: Login
     },
-    {
-      path: '/sidenav',
-      name: 'SideNav',
-      component: SideNav,
-      meta: { requiredLogin: true }
-      // 元信息，用于权限管理
-    },
-    {
-      path: '/bnw',
-      name: 'beautifulnewworld',
-      component: BeautifulNewWorld
-    },
+    // {
+    //   path: '/sidenav',
+    //   name: 'SideNav',
+    //   component: SideNav,
+    //   meta: { requiredLogin: true }
+    //   // 元信息，用于权限管理
+    // },
+    // {
+    //   path: '/bnw',
+    //   name: 'beautifulnewworld',
+    //   component: BeautifulNewWorld
+    // },
     {
       path: '/diary',
       name: 'Diary',
@@ -78,6 +79,10 @@ const router = createRouter({
       path: '/imgmark',
       name: 'Imagemark',
       component: Imagemark
+    }, {
+      path: '/salary',
+      name: 'Salary',
+      component: Salary
     }
   ]
 })
