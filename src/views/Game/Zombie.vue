@@ -9,20 +9,21 @@
       <button @click="changeWeapon">切换武器</button>
     </div>
     <canvas class="canvasRole" width="400" height="600"></canvas>
-    <!-- <canvas class="canvasAmmun" width="400" height="800"></canvas> -->
+    <canvas class="canvasBackg" width="400" height="600"></canvas>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue'
+import { defineComponent, onMounted, reactive, inject, Ref } from 'vue'
 import { log } from '../../weapons/index'
+
 interface Role {
   name: string;
   x: number;
   y: number;
   step: number;
   score: number;
-  blood?: number;
+  blood: number;
   direction: string;
 }
 
@@ -31,16 +32,27 @@ export default defineComponent({
   setup () {
     const WIDTH = 400
     const HEIGHT = 600
-    let weaponCir = Math.PI
+    let weaponCir = Math.PI * 2
     let cRole: CanvasRenderingContext2D
     // 第二块画布
-    // let cAmmun: CanvasRenderingContext2D
+    let cAmmun: CanvasRenderingContext2D
+    const img = new Image()
+
+    const drawBckg = () => {
+      // cAmmun.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+      cAmmun.drawImage(img, 0, 0, 640, 640)
+    }
+    img.src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2FQ3auHgzwzM7O7bvUvjAJMN1piaJ26fGpYYDJ3EYULLyMxHt9O3Y6aBvCAcN9mMNCM8DY8ibdN7xg2x5nJB4P2KqI2hicibLcotawxIfSO6DtvL0%2F0&refer=http%3A%2F%2Fwx.qlogo.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1633759999&t=0dad1a230e5523f98a0716194f057709'
+    img.onload = () => {
+      log('picture_ready!!!')
+    }
     const npc: Role = {
       name: 'Satein',
       x: 200,
       y: 200,
       step: 10,
-      score: 0,
+      blood: 100,
+      score: 19,
       direction: ''
     }
     const role: Role = reactive({
@@ -86,15 +98,18 @@ export default defineComponent({
         this.radius = radius
         this.direction = direction
       }
+      // 根据当前弹药对象的基本数据，绘制操作
 
       draw () {
         cRole.strokeStyle = 'white'
         cRole.fillStyle = 'gray'
         cRole.beginPath()
-        cRole.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        // cRole.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        cRole.arc(this.x, this.y, this.radius, 0, weaponCir, false)
         cRole.stroke()
         cRole.fill()
       }
+      // 让弹药以设定速度往人物方向运动
 
       update () {
         // 如果越界，消除
@@ -139,7 +154,7 @@ export default defineComponent({
         }
       }
     }
-    let handle = null as any
+    let handle: any
     // 根据人物当前位置和方向，确定弹药的起始坐标
     const getAmmunPix = () => {
       if (role.direction === 'up') {
@@ -193,6 +208,7 @@ export default defineComponent({
           break
       }
     }
+    // 根据人物对象当前信息，绘制人物，同时判断越界
     const drawRole = (x: number, y: number) => {
       if (role.x - role.step < -10 || role.x + role.step > 410 || role.y - role.step < -10 || role.y + role.step > 810) {
         // alert('越界')
@@ -202,7 +218,7 @@ export default defineComponent({
         role.y = y
         cRole.clearRect(0, 0, WIDTH, HEIGHT)
         drawNpc()
-        cRole.fillStyle = 'black'
+        cRole.fillStyle = 'green'
         drawPao()
         cRole.fillRect(x, y, 20, 20)
       }
@@ -210,19 +226,14 @@ export default defineComponent({
 
     const changeWeapon = () => {
       // 切换武器
-      if (weaponCir === Math.PI) {
-        weaponCir = Math.PI * 2
-        alert('切换成功')
-      } else {
-        weaponCir = Math.PI * 0.5
-        alert('切换成功')
-      }
+      weaponCir = Math.PI * Math.random()
     }
     // 空格键触发射击动作，全屏幕清除，再分别绘制人物和弹药
     const drawShot = () => {
       cancelAnimationFrame(handle)
       cRole.clearRect(0, 0, WIDTH, HEIGHT)
       drawRole(role.x, role.y)
+      drawPao()
       for (let i = 0; i < ammuniResp.length; i++) {
         ammuniResp[i].update()
       }
@@ -284,15 +295,19 @@ export default defineComponent({
     // 初始化游戏世界
     const initCanvas = () => {
       const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
+      const canvasAmmun: any = document.getElementsByClassName('canvasBackg')[0]
+      cAmmun = canvasAmmun.getContext('2d')
       cRole = canvasRole.getContext('2d')
+      drawBckg()
+      // canvas上下文
+      log('canvas上下文:', cRole)
       drawRole(role.x, role.y)
-      // const canvasAmmun: any = document.getElementsByClassName('canvasAmmun')[0]
-      // cAmmun = canvasAmmun.getContext('2d')
     }
     onMounted(() => {
       initCanvas()
     })
     return {
+      drawBckg,
       initCanvas,
       drawRole,
       drawNpc,
@@ -310,7 +325,5 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-
   @import '../../css/Zombie.less';
-
 </style>

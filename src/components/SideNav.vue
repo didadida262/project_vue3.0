@@ -17,20 +17,20 @@
       </a-menu-item>
       <a-sub-menu key="game" title="Game">
         <a-menu-item key="game/steam">
-          <span>steam</span>
+          <span>Steam</span>
         </a-menu-item>
         <a-menu-item key="game/zombie">
-          <span>zombie</span>
+          <span>Zombie</span>
         </a-menu-item>
       </a-sub-menu>
       <a-menu-item key="testpage">
-          <span>testpage</span>
+          <span>Testpage</span>
       </a-menu-item>
       <a-menu-item key="imgmark">
-          <span>imgmark</span>
+          <span>Imgmark</span>
       </a-menu-item>
       <a-menu-item key="salary">
-          <span>salary</span>
+          <span>Salary</span>
       </a-menu-item>
     </a-menu>
   </div>
