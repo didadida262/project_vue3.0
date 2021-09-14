@@ -64,8 +64,8 @@ export default defineComponent({
         c.fillStyle = this.color
         c.beginPath()
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-        c.stroke()
         c.fill()
+        c.stroke()
       }
 
       update () {
@@ -92,14 +92,11 @@ export default defineComponent({
 
     for (let i = 0; i < 500; i++) {
       // 随机半径
-      cirArr.push(new Cir(randomArea([10, 350]), randomArea([10, 510]), randomArea([1, 10]), Math.random() * 1, Math.random() * 1, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
+      cirArr.push(new Cir(randomArea([10, 390]), randomArea([10, 590]), randomArea([1, 10]), Math.random() * 1, Math.random() * 1, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
       // 半径加速度写死
       // cirArr.push(new Cir(randomArea([10, 350]), randomArea([10, 510]), 5, 2, 2, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
     }
 
-    const x = 10
-    const y = 10
-    const d = 10
     const drawR = (x: number, y: number) => {
       c.clearRect(0, 0, 360, 520)
       // fillRect绘制有填充色的矩形
@@ -115,7 +112,7 @@ export default defineComponent({
     const drawCircle = () => {
       // do something
       requestAnimationFrame(drawCircle)
-      c.clearRect(0, 0, 360, 520)
+      c.clearRect(0, 0, 400, 600)
       for (let i = 0; i < cirArr.length; i++) {
         cirArr[i].update()
       }
