@@ -445,26 +445,36 @@
 
 
 
-const arr = [1, 2, 3]
-const p = []
-const res = []
-const visited = new Array(arr.length).fill(false)
-const f = (p) => {
-  if (p.length === arr.length) {
-    if (res.findIndex(item => JSON.stringify(item) === JSON.stringify(p)) < 0) {
-      res.push([...p])
-      return
-    }
-  }
-  for (let i = 0; i < arr.length; i++) {
-    if (!visited[i]) {
-      p.push(arr[i])
-      visited[i] = true
-      f(p)
-      p.pop()
-      visited[i] = false
-    }
-  }
-}
-f(p)
-console.log('res:', res)
+// const leastInterval = function(tasks, n) {
+//   const res = []
+//   while (tasks.length) {
+//       console.log('------------------')
+//       console.log('tasks:', tasks)
+//       let flag = false
+//       // const rest = res.slice(res.length - n)
+//       let rest = []
+//       if (n >= res.length) {
+//            rest.push(...res)
+//       } else {
+//           rest = res.slice(res.length - n)
+//       }
+//       console.log('reset:', rest)
+//       for (let i = 0; i < tasks.length; i++) {
+//           if (!rest.filter(item => item === tasks[i]).length) {
+//               res.push(tasks[i])
+//               tasks.splice(i, 1)
+//               flag = true
+//               break
+//           }
+//       }
+//       if (!flag) {
+//           res.push('(待命)')
+//       }
+//       console.log('res:"', res)
+//       console.log('------------------')
+//   }
+//   return res.length
+// }
+
+// leastInterval(["E", "D", "D", "A","A","A","B","B","B", "C","C","C"], 2)
+console.log('z'.charCodeAt())

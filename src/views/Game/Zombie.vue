@@ -1,15 +1,17 @@
 <template>
   <div class="zombie">
     <!-- 僵尸 -->
-    <h1>Zombie</h1>
     <div class="info">
+      <h1>Zombie</h1>
       <p>name: {{ role.name }}</p>
       <p>score: {{ role.score }}</p>
       <!-- <p>blood: {{ role.blood }}</p> -->
-      <button @click="changeWeapon">切换武器</button>
+      <a-button @click="changeWeapon">切换武器</a-button>
     </div>
-    <canvas class="canvasRole" width="400" height="600"></canvas>
-    <canvas class="canvasBackg" width="400" height="600"></canvas>
+    <div class="canvasDiv">
+      <canvas class="canvasRole" width="400" height="600"></canvas>
+      <canvas class="canvasBackg" width="400" height="600"></canvas>
+    </div>
   </div>
 </template>
 
@@ -30,6 +32,8 @@ interface Role {
 export default defineComponent({
   name: 'Zombie',
   setup () {
+    // const data = inject(<Ref<boolean>>('data'),
+    // log('data:', data),
     const WIDTH = 400
     const HEIGHT = 600
     let weaponCir = Math.PI * 2
@@ -39,10 +43,11 @@ export default defineComponent({
     const img = new Image()
 
     const drawBckg = () => {
-      // cAmmun.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+      // cAmmun.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);]
       cAmmun.drawImage(img, 0, 0, 640, 640)
     }
-    img.src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2FQ3auHgzwzM7O7bvUvjAJMN1piaJ26fGpYYDJ3EYULLyMxHt9O3Y6aBvCAcN9mMNCM8DY8ibdN7xg2x5nJB4P2KqI2hicibLcotawxIfSO6DtvL0%2F0&refer=http%3A%2F%2Fwx.qlogo.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1633759999&t=0dad1a230e5523f98a0716194f057709'
+    // img.src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2FQ3auHgzwzM7O7bvUvjAJMN1piaJ26fGpYYDJ3EYULLyMxHt9O3Y6aBvCAcN9mMNCM8DY8ibdN7xg2x5nJB4P2KqI2hicibLcotawxIfSO6DtvL0%2F0&refer=http%3A%2F%2Fwx.qlogo.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1633759999&t=0dad1a230e5523f98a0716194f057709'
+    img.src = '../src/assets/backg.jpg'
     img.onload = () => {
       log('picture_ready!!!')
     }
@@ -51,8 +56,8 @@ export default defineComponent({
       x: 200,
       y: 200,
       step: 10,
+      score: 0,
       blood: 100,
-      score: 19,
       direction: ''
     }
     const role: Role = reactive({
@@ -154,7 +159,7 @@ export default defineComponent({
         }
       }
     }
-    let handle: any
+    let handle = null as any
     // 根据人物当前位置和方向，确定弹药的起始坐标
     const getAmmunPix = () => {
       if (role.direction === 'up') {
@@ -223,7 +228,6 @@ export default defineComponent({
         cRole.fillRect(x, y, 20, 20)
       }
     }
-
     const changeWeapon = () => {
       // 切换武器
       weaponCir = Math.PI * Math.random()
@@ -322,8 +326,31 @@ export default defineComponent({
   }
 })
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-  @import '../../css/Zombie.less';
+  .zombie {
+      height: 100%;
+      .canvasDiv {
+          border: 1px solid gainsboro;
+          height: calc(100% - 210px);
+          position: relative;
+          .canvasRole {
+            box-sizing: content-box;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+          }
+          .canvasBackg {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            box-sizing: content-box;
+            z-index: -100;
+          }
+      }
+      .info {
+          margin-bottom: 10px;
+          height: 200px;
+      }
+  }
 </style>

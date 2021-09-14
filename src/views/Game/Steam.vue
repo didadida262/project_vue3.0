@@ -152,5 +152,28 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-  @import '../../css/Steam.less';
+  // @import '../../css/Steam.less';
+  .steam {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    #role {
+      width: 61px;
+      height: 100px;
+      border: 1px solid red;
+      background-size: contain;
+      background-repeat: no-repeat;
+      // background-image: url('../assets/jiang.jpg');
+      border: 1px solid black;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      // background-color: red;
+    }
+    canvas {
+      display: block;
+      border: 1px solid black;
+      margin: 10px auto;
+    }
+  }
 </style>

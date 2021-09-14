@@ -111,5 +111,19 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-  @import '../css/Imgmark.less';
+  // @import '../css/Imgmark.less';
+  .imgmark{
+    width: 100%;
+    height:100%;
+    /* background:transparent url("../assets/avatar_null.png") no-repeat scroll -70px -40px; */
+    /* background:transparent url("../assets/avatar_null.png") no-repeat scroll 10px 10px; */
+    border:1px solid green;
+    #picarea {
+      width: 300px;
+      height: 600px;
+      border: 1px solid red;
+      margin: 100px auto;
+      position: relative;
+    }
+  }
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div class="test">
     <p>test</p>
-    <div class="container"></div>
+    <div class="divone"></div>
+    <div class="divtwo"></div>
 
     <!-- <video src="" id="player"></video>
     <p>{{ blob }}</p>
@@ -25,39 +26,23 @@ interface DataProps {
 export default defineComponent({
   name: 'TestPage',
   setup () {
-    // const xml = new XMLHttpRequest()
-    // let showBlob = ''
-    // let blob = ''
-    // xml.open('GET', 'http://127.0.0.1:5000/testBlob', true)
-    // xml.responseType = 'blob'
-    // xml.send()
-    // xml.onload = function (e) {
-    //   if (this.status === 200) {
-    //     blob = this.response
-    //     showBlob = URL.createObjectURL(blob)
-    //     const page: SelectProtected = document
-    //     if (page) {
-    //       page.getElementById('player').src = showBlob
-    //     }
-    //   }
-    //   log('blob:', blob)
-    //   log('showBlob:', showBlob)
-    // }
-    // return {
-    //   blob,
-    //   showBlob
-    // }
+    log(1)
   }
 })
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .container{
-        width:300px;
-        height:600px;
-        /* background:transparent url("../assets/avatar_null.png") no-repeat scroll -70px -40px; */
-        /* background:transparent url("../assets/avatar_null.png") no-repeat scroll 10px 10px; */
-        border:5px solid green;
-    }
+  .divone {
+    width: 200px;
+    float: left;
+    border: 1px solid red;
+    height: 100px;
+  }
+  .divtwo {
+    border: 1px solid green;
+    margin-left: 200px;
+    height: 100px;
+  }
+
 </style>
