@@ -305,43 +305,43 @@ export default defineComponent({
       }
     }
     // 初始化游戏世界
-    const initCanvas = () => {
-      const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
-      const canvasAmmun: any = document.getElementsByClassName('canvasBackg')[0]
-      cAmmun = canvasAmmun.getContext('2d')
-      cRole = canvasRole.getContext('2d')
-      drawBckg()
-      // canvas上下文
-      log('canvas上下文:', cRole)
-      drawRole(role.x, role.y)
-    }
-    // 2.1 canvas基本操作
     // const initCanvas = () => {
     //   const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
-    //   const c = canvasRole.getContext('2d')
-    //   // draw rectangle
-    //   c.fillStyle = 'rgb(38,47,49)'
-    //   c.fillRect(50, 50, 20, 20)
-    //   c.fillRect(300, 50, 20, 20)
-    //   // draw line
-    //   c.beginPath()
-    //   c.moveTo(70, 70)
-    //   c.lineTo(190, 200)
-    //   c.lineTo(300, 70)
-    //   c.strokeStyle = 'green'
-    //   c.stroke()
-    //   // draw circle
-    //   for (let i = 0; i < 30; i++) {
-    //     const x: number = Math.random() * 360
-    //     const y: number = Math.random() * 520
-    //     c.beginPath()
-    //     c.arc(x, y, 10, 0, Math.PI * 2, false)
-    //     c.strokeStyle = 'blue'
-    //     c.fillStyle = 'rgb(222,235,242)'
-    //     c.fill()
-    //     c.stroke()
-    //   }
+    //   const canvasAmmun: any = document.getElementsByClassName('canvasBackg')[0]
+    //   cAmmun = canvasAmmun.getContext('2d')
+    //   cRole = canvasRole.getContext('2d')
+    //   drawBckg()
+    //   // canvas上下文
+    //   log('canvas上下文:', cRole)
+    //   drawRole(role.x, role.y)
     // }
+    // 2.1 canvas基本操作
+    const initCanvas = () => {
+      const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
+      const c = canvasRole.getContext('2d')
+      // draw rectangle
+      c.fillStyle = 'rgb(38,47,49)'
+      c.fillRect(50, 50, 20, 20)
+      c.fillRect(300, 50, 20, 20)
+      // draw line
+      c.beginPath()
+      c.moveTo(70, 70)
+      c.lineTo(190, 200)
+      c.lineTo(300, 70)
+      c.strokeStyle = 'green'
+      c.stroke()
+      // draw circle
+      for (let i = 0; i < 30; i++) {
+        const x: number = Math.random() * 360
+        const y: number = Math.random() * 520
+        c.beginPath()
+        c.arc(x, y, 10, 0, Math.PI * 2, false)
+        c.strokeStyle = 'blue'
+        c.fillStyle = 'rgb(222,235,242)'
+        c.fill()
+        c.stroke()
+      }
+    }
     // 2.2 让圆球动起来
     // const initCanvas = () => {
     //   const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
