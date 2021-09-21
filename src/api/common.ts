@@ -11,6 +11,9 @@ const commonAPI = {
   },
   login (userInfo: object) {
     return service.post('/signIn', userInfo)
+  },
+  getUser () {
+    return service.get('/users')
   }
 }
 

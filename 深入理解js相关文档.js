@@ -639,59 +639,31 @@
 
 
 // 14 类,继承，等等相关 
-    // 1) es6中的class类
-    // class Animal {
-    //     constructor(name,sound) {
-    //         this.name = name
-    //         this.sound = sound
-    //     }
-    //     shout() {
-    //         console.log(this.sound)
-    //     }
-    // }
-    // const tiger = new Animal('tiger','wow')
-    // const dog = new Animal('dog','wawa')
-    // console.log(dog.sound)
 
-    // const test2 = function(name) {
-    //     this.name = name
-    // }
-    // test2.prototype.shout = function(){
-    //     console.log(this.name)
-    // }
-    // const cc = new test2('shenle2')
-    // cc.shout()
     
 
     // 2) es6之前实现类得方法
-    // const Animal = function(name,sound) {
-    //     this.parent = 'babab'
-    //     this.name = name
-    //     this.sound =sound
-    // }
-
-    // Animal.prototype.shout = function() {
-    //     console.log(this.sound)
-    // }
-
-    // const tiger = new Animal('tiger','wow')
-    // const dog = new Animal('dog','wawwa')
-    // tiger.shout()
-    // dog.shout()
-
     // 3) js中继承的几种方式
     // 构造函数继承
-    // const parent = function(){
-    //     this.name = 'baba'
-    //     const s = 'test'
-    // }
-    // // const child = new parent()
-    // // console.log(child.name)
-    
-    // // // 原型链继承
-    // const child2 = {}
-    // child2.__proto__ = parent.prototype
-    // console.log(child2.name)
+    const Parent = function(){
+        this.children = ['son1', 'son2']
+    }
+
+    Parent.prototype.getChildren = function () {
+      return this.children
+    }
+    const Children = function (...args) {
+      Parent.call(this, ...args)
+    }
+    Children.prototype = new Parent()
+    const child = new Children()
+    const child2 = new Children()
+    console.log('child.__proto__', child.__proto__)
+    child.children.push('nima')
+    child2.children.push('nima2')
+    console.log('child.getName():', child.getChildren())
+    // const child = new parent()
+    // console.log(child.name)
 
 
     // ts与js的区别

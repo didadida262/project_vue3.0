@@ -25,9 +25,12 @@ export default {
     const world = ref('')
     store.commit('handelLoading', true)
     commonAPI.getStart().then((res) => {
-      world.value = res.data
-      console.log('res.data:', res.data)
+      world.value = JSON.stringify(res)
+      console.log('res.data:', res)
       store.commit('handelLoading', false)
+    })
+    commonAPI.getUser().then((res) => {
+      console.log('user:', res)
     })
 
     return {
