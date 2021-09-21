@@ -2,18 +2,18 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
   <div class="app">
-    <div class="login" v-if="!isLogin">
+    <!-- <div class="login" v-if="!isLogin">
       <router-view></router-view>
-    </div>
-    <div v-else class="webpage">
+    </div> -->
+    <div class="webpage">
     <!-- 头部 -->
       <global-header
         :user="user">
       </global-header>
-      <loader
+      <!-- <loader
         v-if="loading"
         text="死命加载中....">
-      </loader>
+      </loader> -->
       <!-- 内容 -->
       <div class="middle">
         <div class="sidenav">
@@ -58,7 +58,6 @@ export default defineComponent({
   name: 'App',
   components: {
     GlobalHeader,
-    Loader,
     SideNav
   },
   setup () {
@@ -71,7 +70,8 @@ export default defineComponent({
     })
     const loading = computed(() => store.state.loading)
     const route = useRoute()
-    const user = JSON.parse(localStorage.userInfo)
+    // const user = JSON.parse(localStorage.userInfo)
+    const user = localStorage.userInfo
     return {
       inputRef,
       store,

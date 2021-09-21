@@ -645,23 +645,23 @@
     // 2) es6之前实现类得方法
     // 3) js中继承的几种方式
     // 构造函数继承
-    const Parent = function(){
-        this.children = ['son1', 'son2']
-    }
+    // const Parent = function(){
+    //     this.children = ['son1', 'son2']
+    // }
 
-    Parent.prototype.getChildren = function () {
-      return this.children
-    }
-    const Children = function (...args) {
-      Parent.call(this, ...args)
-    }
-    Children.prototype = new Parent()
-    const child = new Children()
-    const child2 = new Children()
-    console.log('child.__proto__', child.__proto__)
-    child.children.push('nima')
-    child2.children.push('nima2')
-    console.log('child.getName():', child.getChildren())
+    // Parent.prototype.getChildren = function () {
+    //   return this.children
+    // }
+    // const Children = function (...args) {
+    //   Parent.call(this, ...args)
+    // }
+    // Children.prototype = new Parent()
+    // const child = new Children()
+    // const child2 = new Children()
+    // console.log('child.__proto__', child.__proto__)
+    // child.children.push('nima')
+    // child2.children.push('nima2')
+    // console.log('child.getName():', child.getChildren())
     // const child = new parent()
     // console.log(child.name)
 
@@ -692,3 +692,18 @@
 
     // xml.open(method,url,true)
     // xml.send()
+
+
+    const a = [1,8,6,2,5,4,8,3,7]
+    const f = (arr) => {
+      let max = -Infinity
+      for (let i =0; i < arr.length - 1; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+          if (max < (j - i) * Math.min(arr[i], arr[j])) {
+            max = (j - i) * Math.min(arr[i], arr[j])
+          }
+        }
+      }
+      return max
+    }
+    console.log(f(a))

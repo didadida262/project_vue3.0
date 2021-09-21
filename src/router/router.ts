@@ -87,18 +87,18 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  log('router:to', to)
-  log('router:from', from)
-  const userInfo = localStorage.userInfo
-  if (to.name !== 'Login' && userInfo === '{}') {
-    next({ path: '/login' })
-  } else {
-    if (userInfo !== '{}') {
-      store.commit('login', userInfo)
-    }
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   log('router:to', to)
+//   log('router:from', from)
+//   const userInfo = localStorage.userInfo
+//   if (to.name !== 'Login' && userInfo === '{}') {
+//     next({ path: '/login' })
+//   } else {
+//     if (userInfo !== '{}') {
+//       store.commit('login', userInfo)
+//     }
+//     next()
+//   }
+// })
 
 export default router

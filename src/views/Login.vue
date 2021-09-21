@@ -49,6 +49,10 @@ export default defineComponent({
           ...res,
           isLogin: true
         }))
+        console.log('-------------', JSON.stringify({
+          ...res,
+          isLogin: true
+        }))
         store.commit('login', res)
         router.push('/')
       })

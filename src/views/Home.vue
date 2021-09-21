@@ -22,16 +22,16 @@ import router from '../router/router'
 export default {
   setup () {
     const store = useStore()
-    const world = ref('')
+    const world = ref('alloha')
     store.commit('handelLoading', true)
-    commonAPI.getStart().then((res) => {
-      world.value = JSON.stringify(res)
-      console.log('res.data:', res)
-      store.commit('handelLoading', false)
-    })
-    commonAPI.getUser().then((res) => {
-      console.log('user:', res)
-    })
+    // commonAPI.getStart().then((res) => {
+    //   world.value = JSON.stringify(res)
+    //   console.log('res.data:', res)
+    //   store.commit('handelLoading', false)
+    // })
+    // commonAPI.getUser().then((res) => {
+    //   console.log('user:', res)
+    // })
 
     return {
       world
