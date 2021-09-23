@@ -12,6 +12,7 @@ import Game from '../views/Game/Game.vue'
 import Steam from '../views/Game/Steam.vue'
 import Zombie from '../views/Game/Zombie.vue'
 import Salary from '../views/Salary.vue'
+import Map from '../views/Map.vue'
 import { log } from '../weapons/index'
 const routerHitory = createWebHistory()
 const router = createRouter({
@@ -83,8 +84,12 @@ const router = createRouter({
       path: '/salary',
       name: 'Salary',
       component: Salary
-    }
-  ]
+    }, {
+    path: '/map',
+    name: 'Map',
+    component: Map
+  },
+]
 })
 
 // router.beforeEach((to, from, next) => {

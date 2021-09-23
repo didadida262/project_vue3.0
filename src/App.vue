@@ -71,7 +71,8 @@ export default defineComponent({
     const loading = computed(() => store.state.loading)
     const route = useRoute()
     // const user = JSON.parse(localStorage.userInfo)
-    const user = localStorage.userInfo
+    // const user = localStorage.userInfo
+    const user = { userName: 'hhvcg', userPd: '11' }
     return {
       inputRef,
       store,

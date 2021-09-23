@@ -31,6 +31,9 @@
       </a-menu-item>
       <a-menu-item key="salary">
           <span>Salary</span>
+      </a-menu-item>      
+      <a-menu-item key="map">
+          <span>Map</span>
       </a-menu-item>
     </a-menu>
   </div>
