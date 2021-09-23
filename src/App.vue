@@ -72,7 +72,7 @@ export default defineComponent({
     const route = useRoute()
     // const user = JSON.parse(localStorage.userInfo)
     // const user = localStorage.userInfo
-    const user = { userName: 'hhvcg', userPd: '11' }
+    const user = { userName: 'hhvcg', userPd: '11as' }
     return {
       inputRef,
       store,
