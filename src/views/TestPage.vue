@@ -1,12 +1,7 @@
 <template>
   <div class="test">
     <p>test</p>
-    <!-- <h1>{{ age }}</h1> -->
-    <h1>{{ obj }}</h1>
-    <a-button @click="changeObj">changeObj</a-button>
-    <!-- <video src="" id="player"></video>
-    <p>{{ blob }}</p>
-    <p>{{ showBlob }}</p> -->
+    <a-button @click="debounce">click</a-button>
   </div>
 </template>
 
@@ -28,36 +23,18 @@ interface DataProps {
 export default defineComponent({
   name: 'TestPage',
   setup () {
-    const obj = {
-      name: ''
-    }
-    Object.defineProperty(obj, 'name', {
-      get () {
-        log('你正在访问那么')
-        return this.name
-      },
-      set (val) {
-        log('你在改变')
-        log('val:', val)
-        this.name = val
+    const f = function () {
+      let timer = null as any
+      return function () {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          log('click')
+        }, 2000)
       }
-    })
-    const changeObj = () => {
-      obj.name = 'hhcsa'
-      log('1')
     }
-    const store = useStore()
-    const age = computed(() => {
-      return store.state.age
-    })
-    const addAge = () => {
-      store.dispatch('asaddAge', 4000)
-    }
+    const debounce = f()
     return {
-      addAge,
-      age,
-      obj,
-      changeObj
+      debounce
     }
   }
 })
@@ -65,16 +42,5 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .divone {
-    width: 200px;
-    float: left;
-    border: 1px solid red;
-    height: 100px;
-  }
-  .divtwo {
-    border: 1px solid green;
-    margin-left: 200px;
-    height: 100px;
-  }
 
 </style>
