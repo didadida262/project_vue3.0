@@ -13,6 +13,8 @@ import Steam from '../views/Game/Steam.vue'
 import Zombie from '../views/Game/Zombie.vue'
 import Salary from '../views/Salary.vue'
 import Map from '../views/Map.vue'
+import Threejs from '../views/Threejs.vue'
+import Music from '../views/Music.vue'
 import { log } from '../weapons/index'
 const routerHitory = createWebHistory()
 const router = createRouter({
@@ -85,11 +87,21 @@ const router = createRouter({
       name: 'Salary',
       component: Salary
     }, {
-    path: '/map',
-    name: 'Map',
-    component: Map
-  },
-]
+      path: '/map',
+      name: 'Map',
+      component: Map
+    },
+    {
+      path: '/threejs',
+      name: 'Threejs',
+      component: Threejs
+    },
+    {
+      path: '/music',
+      name: 'Music',
+      component: Music
+    }
+  ]
 })
 
 // router.beforeEach((to, from, next) => {
