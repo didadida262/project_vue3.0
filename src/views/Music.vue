@@ -9,18 +9,11 @@ import { computed, defineComponent, ref, reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 // import { useStore } from '@/vuex/index'
 import { log } from '../weapons/index'
-interface SelectProtected {
-    readonly wrapperElement: HTMLDivElement;
-    readonly videoElement: HTMLVideoElement;
-}
+
 // import { commonAPI } from '../api/common'
-interface DataProps {
-  count: number;
-  double: number;
-  increase: () => void;
-}
+
 export default defineComponent({
-  name: 'TestPage',
+  name: 'Music',
   setup () {
     log('music')
   }
