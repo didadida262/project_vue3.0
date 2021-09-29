@@ -1,6 +1,7 @@
 <template>
   <div class="music">
-    <p>music</p>
+    <h1>music</h1>
+    <audio src="../" class="mymusic"></audio>
   </div>
 </template>
 
