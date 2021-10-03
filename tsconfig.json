@@ -1,8 +1,10 @@
+// 总而言之，没有这个文件，项目运行就找不到node_modules里的依赖
 {
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
     "strict": true,
+    "removeComments": true,      // 删除注释 
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
