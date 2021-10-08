@@ -9,7 +9,7 @@
 import { computed, defineComponent, ref, reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 // import { useStore } from '@/vuex/index'
-import { log } from '../weapons/index'
+import { log, change } from '../weapons/index'
 interface SelectProtected {
     readonly wrapperElement: HTMLDivElement;
     readonly videoElement: HTMLVideoElement;
@@ -23,6 +23,11 @@ interface DataProps {
 export default defineComponent({
   name: 'TestPage',
   setup () {
+    const obj = {
+      name: 'hhvcg'
+    }
+    change(obj)
+    console.log('obj:', obj)
     const f = function () {
       let timer = null as any
       return function () {

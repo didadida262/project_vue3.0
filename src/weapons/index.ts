@@ -2,5 +2,7 @@ const log = console.log.bind(console)
 const e = (selector: any) => {
     return document.querySelector(selector)
 }
-
-export { log, e }
+const change = (obj: any) => {
+    obj.name = 'change'
+}
+export { log, e, change }
