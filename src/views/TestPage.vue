@@ -30,10 +30,15 @@ export default defineComponent({
     console.log('obj:', obj)
     const f = function () {
       let timer = null as any
+      let flag = true
       return function () {
-        clearTimeout(timer)
+        if (!flag) {
+          return
+        }
+        flag = false
         timer = setTimeout(() => {
           log('click')
+          flag = true
         }, 2000)
       }
     }
