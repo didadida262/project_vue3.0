@@ -30,16 +30,11 @@ export default defineComponent({
     console.log('obj:', obj)
     const f = function () {
       let timer = null as any
-      let flag = true
       return function () {
-        if (!flag) {
-          return
-        }
-        flag = false
+        clearTimeout(timer)
         timer = setTimeout(() => {
-          log('click')
-          flag = true
-        }, 2000)
+          console.log('click')
+        }, 1000)
       }
     }
     const debounce = f()
