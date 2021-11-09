@@ -1,23 +1,27 @@
 <template>
-  <div class="salary">
-    <p>工资计算器</p>
-    <p>税前（元）：<a-input
-     @change="getSalary"
-     placeholder="税前收入"></a-input>
-    </p>
-    <p>五险基数（元）：<a-input
-     @change="getWuxianBase"
-     placeholder="请输入五险基数"></a-input>
-    </p>
-    <p>公积金基数（元）：<a-input
-     @change="getRoomratioBase"
-     placeholder="请输入公积金基数"></a-input>
-    </p>
-    <p>公积金比例（%）：<a-input
-     @change="getRoomratio"
-     placeholder="请输入公积金比例"></a-input>
-    </p>
-    <a-button type="primary" @click="handleSubmit" ghost>Calculate</a-button>
+    <h1>工资计算器</h1>
+    <a-form ref="formRef"
+      :model="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="calculate">
+      <a-form-item label="税前（元）" ref="salary">
+        <a-input v-model:value="form.salary" placeholder="请输入税前工资"/>
+      </a-form-item>
+      <a-form-item label="社保基数（元）">
+        <a-input v-model:value="form.sbasic" placeholder="请输入社保基数"/>
+      </a-form-item>
+      <a-form-item label="公积金基数（元）">
+        <a-input v-model:value="form.gbasic" placeholder="请输入公积金基数"/>
+      </a-form-item>
+      <a-form-item label="公积金比例">
+        <a-input v-model:value="form.gpercent" placeholder="请输入公积金比例"/>
+      </a-form-item>
+      <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+        <a-button type="primary" html-type="submit">
+          Calculate
+        </a-button>
+      </a-form-item>
+    </a-form>
+
+  <div class="result">
     <div class="data" style="margin-top:10px">
       <p>个人五险：{{ resData.personalWu}}</p>
       <p>公司五险：{{ resData.companyWu}}</p>
@@ -26,6 +30,7 @@
       <p>实际到手{{ resData.actualGetMoney}}</p>
       <p>五险一金总额{{ resData.all}}</p>
     </div>
+
   </div>
 </template>
 
@@ -36,12 +41,16 @@ import { log } from '../weapons/index'
 export default defineComponent({
   name: 'Salary',
   setup () {
-    const salary = ref(0)
-    const roomRation = ref(0)
-    const roomRationBase = ref(0)
-    const wuxianBase = ref(0)
-    const personalWuJin = [0.08, 0.02, 0.005]
-    const companyWuJin = [0.14, 0.099, 0.005, 0.015, 0.002]
+    const formRef = ref()
+    const form = reactive({
+        salary: 0,
+        sbasic: 0,
+        gbasic: 0,
+        gpercent: 0
+      })
+      // 养老保险、医疗保险、失业补助、生育、工伤
+    const spercent = [0.08, 0.02, 0.005]
+    const spercentcomp = [0.14, 0.099, 0.005, 0.015, 0.002]
     const resData = reactive({
       actualGetMoney: 0,
       tax: 0,
@@ -50,16 +59,20 @@ export default defineComponent({
       companyWu: 0,
       all: 0
     })
-    const handleSubmit = () => {
-      resData.personalWu = Number(wuxianBase.value * personalWuJin.reduce((a, b) => {
-        return a + b
-      }, 0))
-      resData.personalJin = Number(salary.value) * roomRation.value / 100
-      resData.companyWu = wuxianBase.value * companyWuJin.reduce((a, b) => {
-        return a + b
-      }, 0)
-      const ying = salary.value - resData.personalJin - resData.personalWu - 5000
-      log('ying:', ying)
+    const calculate = () => {
+      log('form', form)
+      for (const key in form) {
+        form[key].value = Number(form[key].value)
+      }
+      log('calculate.....')
+      // 个人五险缴纳
+      resData.personalWu = form.sbasic * spercent.reduce((a, b) => { return a + b })
+      resData.companyWu = form.sbasic * spercentcomp.reduce((a, b) => { return a + b })
+      // 个人、公司一金
+      resData.personalJin = form.gbasic * form.gpercent
+      // 应纳税
+      const ying = form.salary - resData.personalJin - resData.personalWu - 5000
+      log('应纳税:', ying)
       if (ying <= 3000) {
         resData.tax = ying * 0.03
       } else if (ying <= 12000) {
@@ -75,36 +88,16 @@ export default defineComponent({
       } else {
         resData.tax = ying * 0.45 - 15160
       }
-      resData.actualGetMoney = salary.value - resData.tax - resData.personalWu - resData.personalJin
+      resData.actualGetMoney = form.salary - resData.tax - resData.personalWu - resData.personalJin
       resData.all = resData.actualGetMoney + resData.personalWu + resData.personalJin * 2 + resData.companyWu
+      log('resData:', resData)
     }
-    const handleSelectChange = (e: any) => {
-      log('e:', e)
-    }
-    const getSalary = (e: any) => {
-      salary.value = e.target.value
-    }
-    const getRoomratio = (e: any) => {
-      roomRation.value = e.target.value
-    }
-    const getWuxianBase = (e: any) => {
-      wuxianBase.value = e.target.value
-    }
-    const getRoomratioBase = (e: any) => {
-      roomRationBase.value = e.target.value
-    }
+
     return {
-      salary,
-      roomRation,
-      handleSubmit,
-      handleSelectChange,
-      getSalary,
-      getRoomratio,
-      resData,
-      personalWuJin,
-      companyWuJin,
-      getWuxianBase,
-      getRoomratioBase
+      formRef,
+      form,
+      calculate,
+      resData
     }
   }
 })

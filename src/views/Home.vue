@@ -2,6 +2,7 @@
   <div class="Home">
     <p class="slogan">Fuck Every Day!</p>
     <p class="slogan">{{ world }}</p>
+    <a-button @click="test">测试</a-button>
     <!-- <img src="@/assets/desk.jpg" alt=""> -->
     <!-- <router-link class="btn btn-danger mb-3"><p>asd</p></router-link> -->
     <!-- <div><button class="btn btn-success mb-3">开启伟大时代</button>
@@ -18,12 +19,15 @@ import { commonAPI } from '../api/common'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 import router from '../router/router'
-
+import bus from './Bus'
 export default {
   setup () {
     const store = useStore()
     const world = ref('alloha')
     store.commit('handelLoading', true)
+    const test = () => {
+      bus.$emit('change', 'lalalalla')
+    }
     // commonAPI.getStart().then((res) => {
     //   world.value = JSON.stringify(res)
     //   console.log('res.data:', res)
@@ -34,7 +38,8 @@ export default {
     // })
 
     return {
-      world
+      world,
+      test
     }
   }
 
