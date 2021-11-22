@@ -61,9 +61,11 @@ export default defineComponent({
     const initMusic = () => {
       musicBox = e('audio')
       const par = document.getElementById('music') as any
-      par.appendChild(musicBox)
-      musicBox.src = 'https://link.zhihu.com/?target=http%3A//music.163.com/song/media/outer/url%3Fid%3D1880886636.mp3'
-      musicBox.play()
+      console.log('par:', par)
+      console.log('musicBox:', musicBox)
+      // par.appendChild(musicBox)
+      // musicBox.src = 'https://link.zhihu.com/?target=http%3A//music.163.com/song/media/outer/url%3Fid%3D1880886636.mp3'
+      // musicBox.play()
       log('musicBox:', musicBox)
       // addSong('诚如神之所说.mp3')
       // addSong('小姐.mp3')
