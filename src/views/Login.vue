@@ -45,15 +45,13 @@ export default defineComponent({
       console.log('提交用户信息:', result)
       commonAPI.login(result).then((res: any) => {
         console.log('反馈:', res)
-        localStorage.setItem('userInfo', JSON.stringify({
+        const userInfo = {
           ...res,
           isLogin: true
-        }))
-        console.log('-------------', JSON.stringify({
-          ...res,
-          isLogin: true
-        }))
-        store.commit('login', res)
+        }
+        localStorage.setItem('userInfo', JSON.stringify(userInfo))
+        console.log('-------------', userInfo)
+        store.commit('login', userInfo)
         router.push('/')
       })
     }

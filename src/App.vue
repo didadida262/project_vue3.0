@@ -2,10 +2,10 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
   <div class="app">
-    <!-- <div class="login" v-if="!isLogin">
+    <div class="login" v-if="!isLogin">
       <router-view></router-view>
-    </div> -->
-    <div class="webpage">
+    </div>
+    <div class="webpage" v-else>
     <!-- 头部 -->
       <global-header
         :user="user">

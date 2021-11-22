@@ -19,7 +19,10 @@ const store = createStore({
     },
 
     login (state, userInfo) {
-      state.user.userName = userInfo.userName
+      state.user = {
+        ...state.user,
+        ...userInfo
+      }
       state.user.isLogin = true
     },
     loginOut (state) {
