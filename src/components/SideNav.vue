@@ -41,6 +41,9 @@
       <a-menu-item key="music">
           <span>Music</span>
       </a-menu-item>
+      <a-menu-item key="echart">
+          <span>Echarts</span>
+      </a-menu-item>
     </a-menu>
   </div>
 </template>
