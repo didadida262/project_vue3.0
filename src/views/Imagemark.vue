@@ -20,7 +20,6 @@ interface Point {
   x: number;
   y: number;
 }
-// import { commonAPI } from '../api/common'
 interface DataProps {
   count: number;
   double: number;

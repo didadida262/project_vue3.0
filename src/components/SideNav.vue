@@ -2,7 +2,7 @@
   <div class="SideNav">
     <a-menu
       style="width: 256px"
-      :default-selected-keys="['1']"
+      :defaultSelectedKeys="['home']"
       mode="inline"
       @click="handleClick"
     >
@@ -56,7 +56,6 @@ export default defineComponent({
   name: 'SideNav',
   setup () {
     const handleClick = (e: any) => {
-      // const label = (e.target as HTMLElement).getAttribute('label')
       log('e:', e)
       router.push(`/${e.key}`)
     }
@@ -76,11 +75,4 @@ export default defineComponent({
 </script>
 
 <style>
-  .SideNav {
-    /* width: 190px; */
-    /* height: 80vh; */
-    border: 1px solid gainsboro;
-    border-bottom: 0px;
-    margin-right: 10px;
-  }
 </style>

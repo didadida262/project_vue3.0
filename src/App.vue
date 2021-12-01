@@ -80,13 +80,13 @@ export default defineComponent({
       window.addEventListener('resize', () => {
         console.log('窗口变化')
         const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
-        middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight + 'px'
+        middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight - 10 + 'px'
       })
     }
     autoHeight()
     onMounted(() => {
       const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
-      middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight + 'px'
+      middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight - 10 + 'px'
     })
 
     return {

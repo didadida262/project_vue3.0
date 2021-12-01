@@ -18,7 +18,7 @@
 import { getStart } from '../api/common'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
-import router from '../router/router'
+// import router from '../router/router'
 import bus from './Bus'
 export default {
   setup () {
@@ -45,7 +45,7 @@ export default {
 
 <style>
   .Home {
-    height: 60vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

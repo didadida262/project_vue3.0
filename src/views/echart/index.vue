@@ -17,7 +17,6 @@ interface SelectProtected {
     readonly wrapperElement: HTMLDivElement;
     readonly videoElement: HTMLVideoElement;
 }
-// import { commonAPI } from '../api/common'
 interface DataProps {
   count: number;
   double: number;

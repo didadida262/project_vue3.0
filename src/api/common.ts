@@ -6,9 +6,9 @@ export const getStart = () =>
     method: 'get'
   })
 
-export const login = (data: any) =>
+export const login = (data: object) =>
   axios({
-    url: '/login',
+    url: '/signIn',
     method: 'post',
     data: data
   })

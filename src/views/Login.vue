@@ -43,7 +43,7 @@ export default defineComponent({
     ]
     const getData = (result: object) => {
       console.log('提交用户信息:', result)
-      login(result).then((res: any) => {
+      login(result).then((res: object) => {
         console.log('反馈:', res)
         const userInfo = {
           ...res,

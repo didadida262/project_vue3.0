@@ -43,8 +43,6 @@ import { useStore } from 'vuex'
 // import { useStore } from '@/vuex/index'
 import { log, e } from '../weapons/index'
 
-// import { commonAPI } from '../api/common'
-
 export default defineComponent({
   name: 'Music',
   setup () {
