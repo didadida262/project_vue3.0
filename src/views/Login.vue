@@ -26,7 +26,7 @@ import ValidateInput, { RuleProps } from '../components/ValidateInput.vue'
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 import router from '../router/router'
-import { commonAPI } from '../api/common'
+import { login } from '../api/common'
 
 export default defineComponent({
   name: 'Login',
@@ -43,7 +43,7 @@ export default defineComponent({
     ]
     const getData = (result: object) => {
       console.log('提交用户信息:', result)
-      commonAPI.login(result).then((res: any) => {
+      login(result).then((res: any) => {
         console.log('反馈:', res)
         const userInfo = {
           ...res,

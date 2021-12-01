@@ -1,27 +1,20 @@
-import axios from 'axios'
-import { Root } from '../url/url'
+import axios from '@/api/axios'
 
-const service = axios.create({
-  baseURL: Root,
-  timeout: 1000
-})
-const commonAPI = {
-  getStart () {
-    return service.get('/word')
-  },
-  login (userInfo: object) {
-    return service.post('/signIn', userInfo)
-  },
-  getUser () {
-    return service.get('/users')
-  }
-}
+export const getStart = () =>
+  axios({
+    url: '/word',
+    method: 'get'
+  })
 
-service.interceptors.response.use((res) => {
-  if (res.status === 200) {
-    const resData = res.data
-    return resData
-  }
-})
+export const login = (data: any) =>
+  axios({
+    url: '/login',
+    method: 'post',
+    data: data
+  })
 
-export { commonAPI }
+export const getUser = () =>
+  axios({
+    url: '/users',
+    method: 'get'
+  })

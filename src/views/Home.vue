@@ -15,7 +15,7 @@
 </template>
 
 <script lang='ts'>
-import { commonAPI } from '../api/common'
+import { getStart } from '../api/common'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 import router from '../router/router'
@@ -28,14 +28,11 @@ export default {
     const test = () => {
       bus.$emit('change', 'lalalalla')
     }
-    commonAPI.getStart().then((res) => {
+    getStart().then((res) => {
       console.log('res:', res)
       world.value = JSON.stringify(res)
       store.commit('handelLoading', false)
     })
-    // commonAPI.getUser().then((res) => {
-    //   console.log('user:', res)
-    // })
 
     return {
       world,

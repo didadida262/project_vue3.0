@@ -58,7 +58,6 @@ interface SelectProtected {
     readonly wrapperElement: HTMLDivElement;
     readonly videoElement: HTMLVideoElement;
 }
-// import { commonAPI } from '../api/common'
 interface DataProps {
   count: number;
   double: number;
@@ -99,7 +98,7 @@ export default defineComponent({
     height: 5px;
     background: red;
     border-radius: 50%;
-    animation: first 0.3s linear infinite;
+    animation: first 1.3s linear infinite;
   }
   .box2 {
       animation-delay: -1.1s;
