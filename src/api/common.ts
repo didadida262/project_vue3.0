@@ -3,7 +3,7 @@ import { Root } from '../url/url'
 
 const service = axios.create({
   baseURL: Root,
-  timeout: 5000
+  timeout: 1000
 })
 const commonAPI = {
   getStart () {

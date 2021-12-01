@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-dark bg-primary justify-content-between mb-4 px-4">
+    <nav class="navbar navbar-dark bg-primary justify-content-between px-4">
         <router-link to="/" class="navbar-brand">
           爸爸的地盘
         </router-link>
@@ -41,12 +41,6 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const handleHeight = () => {
-      // const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
-      console.log('document.documentElement.clientHeight:', document.documentElement.clientHeight)
-      console.log('document.body.clientHeight:', document.body.clientHeight)
-    }
-    handleHeight()
     const store = useStore()
     let name = ''
     for (let i = 0; i < props.user.userName?.length; i++) {

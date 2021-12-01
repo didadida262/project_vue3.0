@@ -7,15 +7,15 @@
     </div> -->
     <div class="webpage">
     <!-- 头部 -->
-      <global-header
-        :user="user">
-      </global-header>
+      <div ref="headerRef">
+        <global-header :user="user"></global-header>
+      </div>
       <!-- <loader
         v-if="loading"
         text="死命加载中....">
       </loader> -->
       <!-- 内容 -->
-      <div class="middle">
+      <div class="middle" ref="middleRef">
         <div class="sidenav">
           <side-nav></side-nav>
         </div>
@@ -26,8 +26,7 @@
       <!-- 专栏卡片 -->
       <!-- <column-list :list="list"></column-list> -->
       <!-- 尾部 -->
-      <footer
-        class="text-center py-4 text-secondary bg-light mt-6">
+      <footer class="text-center py-4 text-secondary bg-light mt-6 footer" ref="footerRef">
         <small>
           <ul class="list-inline mb-0">
             <li class="list-inline-item">Didi</li>
@@ -43,7 +42,7 @@
 
 <script lang="ts">
 // import HelloWorld from './components/HelloWorld.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader from './components/GlobalHeader.vue'
@@ -73,6 +72,23 @@ export default defineComponent({
     // const user = JSON.parse(localStorage.userInfo)
     // const user = localStorage.userInfo
     const user = { userName: 'hhvcg', userPd: '11a' }
+    const headerRef = ref<null | HTMLElement>(null)
+    const middleRef = ref<null | HTMLElement>(null)
+    const footerRef = ref<null | HTMLElement>(null)
+    const autoHeight = () => {
+      // 中间内容显示区域高度自适应
+      window.addEventListener('resize', () => {
+        console.log('窗口变化')
+        const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
+        middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight + 'px'
+      })
+    }
+    autoHeight()
+    onMounted(() => {
+      const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
+      middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight + 'px'
+    })
+
     return {
       inputRef,
       store,
@@ -80,7 +96,11 @@ export default defineComponent({
       isLogin,
       route,
       user,
-      flag
+      flag,
+      autoHeight,
+      headerRef,
+      middleRef,
+      footerRef
     }
   }
 })
