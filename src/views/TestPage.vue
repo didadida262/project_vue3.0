@@ -44,6 +44,7 @@
       Region: East China 1<br />
     </a-descriptions-item>
   </a-descriptions>
+  <div class="box1"></div>
   </div>
 </template>
 
@@ -93,5 +94,31 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .box1 {
+    width: 5px;
+    height: 5px;
+    background: red;
+    border-radius: 50%;
+    animation: first 0.3s linear infinite;
+  }
+  .box2 {
+      animation-delay: -1.1s;
+  }
+  .box3 {
+    animation-delay: -.9s
+  }
+  @keyframes first {
+      0% {
+          transform: scale(1.0);
+      }
+      60% {
+          transform: scale(1.3);
+          opacity: 0.5;
+      }
+      100% {
+          transform: scale(1);
+          opacity: 1;
+      }
+  }
 
 </style>
