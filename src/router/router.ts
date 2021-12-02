@@ -1,6 +1,7 @@
 import store from '@/store/store'
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import index from '../views/index.vue'
 import Login from '../views/Login.vue'
 import SideNav from '../components/SideNav.vue'
 import BeautifulNewWorld from '../views/BeautifulNewWorld.vue'
@@ -22,106 +23,93 @@ const router = createRouter({
   history: routerHitory,
   routes: [
     {
-      path: '/',
-      redirect: '/home'
-    },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login
     },
-    // {
-    //   path: '/sidenav',
-    //   name: 'SideNav',
-    //   component: SideNav,
-    //   meta: { requiredLogin: true }
-    //   // 元信息，用于权限管理
-    // },
-    // {
-    //   path: '/bnw',
-    //   name: 'beautifulnewworld',
-    //   component: BeautifulNewWorld
-    // },
     {
-      path: '/diary',
-      name: 'Diary',
-      component: Diary
-    },
-    {
-      path: '/video',
-      name: 'Video',
-      component: Video
-    },
-    {
-      path: '/game',
-      name: 'Game',
-      component: Game,
+      path: '/',
+      name: 'index',
+      component: index,
       children: [
         {
-          path: 'steam',
-          name: 'Steam',
-          component: Steam
+          path: '/home',
+          name: 'Home',
+          component: Home
         },
         {
-          path: 'zombie',
-          name: 'Zombie',
-          component: Zombie
+          path: '/diary',
+          name: 'Diary',
+          component: Diary
+        },
+        {
+          path: '/video',
+          name: 'Video',
+          component: Video
+        },
+        {
+          path: '/game',
+          name: 'Game',
+          component: Game,
+          children: [
+            {
+              path: 'steam',
+              name: 'Steam',
+              component: Steam
+            },
+            {
+              path: 'zombie',
+              name: 'Zombie',
+              component: Zombie
+            }
+          ]
+        },
+        {
+          path: '/testpage',
+          name: 'Testpage',
+          component: TestPage
+        },
+        {
+          path: '/imgmark',
+          name: 'Imagemark',
+          component: Imagemark
+        },
+        {
+          path: '/salary',
+          name: 'Salary',
+          component: Salary
+        },
+        {
+          path: '/map',
+          name: 'Map',
+          component: Map
+        },
+        {
+          path: '/threejs',
+          name: 'Threejs',
+          component: Threejs
+        },
+        {
+          path: '/music',
+          name: 'Music',
+          component: Music
+        },
+        {
+          path: '/echart',
+          name: 'Echart',
+          component: Echart
         }
       ]
-    },
-    {
-      path: '/testpage',
-      name: 'Testpage',
-      component: TestPage
-    },
-    {
-      path: '/imgmark',
-      name: 'Imagemark',
-      component: Imagemark
-    }, {
-      path: '/salary',
-      name: 'Salary',
-      component: Salary
-    }, {
-      path: '/map',
-      name: 'Map',
-      component: Map
-    },
-    {
-      path: '/threejs',
-      name: 'Threejs',
-      component: Threejs
-    },
-    {
-      path: '/music',
-      name: 'Music',
-      component: Music
-    },
-    {
-      path: '/echart',
-      name: 'Echart',
-      component: Echart
     }
   ]
 })
-
-// router.beforeEach((to, from, next) => {
-//   log('router:to', to)
-//   log('router:from', from)
-//   const userInfo = localStorage.userInfo
-//   if (to.name !== 'Login' && userInfo === '{}') {
-//     next({ path: '/login' })
-//   } else {
-//     if (userInfo !== '{}') {
-//       store.commit('login', userInfo)
-//     }
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  log('router:to', to)
+  log('router:from', from)
+  next()
+  // if (to.path === '/path') {
+  //   next()
+  // }
+})
 
 export default router

@@ -46,13 +46,12 @@ export default defineComponent({
       login(result).then((res: object) => {
         console.log('反馈:', res)
         const userInfo = {
-          ...res,
-          isLogin: true
+          ...res
         }
-        localStorage.setItem('userInfo', JSON.stringify(userInfo))
-        console.log('-------------', userInfo)
-        store.commit('login', userInfo)
-        router.push('/')
+        window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
+        // console.log('-------------', userInfo)
+        // store.commit('login', userInfo)
+        // router.push('/')
       })
     }
     return {
@@ -74,6 +73,5 @@ export default defineComponent({
   align-items: center;
   width: 100%;
   height: 100vh;
-  margin-top: 50px;
 }
 </style>

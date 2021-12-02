@@ -2,7 +2,7 @@
   <div class="SideNav">
     <a-menu
       style="width: 256px"
-      :defaultSelectedKeys="['home']"
+      :default-selected-keys="current"
       mode="inline"
       @click="handleClick"
     >
@@ -55,9 +55,14 @@ import { log } from '../weapons/index'
 export default defineComponent({
   name: 'SideNav',
   setup () {
+    const current = ['home']
     const handleClick = (e: any) => {
-      log('e:', e)
-      router.push(`/${e.key}`)
+    // const target = router.currentRoute.value.path
+    // current.pop()
+    // current.push(target)
+    // console.log('ta', target)
+    // current = target.substr(0)
+    router.push(`/${e.key}`)
     }
     const dropdown = (e: any) => {
       log('============', e)
@@ -68,7 +73,8 @@ export default defineComponent({
     return {
       handleClick,
       dropdown,
-      titleClick
+      titleClick,
+      current
     }
   }
 })
