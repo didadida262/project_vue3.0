@@ -45,13 +45,13 @@ export default defineComponent({
       console.log('提交用户信息:', result)
       login(result).then((res: object) => {
         console.log('反馈:', res)
-        const userInfo = {
-          ...res
-        }
-        window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
+        // const userInfo = {
+        //   ...res
+        // }
+        window.sessionStorage.setItem('token', JSON.stringify(res))
         // console.log('-------------', userInfo)
         // store.commit('login', userInfo)
-        // router.push('/')
+        router.push('/home')
       })
     }
     return {
