@@ -6,7 +6,7 @@
     @finishFailed="handleFinishFailed"
   >
     <a-form-item>
-      <a-input v-model:value="formState.user" placeholder="Username">
+      <a-input v-model:value="formState.name" placeholder="Username">
         <template #prefix><UserOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
       </a-input>
     </a-form-item>
@@ -20,7 +20,7 @@
         @click="subMit"
         type="primary"
         html-type="submit"
-        :disabled="formState.user === '' || formState.password === ''"
+        :disabled="formState.name === '' || formState.password === ''"
       >
         Log in
       </a-button>
@@ -42,7 +42,6 @@
         </validate-input>
       </div>
     </validate-form> -->
-
   </div>
 </template>
 
@@ -78,29 +77,21 @@ export default defineComponent({
     const handleFinishFailed: FormProps['onFinishFailed'] = errors => {
       console.log('handleFinishFailed', errors)
     }
-    const store = useStore()
-    const user = computed(() => store.state.user)
-    // const emailRules: RuleProps = [
-    //   { type: 'required', message: '不能为空' },
-    //   { type: 'email', message: '输入有效邮箱' }
-    // ]
     const subMit = () => {
-      console.log('提交用户信息:', formState)
-      // login(result).then((res: object) => {
-      //   console.log('反馈:', res)
-      //   // const userInfo = {
-      //   //   ...res
-      //   // }
-      //   window.sessionStorage.setItem('token', JSON.stringify(res))
-      //   // console.log('-------------', userInfo)
-      //   // store.commit('login', userInfo)
-      //   router.push('/home')
-      // })
+      console.log('提交用户信息:', formState.name)
+      const params = {
+        name: formState.name,
+        password: formState.password
+      }
+      login(params).then((res: object) => {
+        console.log('反馈:', res)
+        window.sessionStorage.setItem('token', JSON.stringify(res))
+        router.push('/home')
+      })
     }
     return {
       formState,
       subMit,
-      user,
       handleFinish,
       handleFinishFailed
     }
