@@ -1,6 +1,32 @@
 <template>
   <div class="Login">
-    <validate-form @form-submit="getData">
+  <a-form
+    :model="formState"
+    @finish="handleFinish"
+    @finishFailed="handleFinishFailed"
+  >
+    <a-form-item>
+      <a-input v-model:value="formState.user" placeholder="Username">
+        <template #prefix><UserOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-input v-model:value="formState.password" type="password" placeholder="Password">
+        <template #prefix><LockOutlined style="color: rgba(0, 0, 0, 0.25)" /></template>
+      </a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-button
+        @click="subMit"
+        type="primary"
+        html-type="submit"
+        :disabled="formState.user === '' || formState.password === ''"
+      >
+        Log in
+      </a-button>
+    </a-form-item>
+  </a-form>
+    <!-- <validate-form @form-submit="getData">
       <div class="mb-3">
         <validate-input
           :rules="emailRules"
@@ -15,51 +41,68 @@
         >
         </validate-input>
       </div>
-    </validate-form>
+    </validate-form> -->
+
   </div>
 </template>
 
 <script lang='ts'>
 
-import ValidateForm from '../components/validateForm.vue'
-import ValidateInput, { RuleProps } from '../components/ValidateInput.vue'
-import { defineComponent, computed } from 'vue'
+// import ValidateForm from '../components/validateForm.vue'
+// import ValidateInput, { RuleProps } from '../components/ValidateInput.vue'
+import { defineComponent, computed, reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 import router from '../router/router'
 import { login } from '../api/common'
-
+import type { UnwrapRef } from 'vue'
+import type { FormProps } from 'ant-design-vue'
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+interface FormState {
+  name: string;
+  password: string;
+}
 export default defineComponent({
-  name: 'Login',
   components: {
-    ValidateForm,
-    ValidateInput
+    UserOutlined,
+    LockOutlined
   },
+  name: 'Login',
   setup () {
+    const formState: UnwrapRef<FormState> = reactive({
+      name: '',
+      password: ''
+    })
+    const handleFinish: FormProps['onFinish'] = values => {
+      console.log('handleFinish-->', values, formState)
+    }
+    const handleFinishFailed: FormProps['onFinishFailed'] = errors => {
+      console.log('handleFinishFailed', errors)
+    }
     const store = useStore()
     const user = computed(() => store.state.user)
-    const emailRules: RuleProps = [
-      { type: 'required', message: '不能为空' },
-      { type: 'email', message: '输入有效邮箱' }
-    ]
-    const getData = (result: object) => {
-      console.log('提交用户信息:', result)
-      login(result).then((res: object) => {
-        console.log('反馈:', res)
-        // const userInfo = {
-        //   ...res
-        // }
-        window.sessionStorage.setItem('token', JSON.stringify(res))
-        // console.log('-------------', userInfo)
-        // store.commit('login', userInfo)
-        router.push('/home')
-      })
+    // const emailRules: RuleProps = [
+    //   { type: 'required', message: '不能为空' },
+    //   { type: 'email', message: '输入有效邮箱' }
+    // ]
+    const subMit = () => {
+      console.log('提交用户信息:', formState)
+      // login(result).then((res: object) => {
+      //   console.log('反馈:', res)
+      //   // const userInfo = {
+      //   //   ...res
+      //   // }
+      //   window.sessionStorage.setItem('token', JSON.stringify(res))
+      //   // console.log('-------------', userInfo)
+      //   // store.commit('login', userInfo)
+      //   router.push('/home')
+      // })
     }
     return {
-      ValidateForm,
-      ValidateInput,
-      getData,
-      emailRules,
-      user
+      formState,
+      subMit,
+      user,
+      handleFinish,
+      handleFinishFailed
     }
   }
 })
