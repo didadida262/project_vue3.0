@@ -1,9 +1,11 @@
 <template>
   <div class="Home">
-    <p class="slogan">Fuck Every Day!</p>
-    <p class="slogan">{{ world }}</p>
-    <a-button @click="test">测试</a-button>
-    <img :src="imgUrl" alt="">
+    <div>
+      <span class="slogan">Fuck Every Day!</span>
+      <span class="slogan">{{ world }}</span>
+    </div>
+    <!-- <a-button @click="test">测试</a-button> -->
+    <div class="img-st"><img :src="imgUrl" alt=""></div>
     <!-- <span>{{imgUrl}}</span> -->
     <!-- <router-link class="btn btn-danger mb-3"><p>asd</p></router-link> -->
     <!-- <div><button class="btn btn-success mb-3">开启伟大时代</button>
@@ -49,7 +51,7 @@ export default {
       let url = 'data:image/jpeg;base64,'
       url = url + _arrayBufferToBase64(res)
       imgUrl.value = url
-      console.log('tupian2-->:', imgUrl)
+      console.log('tupian2-->:', imgUrl.value)
     })
     return {
       world,
@@ -68,13 +70,18 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-image: url('../assets/desk.jpg'); */
   }
   .slogan {
     color:lightcoral;
     font-size: 30px;
+    display: block;
   }
   .audio {
     z-index: -100;
+  }
+  .img-st {
+    position: absolute;
+    top: 100px;
+    z-index: -1;
   }
 </style>
