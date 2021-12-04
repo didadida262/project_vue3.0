@@ -18,6 +18,7 @@ import Threejs from '../views/Threejs.vue'
 import Echart from '../views/echart/index.vue'
 import Music from '../views/Music.vue'
 import { log } from '../weapons/index'
+import Notfound from '../views/Notfound.vue'
 const routerHitory = createWebHistory()
 const router = createRouter({
   history: routerHitory,
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: Notfound
     },
     {
       path: '/',

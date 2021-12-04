@@ -6,6 +6,13 @@ export const getStart = () =>
     method: 'get'
   })
 
+export const getImg = () =>
+  axios({
+    url: '/img',
+    method: 'get',
+    responseType: 'arraybuffer'
+  })
+
 export const login = (data: object) =>
   axios({
     url: '/signIn',

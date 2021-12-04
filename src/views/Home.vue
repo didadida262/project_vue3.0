@@ -3,7 +3,8 @@
     <p class="slogan">Fuck Every Day!</p>
     <p class="slogan">{{ world }}</p>
     <a-button @click="test">测试</a-button>
-    <!-- <img src="@/assets/desk.jpg" alt=""> -->
+    <img :src="imgUrl" alt="">
+    <!-- <span>{{imgUrl}}</span> -->
     <!-- <router-link class="btn btn-danger mb-3"><p>asd</p></router-link> -->
     <!-- <div><button class="btn btn-success mb-3">开启伟大时代</button>
     </div> -->
@@ -15,7 +16,7 @@
 </template>
 
 <script lang='ts'>
-import { getStart } from '../api/common'
+import { getStart, getImg } from '../api/common'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 // import router from '../router/router'
@@ -24,6 +25,7 @@ export default {
   setup () {
     const store = useStore()
     const world = ref('')
+    const imgUrl = ref('')
     store.commit('handelLoading', true)
     const test = () => {
       bus.$emit('change', 'lalalalla')
@@ -33,10 +35,26 @@ export default {
       world.value = JSON.stringify(res)
       store.commit('handelLoading', false)
     })
-
+    const _arrayBufferToBase64 = (buffer: any) => {
+        let binary = ''
+        const bytes = new Uint8Array(buffer)
+        const len = bytes.byteLength
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i])
+        }
+        return window.btoa(binary)
+    }
+    getImg().then((res) => {
+      console.log('tupian1-->:', res)
+      let url = 'data:image/jpeg;base64,'
+      url = url + _arrayBufferToBase64(res)
+      imgUrl.value = url
+      console.log('tupian2-->:', imgUrl)
+    })
     return {
       world,
-      test
+      test,
+      imgUrl
     }
   }
 
@@ -50,7 +68,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('../assets/desk.jpg');
+    /* background-image: url('../assets/desk.jpg'); */
   }
   .slogan {
     color:lightcoral;
