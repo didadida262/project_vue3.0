@@ -45,6 +45,22 @@
     </a-descriptions-item>
   </a-descriptions>
   <div class="box1"></div>
+  <a-upload
+    v-model:file-list="fileList"
+    name="file"
+    :multiple="true"
+    :customRequest="upload"
+    headers="'Content-Type': 'multipart/form-data'"
+    @change="handleChange"
+  >
+    <a-button>
+      <upload-outlined></upload-outlined>
+      Click to Upload
+    </a-button>
+  </a-upload>
+  <a href="" @click="test">预览</a>
+  <a :href="imgurl" target="_blank" download>下载</a>
+  {{imgurl}}
   </div>
 </template>
 
@@ -54,9 +70,26 @@ import { useStore } from 'vuex'
 // import { useStore } from '@/vuex/index'
 import { log, change } from '../weapons/index'
 import bus from './Bus'
+import { message } from 'ant-design-vue'
+import { UploadOutlined } from '@ant-design/icons-vue'
+import { uploadFile, getImg } from '@/api/common'
+import { _arrayBufferToBase64 } from '@/utils/utils'
+
 interface SelectProtected {
     readonly wrapperElement: HTMLDivElement;
     readonly videoElement: HTMLVideoElement;
+}
+interface FileItem {
+  uid: string;
+  name?: string;
+  status?: string;
+  response?: string;
+  url?: string;
+}
+
+interface FileInfo {
+  file: FileItem;
+  fileList: FileItem[];
 }
 interface DataProps {
   count: number;
@@ -66,6 +99,8 @@ interface DataProps {
 export default defineComponent({
   name: 'TestPage',
   setup () {
+    const imgurl = ref('')
+    const fileList = ref([])
     bus.$on('change', (data: any) => {
       alert(data)
     })
@@ -83,9 +118,45 @@ export default defineComponent({
         }, 1000)
       }
     }
+    const handleChange = (info: FileInfo) => {
+      if (info.file.status !== 'uploading') {
+        console.log('uploading', info.file, info.fileList)
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`)
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`)
+      }
+    }
     const debounce = f()
+    const test = () => {
+      console.log('imgurl.value:', imgurl.value)
+      window.location.href = imgurl.value
+    }
+    const upload = (file: any) => {
+      const params = new FormData()
+      console.log('file1:', file)
+      params.append('file', file.file)
+      console.log('file--->:', params.get('file'))
+      uploadFile(params).then((res) => {
+        // message.success(`${res}`)
+        getImg().then((res) => {
+          console.log('tupian1-->:', res)
+          let url = 'data:image/jpeg;base64,'
+          url = url + _arrayBufferToBase64(res)
+          console.log('tupian2-->:', url)
+          imgurl.value = url
+          console.log('tupian3-->', imgurl)
+        })
+      })
+    }
     return {
-      debounce
+      debounce,
+      fileList,
+      handleChange,
+      upload,
+      imgurl,
+      test
     }
   }
 })

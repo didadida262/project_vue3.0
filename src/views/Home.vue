@@ -6,10 +6,6 @@
     </div>
     <!-- <a-button @click="test">测试</a-button> -->
     <div class="img-st"><img :src="imgUrl" alt=""></div>
-    <!-- <span>{{imgUrl}}</span> -->
-    <!-- <router-link class="btn btn-danger mb-3"><p>asd</p></router-link> -->
-    <!-- <div><button class="btn btn-success mb-3">开启伟大时代</button>
-    </div> -->
     <!-- <audio
      class="audio"
      loop
@@ -18,9 +14,10 @@
 </template>
 
 <script lang='ts'>
-import { getStart, getImg } from '../api/common'
+import { getStart, getImg } from '@/api/common'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
+import { _arrayBufferToBase64 } from '@/utils/utils'
 // import router from '../router/router'
 import bus from './Bus'
 export default {
@@ -37,15 +34,7 @@ export default {
       world.value = JSON.stringify(res)
       store.commit('handelLoading', false)
     })
-    const _arrayBufferToBase64 = (buffer: any) => {
-        let binary = ''
-        const bytes = new Uint8Array(buffer)
-        const len = bytes.byteLength
-        for (let i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i])
-        }
-        return window.btoa(binary)
-    }
+
     getImg().then((res) => {
       console.log('tupian1-->:', res)
       let url = 'data:image/jpeg;base64,'

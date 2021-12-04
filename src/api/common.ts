@@ -25,3 +25,10 @@ export const getUser = () =>
     url: '/users',
     method: 'get'
   })
+
+export const uploadFile = (file: any) =>
+  axios({
+    url: '/upload',
+    method: 'post',
+    data: file
+  })
