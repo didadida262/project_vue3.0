@@ -13,6 +13,12 @@ export const getImg = () =>
     responseType: 'arraybuffer'
   })
 
+export const getMusic = () =>
+  axios({
+    url: '/music',
+    method: 'get',
+    responseType: 'arraybuffer'
+  })
 export const login = (data: object) =>
   axios({
     url: '/signIn',

@@ -6,15 +6,15 @@
     </div>
     <!-- <a-button @click="test">测试</a-button> -->
     <div class="img-st"><img :src="imgUrl" alt=""></div>
-    <!-- <audio
+    <audio
      class="audio"
      loop
-     src="http://m701.music.126.net/20210801215212/9d301aa15bf872a60b6368f95ee97d77/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/4119874/37c3/0ce7/b90f/b0b4023a3e684f20c33046c5aa329851.mp3" controls="controls" autoplay></audio> -->
+     :src="audioUrl" controls="controls" autoplay></audio>
   </div>
 </template>
 
 <script lang='ts'>
-import { getStart, getImg } from '@/api/common'
+import { getStart, getImg, getMusic } from '@/api/common'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 import { _arrayBufferToBase64 } from '@/utils/utils'
@@ -24,6 +24,7 @@ export default {
   setup () {
     const store = useStore()
     const world = ref('')
+    const audioUrl = ref('')
     const imgUrl = ref('')
     store.commit('handelLoading', true)
     const test = () => {
@@ -36,16 +37,22 @@ export default {
     })
 
     getImg().then((res) => {
-      console.log('tupian1-->:', res)
       let url = 'data:image/jpeg;base64,'
       url = url + _arrayBufferToBase64(res)
       imgUrl.value = url
-      console.log('tupian2-->:', imgUrl.value)
+    })
+    getMusic().then((res) => {
+      console.log('music:', res)
+      let url = 'data:audio/mp3;base64,'
+      url = url + _arrayBufferToBase64(res)
+      console.log('url:', url)
+      audioUrl.value = url
     })
     return {
       world,
       test,
-      imgUrl
+      imgUrl,
+      audioUrl
     }
   }
 
