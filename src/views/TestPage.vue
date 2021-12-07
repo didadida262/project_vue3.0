@@ -103,6 +103,7 @@ export default defineComponent({
     const fileList = ref([])
     bus.$on('change', (data: any) => {
       alert(data)
+      console.log('接受到了变化')
     })
     const obj = {
       name: 'hhvcg'

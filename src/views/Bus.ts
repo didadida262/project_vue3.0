@@ -5,8 +5,6 @@ class Bus {
     }
 
     $emit (name: string, data?: any) {
-        console.log('jin')
-        console.log(this.lists)
         if (this.lists[name]) {
             this.lists[name].forEach(fn => {
                 fn(data)

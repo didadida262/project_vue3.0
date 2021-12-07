@@ -694,16 +694,16 @@
     // xml.send()
 
 
-    const a = [1,8,6,2,5,4,8,3,7]
-    const f = (arr) => {
-      let max = -Infinity
-      for (let i =0; i < arr.length - 1; i++) {
-        for (let j = i + 1; j < arr.length; j++) {
-          if (max < (j - i) * Math.min(arr[i], arr[j])) {
-            max = (j - i) * Math.min(arr[i], arr[j])
-          }
-        }
+    const Parent = function(name, age) {
+        this.name = name
+        this.age = age
       }
-      return max
-    }
-    console.log(f(a))
+  
+      const myNew = function (...args) {
+          const obj = Object.create(args[0].prototype)
+          const res = args[0].call(obj, ...args.splice(1))
+          return obj
+      }
+      const child = new Parent('alice', 12)
+      const child2 = myNew(Parent, 'alice', 12)
+      console.log('obj:', child2)

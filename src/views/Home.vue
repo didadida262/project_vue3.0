@@ -4,7 +4,7 @@
       <span class="slogan">Fuck Every Day!</span>
       <span class="slogan">{{ world }}</span>
     </div>
-    <!-- <a-button @click="test">测试</a-button> -->
+    <a-button @click="test">测试</a-button>
     <div class="img-st"><img :src="imgUrl" alt=""></div>
     <audio
      class="audio"
