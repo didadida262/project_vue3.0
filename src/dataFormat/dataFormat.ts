@@ -18,7 +18,6 @@ export interface ColumnProps {
 
 // 用户信息
 export interface UserProps {
-  id?: number;
+  userPd: string;
   userName: string;
-  isLogin: boolean;
 }

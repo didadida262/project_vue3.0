@@ -11,7 +11,7 @@
           </li>
           <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">注册</a></li>
         </ul> -->
-        <drop-down :title="`Hello,${name}`">
+        <drop-down :title="`Hello,${user.userName}`">
           <drop-item><a href="#" class="dropdown-item">新建文章</a></drop-item>
           <drop-item disabled><a href="#" class="dropdown-item">编辑资料</a></drop-item>
           <drop-item><a href="#" class="dropdown-item" @click="quit">退出登录</a></drop-item>
@@ -41,15 +41,11 @@ export default defineComponent({
     }
   },
   setup (props) {
+    console.log('globak-------->:', props.user)
     const store = useStore()
-    let name = ''
-    for (let i = 0; i < props.user.userName?.length; i++) {
-      if (props.user.userName[i] !== '@') {
-        name = name + props.user.userName[i]
-      } else {
-        break
-      }
-    }
+    // const name = props.user.userName
+    // eslint-disable-next-line vue/no-setup-props-destructure
+    const { user } = props
     const quit = () => {
       store.commit('loginOut')
       localStorage.userInfo = JSON.stringify({})
@@ -58,8 +54,7 @@ export default defineComponent({
 
     return {
       quit,
-      store,
-      name
+      store
     }
   }
 })

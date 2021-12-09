@@ -78,14 +78,15 @@ export default defineComponent({
       console.log('handleFinishFailed', errors)
     }
     const subMit = () => {
-      console.log('提交用户信息:', formState.name)
       const params = {
-        name: formState.name,
-        password: formState.password
+        userName: formState.name,
+        userPd: formState.password
       }
-      login(params).then((res: object) => {
+      console.log('提交用户信息:', params)
+      login(params).then((res: any) => {
         console.log('反馈:', res)
-        window.sessionStorage.setItem('token', JSON.stringify(res))
+        window.sessionStorage.setItem('token', res.token)
+        window.sessionStorage.setItem('userInfo', JSON.stringify(res.userInfo))
         router.push('/home')
       })
     }

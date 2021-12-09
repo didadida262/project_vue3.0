@@ -4,7 +4,6 @@
       <span class="slogan">Fuck Every Day!</span>
       <span class="slogan">{{ world }}</span>
     </div>
-    <a-button @click="test">测试</a-button>
     <div class="img-st"><img :src="imgUrl" alt=""></div>
     <audio
      class="audio"
@@ -27,22 +26,16 @@ export default {
     const audioUrl = ref('')
     const imgUrl = ref('')
     store.commit('handelLoading', true)
-    const test = () => {
-      bus.$emit('change', 'lalalalla')
-    }
-    getStart().then((res) => {
-      console.log('res:', res)
-      world.value = JSON.stringify(res)
+    getStart().then((res: any) => {
+      world.value = res.words
       store.commit('handelLoading', false)
     })
-
     getImg().then((res) => {
       let url = 'data:image/jpeg;base64,'
       url = url + _arrayBufferToBase64(res)
       imgUrl.value = url
     })
     getMusic().then((res) => {
-      console.log('music:', res)
       let url = 'data:audio/mp3;base64,'
       url = url + _arrayBufferToBase64(res)
       console.log('url:', url)
@@ -50,7 +43,6 @@ export default {
     })
     return {
       world,
-      test,
       imgUrl,
       audioUrl
     }

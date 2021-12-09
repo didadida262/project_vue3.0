@@ -4,7 +4,7 @@ class Bus {
         this.lists = {}
     }
 
-    $emit (name: string, data?: any) {
+    $emit (name: string, data?: object) {
         if (this.lists[name]) {
             this.lists[name].forEach(fn => {
                 fn(data)

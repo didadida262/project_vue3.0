@@ -6,9 +6,7 @@ const store = createStore({
   state: {
     age: 1,
     user: {
-      id: 0,
       userName: '',
-      isLogin: false,
       userPd: ''
     } as UserProps,
     loading: false
@@ -23,12 +21,10 @@ const store = createStore({
         ...state.user,
         ...userInfo
       }
-      state.user.isLogin = true
     },
     loginOut (state) {
       state.user = {
         ...state.user,
-        isLogin: false,
         userName: ''
       }
     },

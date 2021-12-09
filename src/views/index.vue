@@ -55,16 +55,13 @@ export default defineComponent({
     })
     const loading = computed(() => store.state.loading)
     const route = useRoute()
-    // const user = JSON.parse(localStorage.userInfo)
-    // const user = localStorage.userInfo
-    const user = { userName: 'hhvcg', userPd: '11a' }
+    const user = window.sessionStorage.getItem('userInfo')
     const headerRef = ref<null | HTMLElement>(null)
     const middleRef = ref<null | HTMLElement>(null)
     const footerRef = ref<null | HTMLElement>(null)
     const autoHeight = () => {
       // 中间内容显示区域高度自适应
       window.addEventListener('resize', () => {
-        console.log('窗口变化')
         const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
         middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight - 10 + 'px'
       })
