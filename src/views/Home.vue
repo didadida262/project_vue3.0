@@ -1,14 +1,30 @@
 <template>
   <div class="Home">
-    <div>
-      <span class="slogan">Fuck Every Day!</span>
-      <span class="slogan">{{ world }}</span>
-    </div>
-    <div class="img-st"><img :src="imgUrl" alt=""></div>
-    <audio
+    <a-row>
+      <a-col :span='20'>
+        <div>
+          <span class="slogan">Fuck Every Day!</span>
+          <span class="slogan">{{ world }}</span>
+        </div>
+        <div class="img-st"><img :src="imgUrl" alt="">
+        </div>
+      </a-col>
+      <a-col :span='4'>
+        <div>
+          <a-steps progress-dot direction="vertical" size='normal'>
+            <a-step v-for="(item, key) in articles" :key="key" >
+              <template v-slot:title>{{ item.date }}</template>
+              <template v-slot:description>{{ item.description}}</template>
+            </a-step>
+          </a-steps>
+        </div>
+      </a-col>
+    </a-row>
+
+    <!-- <audio
      class="audio"
      loop
-     :src="audioUrl" controls="controls" autoplay></audio>
+     :src="audioUrl" controls="controls" autoplay></audio> -->
   </div>
 </template>
 
@@ -25,6 +41,20 @@ export default {
     const world = ref('')
     const audioUrl = ref('')
     const imgUrl = ref('')
+    const articles = [
+      {
+        date: '12月11号',
+        description: '我们走着看！！！！！！！'
+      },
+      {
+        date: '12月11号',
+        description: '我们走着看！！！！！！！'
+      },
+      {
+        date: '12月11号',
+        description: '我们走着看！！！！！！！'
+      }
+    ]
     store.commit('handelLoading', true)
     getStart().then((res: any) => {
       world.value = res.words
@@ -44,20 +74,24 @@ export default {
     return {
       world,
       imgUrl,
-      audioUrl
+      audioUrl,
+      articles
     }
   }
 
 }
 </script>
 
-<style>
+<style scoped>
+ant-steps-dot .ant-steps-item-content, .ant-steps-dot.ant-steps-small .ant-steps-item-content {
+    width: 90% !important;
+}
   .Home {
     height: 100%;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
   }
   .slogan {
     color:lightcoral;
