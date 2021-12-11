@@ -1,6 +1,10 @@
 <template>
   <div class="Article">
-    <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form
+     :model="formState"
+     @validate="handleValidate"
+     :label-col="labelCol"
+     :wrapper-col="wrapperCol">
       <a-form-item label="文章标题">
         <a-input v-model:value="formState.title" />
       </a-form-item>
@@ -32,7 +36,6 @@ import { PostProps } from '../dataFormat/dataFormat'
 export default defineComponent({
   name: 'Article',
   setup () {
-    console.log('add_article')
     const formState: PostProps = reactive({
       title: '',
       content: '',
@@ -41,11 +44,15 @@ export default defineComponent({
     const onSubmit = () => {
       console.log('submit!', toRaw(formState))
     }
+    const handleValidate = (...args: any[]) => {
+      console.log(args)
+    }
     return {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
       formState,
-      onSubmit
+      onSubmit,
+      handleValidate
     }
   }
 })
