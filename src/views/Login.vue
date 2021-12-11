@@ -84,7 +84,7 @@ export default defineComponent({
       }
       console.log('提交用户信息:', params)
       login(params).then((res: any) => {
-        console.log('反馈:', res)
+        console.log('登陆成功--->:', res)
         window.sessionStorage.setItem('token', res.token)
         window.sessionStorage.setItem('userInfo', JSON.stringify(res.userInfo))
         router.push('/home')

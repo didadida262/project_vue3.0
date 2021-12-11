@@ -11,7 +11,7 @@
           </li>
           <li class="list-inline-item"><a href="#" class="btn btn-outline-light my-2">注册</a></li>
         </ul> -->
-        <drop-down :title="`Hello,${user.userName}`">
+        <drop-down :title="`Hello,${JSON.parse(user).userName}`">
           <drop-item><a href="#" class="dropdown-item">新建文章</a></drop-item>
           <drop-item disabled><a href="#" class="dropdown-item">编辑资料</a></drop-item>
           <drop-item><a href="#" class="dropdown-item" @click="quit">退出登录</a></drop-item>
@@ -46,6 +46,7 @@ export default defineComponent({
     // const name = props.user.userName
     // eslint-disable-next-line vue/no-setup-props-destructure
     const { user } = props
+    console.log('user:', user)
     const quit = () => {
       store.commit('loginOut')
       localStorage.userInfo = JSON.stringify({})
