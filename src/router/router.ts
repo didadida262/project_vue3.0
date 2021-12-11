@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import index from '../views/index.vue'
 import Login from '../views/Login.vue'
 import SideNav from '../components/SideNav.vue'
+import Article from '../components/Article.vue'
 import BeautifulNewWorld from '../views/BeautifulNewWorld.vue'
 import Diary from '../views/Diary.vue'
 import Video from '../views/Video.vue'
@@ -42,6 +43,11 @@ const router = createRouter({
           path: '/home',
           name: 'Home',
           component: Home
+        },
+        {
+          path: '/article/add',
+          name: '/article/add',
+          component: Article
         },
         {
           path: '/diary',

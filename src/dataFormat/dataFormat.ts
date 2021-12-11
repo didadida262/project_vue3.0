@@ -1,11 +1,11 @@
 // 文章格式
 export interface PostProps { 
-  id: number;
+  id?: number;
   title: string;
   content: string;
   image?: string;
   createAt: string;
-  columnId: number;
+  columnId?: number;
 }
 
 // 专栏格式
