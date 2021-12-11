@@ -1,15 +1,12 @@
 <template>
-  <h1>threeJS</h1>
-  <div id="threejs">
-      <div id="container"></div>
+  <div class="threeJs">
+    <div id="container"></div>
   </div>
-  <div><img src="./test/NormalMap.png" alt=""></div>
+  <!-- <div><img src="./test/NormalMap.png" alt=""></div> -->
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, reactive, toRefs, onMounted } from 'vue'
-import { useStore } from 'vuex'
-// import { useStore } from '@/vuex/index'
+import { defineComponent, onMounted } from 'vue'
 import { log } from '../weapons/index'
 import * as Three from 'three'
 import { OrbitControls } from 'three-orbit-controls'
@@ -18,17 +15,14 @@ import * as dat from 'dat.gui'
 export default defineComponent({
   name: 'Threejs',
   setup () {
-    log('threejs')
     let camera = '' as any
     let scene = '' as any
     let mesh = '' as any
     let renderer = '' as any
     const init = () => {
-      // Debug
+      // 绘制坐标势力
       const gui = new dat.GUI()
       // loading
-      const textureLoader = new Three.TextureLoader()
-      const normalTexture = textureLoader.load('./test/NormalMap.png')
       const container = document.getElementById('container') as any
       camera = new Three.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.01, 10)
       camera.position.z = 0.6
@@ -41,7 +35,6 @@ export default defineComponent({
 
       material.metalness = 0.7
       material.roughness = 0.2
-      log('normalTexture:', normalTexture)
       material.color = new Three.Color(0x292929)
 
       // box
@@ -87,19 +80,12 @@ export default defineComponent({
 })
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#threejs {
-  border: 1px solid red;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  /* color: #2c3e50; */
-  margin-top: 60px;
-  background: rgb(24, 24, 24);
+.threeJs {
+  height: 100%;
 }
 #container {
-  height: 400px;
+  background: rgb(24, 24, 24);
+  height: 100%;
 }
 </style>

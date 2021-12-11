@@ -1,7 +1,5 @@
 // 文章格式
 export interface PostProps {
-  value: any;
-  value: any; 
   id?: number;
   title: string;
   content: string;

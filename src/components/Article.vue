@@ -32,7 +32,7 @@
 <script lang='ts'>
 import { defineComponent, PropType, reactive, toRaw, ref } from 'vue'
 import { PostProps } from '../dataFormat/dataFormat'
-import { message } from 'ant-design-vue';
+import { message } from 'ant-design-vue'
 // import { Dayjs } from 'dayjs'
 import type { UnwrapRef } from 'vue'
 export default defineComponent({
