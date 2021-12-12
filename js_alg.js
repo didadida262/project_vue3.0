@@ -1,3 +1,14 @@
-let s = '123456278'
+const arr = [1, [2, 3], [[4], [5, 6]]]
 
-console.log(s.indexOf(2, 2))
+const res = []
+const f = (arr) => {
+    for (const item of arr) {
+        if (Array.isArray(item)) {
+            f(item)
+        } else {
+            res.push(item)
+        }
+    }
+}
+f(arr)
+console.log(res)

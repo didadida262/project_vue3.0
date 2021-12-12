@@ -1,23 +1,26 @@
 <template>
   <div class="zombie">
+    <h1 class="game-title-st">Zombie</h1>
     <!-- 僵尸 -->
     <div class="info">
-      <h1>Zombie</h1>
-      <p>name: {{ name }}</p>
-      <p>score: {{ score }}</p>
-      <p>blood: {{ blood }}</p>
-      <a-button @click="changeWeapon">切换武器</a-button>
+      <span class="font-st">炮手: {{ name }}</span>
+      <span class="font-st">得分: {{ score }}</span>
+      <span class="font-st">血量: {{ blood }}</span>
+      <a-divider/>
     </div>
     <div class="canvasDiv">
       <canvas class="canvasRole" width="400" height="600"></canvas>
       <canvas class="canvasBackg" width="400" height="600"></canvas>
     </div>
+    <a-button @click="changeWeapon" style="margin: 10px auto;display: block">切换武器</a-button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, onRenderTracked, onRenderTriggered, toRef } from 'vue'
+import { defineComponent, onMounted, ref, reactive, toRefs, onRenderTracked, onRenderTriggered, toRef } from 'vue'
 import { log } from '../../weapons/index'
+import { getImg } from '@/api/common'
+import { _arrayBufferToBase64 } from '@/utils/utils'
 
 interface Role {
   name: string;
@@ -32,30 +35,29 @@ interface Role {
 export default defineComponent({
   name: 'Zombie',
   setup () {
-    // onRenderTracked(() => {
-    //   log('onRenderTracked')
-    // })
-    // onRenderTriggered(() => {
-    //   log('onRenderTriggered')
-    // })
-
     const WIDTH = 400
     const HEIGHT = 600
+    // 游戏地图
+    const img = new Image()
+    getImg().then((res) => {
+      let url = 'data:image/jpeg;base64,'
+      url = url + _arrayBufferToBase64(res)
+      img.src = url
+      // 加载背景图
+      img.onload = () => {
+        log('picture_ready!!!')
+      }
+    })
     let weaponCir = Math.PI * 2
     let cRole: CanvasRenderingContext2D
     // 第二块画布
     let cAmmun: CanvasRenderingContext2D
-    const img = new Image()
     const drawBckg = () => {
       // cAmmun.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);]
+      console.log('加载图片:', img)
       cAmmun.drawImage(img, 0, 0, 400, 600)
     }
-    // 加载背景图
-    // img.src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx.qlogo.cn%2Fmmopen%2FQ3auHgzwzM7O7bvUvjAJMN1piaJ26fGpYYDJ3EYULLyMxHt9O3Y6aBvCAcN9mMNCM8DY8ibdN7xg2x5nJB4P2KqI2hicibLcotawxIfSO6DtvL0%2F0&refer=http%3A%2F%2Fwx.qlogo.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1633759999&t=0dad1a230e5523f98a0716194f057709'
-    img.src = '../src/assets/backg.jpg'
-    img.onload = () => {
-      log('picture_ready!!!')
-    }
+
     const npcFire = () => {
       log('fire')
     }
@@ -69,7 +71,7 @@ export default defineComponent({
       direction: ''
     }
     const role: Role = reactive({
-      name: 'hhvcg',
+      name: '空军一号',
       x: 100,
       y: 400,
       step: 10,
@@ -79,7 +81,7 @@ export default defineComponent({
     })
     // 绘制npc
     const drawNpc = () => {
-      cRole.fillStyle = 'red'
+      cRole.fillStyle = 'green'
       cRole.fillRect(npc.x, npc.y, 20, 20)
     }
     // 命中npc
@@ -122,8 +124,8 @@ export default defineComponent({
         cRole.stroke()
         cRole.fill()
       }
-      // 让弹药以设定速度往人物方向运动
 
+      // 让弹药以设定速度往人物方向运动
       update () {
         // 如果越界，消除
         if (this.y - this.radius < 0 || this.y + this.radius > HEIGHT || this.x - this.radius < 0 || this.x + this.radius > WIDTH) {
@@ -180,9 +182,6 @@ export default defineComponent({
         return item
       } else if (role.direction === 'right') {
         const item = {
-          cx: role.x + 30,
-          cy: role.y + 10,
-          paoX: role.x + 20,
           paoY: role.y + 8
         }
         return item
@@ -231,7 +230,7 @@ export default defineComponent({
         role.y = y
         cRole.clearRect(0, 0, WIDTH, HEIGHT)
         drawNpc()
-        cRole.fillStyle = 'green'
+        cRole.fillStyle = 'black'
         drawPao()
         cRole.fillRect(x, y, 20, 20)
       }
@@ -305,72 +304,14 @@ export default defineComponent({
       }
     }
     // 初始化游戏世界
-    // const initCanvas = () => {
-    //   const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
-    //   const canvasAmmun: any = document.getElementsByClassName('canvasBackg')[0]
-    //   cAmmun = canvasAmmun.getContext('2d')
-    //   cRole = canvasRole.getContext('2d')
-    //   drawBckg()
-    //   // canvas上下文
-    //   log('canvas上下文:', cRole)
-    //   drawRole(role.x, role.y)
-    // }
-    // 2.1 canvas基本操作
     const initCanvas = () => {
       const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
-      const c = canvasRole.getContext('2d')
-      // draw rectangle
-      c.fillStyle = 'rgb(38,47,49)'
-      c.fillRect(50, 50, 20, 20)
-      c.fillRect(300, 50, 20, 20)
-      // draw line
-      c.beginPath()
-      c.moveTo(70, 70)
-      c.lineTo(190, 200)
-      c.lineTo(300, 70)
-      c.strokeStyle = 'green'
-      c.stroke()
-      // draw circle
-      for (let i = 0; i < 30; i++) {
-        const x: number = Math.random() * 360
-        const y: number = Math.random() * 520
-        c.beginPath()
-        c.arc(x, y, 10, 0, Math.PI * 2, false)
-        c.strokeStyle = 'blue'
-        c.fillStyle = 'rgb(222,235,242)'
-        c.fill()
-        c.stroke()
-      }
+      const canvasAmmun: any = document.getElementsByClassName('canvasBackg')[0]
+      cAmmun = canvasAmmun.getContext('2d')
+      cRole = canvasRole.getContext('2d')
+      drawBckg()
+      drawRole(role.x, role.y)
     }
-    // 2.2 让圆球动起来
-    // const initCanvas = () => {
-    //   const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
-    //   const c = canvasRole.getContext('2d')
-    //   let x = 10
-    //   let y = 10
-    //   let dx = 10
-    //   let dy = 10
-    //   const radius = 10
-    //   function animate () {
-    //     log('1')
-    //     requestAnimationFrame(animate)
-    //     c.clearRect(0, 0, 400, 600)
-    //     c.beginPath()
-    //     c.arc(x, y, 10, 0, Math.PI * 2, false)
-    //     c.fillStyle = 'rgb(222,235,242)'
-    //     c.fill()
-    //     c.stroke()
-    //     if (x + radius > 400 || x - radius < 0) {
-    //       dx = -dx
-    //     }
-    //     if (y + radius > 600 || y - radius < 0) {
-    //       dy = -dy
-    //     }
-    //     x += dx
-    //     y += dy
-    //   }
-    //   animate()
-    // }
     onMounted(() => {
       initCanvas()
       requestAnimationFrame(npcFire)
@@ -395,16 +336,29 @@ export default defineComponent({
 <style lang="less">
   .zombie {
       height: 100%;
+      background-image: linear-gradient(120deg,#995a11,#4a3299);
+      .game-title-st {
+        margin: 2px auto;
+        display: block;
+        width: 100px;
+        height: 80px;
+        font-size: 100px;
+      }
       .info {
           margin-bottom: 10px;
+          .font-st {
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 20px;
+          }
       }
       .canvasDiv {
         width: 400px;
         box-sizing: content-box;
+        margin: 10px auto;
         // border: 1px solid gainsboro;
         height: 700px;
         position: relative;
-        margin: 10px auto;
         .canvasRole {
           box-sizing: content-box;
           position: absolute;

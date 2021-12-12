@@ -45,22 +45,11 @@
     </a-descriptions-item>
   </a-descriptions>
   <div class="box1"></div>
-  <a-upload
-    v-model:file-list="fileList"
-    name="file"
-    :multiple="true"
-    :customRequest="upload"
-    headers="'Content-Type': 'multipart/form-data'"
-    @change="handleChange"
-  >
-    <a-button>
-      <upload-outlined></upload-outlined>
-      Click to Upload
-    </a-button>
-  </a-upload>
-  <a href="" @click="test">预览</a>
-  <a :href="imgurl" target="_blank" download>下载</a>
-  {{imgurl}}
+  <div class="progess">
+      <div class="bar"></div>
+  </div>
+  <div class="cir">
+  </div>
   </div>
 </template>
 
@@ -68,7 +57,7 @@
 import { computed, defineComponent, ref, reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 // import { useStore } from '@/vuex/index'
-import { log, change } from '../weapons/index'
+import { log } from '../weapons/index'
 import bus from './Bus'
 import { message } from 'ant-design-vue'
 import { UploadOutlined } from '@ant-design/icons-vue'
@@ -101,15 +90,6 @@ export default defineComponent({
   setup () {
     const imgurl = ref('')
     const fileList = ref([])
-    bus.$on('change', (data: any) => {
-      alert(data)
-      console.log('接受到了变化')
-    })
-    const obj = {
-      name: 'hhvcg'
-    }
-    change(obj)
-    console.log('obj:', obj)
     const f = function () {
       let timer = null as any
       return function () {
@@ -164,7 +144,34 @@ export default defineComponent({
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="less">
+  .cir {
+    width: 200px;
+    height: 200px;
+    border-top: 20px solid black;
+    border-radius: 50%;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+  }
+  .progess {
+    width: 500px;
+    height: 38px;
+    border: 1px solid red;
+    .bar {
+      background-color: green;
+      height: 100%;
+      animation: p 10s infinite;
+    }
+  }
+  @keyframes p {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
   .box1 {
     width: 5px;
     height: 5px;
