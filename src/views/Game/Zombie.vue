@@ -21,16 +21,7 @@ import { defineComponent, onMounted, ref, reactive, toRefs, onRenderTracked, onR
 import { log } from '../../weapons/index'
 import { getImg } from '@/api/common'
 import { _arrayBufferToBase64 } from '@/utils/utils'
-
-interface Role {
-  name: string;
-  x: number;
-  y: number;
-  step: number;
-  score: number;
-  blood: number;
-  direction: string;
-}
+import { Role } from './game_utils'
 
 export default defineComponent({
   name: 'Zombie',
@@ -54,7 +45,6 @@ export default defineComponent({
     let cAmmun: CanvasRenderingContext2D
     const drawBckg = () => {
       // cAmmun.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);]
-      console.log('加载图片:', img)
       cAmmun.drawImage(img, 0, 0, 400, 600)
     }
 
@@ -93,9 +83,9 @@ export default defineComponent({
       drawNpc()
     }
     // 弹药库
-    const ammuniResp = [] as any
+    const ammuniResp: Ammunition[] = []
     // npc弹药
-    const npcAmmuniResp = [] as any
+    const npcAmmuniResp: Array<Ammunition> = []
     class Ammunition {
       // 弹药坐标
       x: number;
@@ -182,6 +172,9 @@ export default defineComponent({
         return item
       } else if (role.direction === 'right') {
         const item = {
+          cx: role.x + 30,
+          cy: role.y + 10,
+          paoX: role.x + 20,
           paoY: role.y + 8
         }
         return item
@@ -205,6 +198,7 @@ export default defineComponent({
     }
     // 画出炮筒
     const drawPao = () => {
+      console.log('坦克方向:', role.direction)
       switch (role.direction) {
         case 'up':
           cRole.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 4, 8)

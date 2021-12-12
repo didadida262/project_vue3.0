@@ -9,16 +9,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from 'vue'
 import { log } from '../../weapons/index'
-interface Role {
-  name: string;
-  blood: number;
-}
-interface Point {
-  x: number;
-  y: number;
-  actualX: number;
-  actualY: number;
-}
+
 export default defineComponent({
   name: 'Steam',
   setup () {
