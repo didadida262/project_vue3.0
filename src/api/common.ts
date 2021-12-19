@@ -5,7 +5,6 @@ export const getStart = () =>
     url: '/word',
     method: 'get'
   })
-
 export const getImg = () =>
   axios({
     url: '/img',
@@ -31,7 +30,6 @@ export const getUser = () =>
     url: '/users',
     method: 'get'
   })
-
 export const uploadFile = (file: any) =>
   axios({
     url: '/upload',

@@ -21,20 +21,21 @@
       </a-col>
     </a-row>
 
-    <!-- <audio
+    <audio
      class="audio"
      loop
-     :src="audioUrl" controls="controls" autoplay></audio> -->
+     :src="audioUrl" controls="controls" autoplay></audio>
   </div>
 </template>
 
 <script lang='ts'>
 import { getStart, getImg, getMusic } from '@/api/common'
 import { useStore } from 'vuex'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { _arrayBufferToBase64 } from '@/utils/utils'
+import axios from '@/api/axios'
+
 // import router from '../router/router'
-import bus from './Bus'
 export default {
   setup () {
     const store = useStore()
@@ -56,26 +57,27 @@ export default {
       }
     ]
     store.commit('handelLoading', true)
-    getStart().then((res: any) => {
-      world.value = res.words
-      store.commit('handelLoading', false)
+
+    const init = () => {
+      console.log('开始并性请求数据--->')
+      axios.all([getStart(), getImg(), getMusic()])
+        .then(axios.spread((word: any, img: any, music: any) => {
+          world.value = word.words
+          imgUrl.value = 'data:image/jpg;base64,' + _arrayBufferToBase64(img)
+          audioUrl.value = 'data:audio/mp3;base64,' + _arrayBufferToBase64(music)
+        }))
+    }
+    onMounted(() => {
+      console.log('home页加载完毕')
+      init()
     })
-    getImg().then((res) => {
-      let url = 'data:image/jpeg;base64,'
-      url = url + _arrayBufferToBase64(res)
-      imgUrl.value = url
-    })
-    getMusic().then((res) => {
-      let url = 'data:audio/mp3;base64,'
-      url = url + _arrayBufferToBase64(res)
-      console.log('url:', url)
-      audioUrl.value = url
-    })
+
     return {
       world,
       imgUrl,
       audioUrl,
-      articles
+      articles,
+      init
     }
   }
 

@@ -2,54 +2,57 @@
   <div class="test">
     <p>test</p>
     <a-button @click="debounce">click</a-button>
-<a-descriptions title="User Info" bordered>
-    <a-descriptions-item label="Product">
-      Cloud Database
-    </a-descriptions-item>
-    <a-descriptions-item label="Billing Mode">
-      Prepaid
-    </a-descriptions-item>
-    <a-descriptions-item label="Automatic Renewal">
-      YES
-    </a-descriptions-item>
-    <a-descriptions-item label="Order time">
-      2018-04-24 18:00:00
-    </a-descriptions-item>
-    <a-descriptions-item label="Usage Time" :span="2">
-      2019-04-24 18:00:00
-    </a-descriptions-item>
-    <a-descriptions-item label="Status" :span="3">
-      <a-badge status="processing" text="Running" />
-    </a-descriptions-item>
-    <a-descriptions-item label="Negotiated Amount">
-      $80.00
-    </a-descriptions-item>
-    <a-descriptions-item label="Discount">
-      $20.00
-    </a-descriptions-item>
-    <a-descriptions-item label="Official Receipts">
-      $60.00
-    </a-descriptions-item>
-    <a-descriptions-item label="Config Info">
-      Data disk type: MongoDB
-      <br />
-      Database version: 3.4
-      <br />
-      Package: dds.mongo.mid
-      <br />
-      Storage space: 10 GB
-      <br />
-      Replication factor: 3
-      <br />
-      Region: East China 1<br />
-    </a-descriptions-item>
-  </a-descriptions>
-  <div class="box1"></div>
-  <div class="progess">
-      <div class="bar"></div>
-  </div>
-  <div class="cir">
-  </div>
+    <a-descriptions title="User Info" bordered>
+      <a-descriptions-item label="Product">
+        Cloud Database
+      </a-descriptions-item>
+      <a-descriptions-item label="Billing Mode">
+        Prepaid
+      </a-descriptions-item>
+      <a-descriptions-item label="Automatic Renewal">
+        YES
+      </a-descriptions-item>
+      <a-descriptions-item label="Order time">
+        2018-04-24 18:00:00
+      </a-descriptions-item>
+      <a-descriptions-item label="Usage Time" :span="2">
+        2019-04-24 18:00:00
+      </a-descriptions-item>
+      <a-descriptions-item label="Status" :span="3">
+        <a-badge status="processing" text="Running" />
+      </a-descriptions-item>
+      <a-descriptions-item label="Negotiated Amount">
+        $80.00
+      </a-descriptions-item>
+      <a-descriptions-item label="Discount">
+        $20.00
+      </a-descriptions-item>
+      <a-descriptions-item label="Official Receipts">
+        $60.00
+      </a-descriptions-item>
+      <a-descriptions-item label="Config Info">
+        Data disk type: MongoDB
+        <br />
+        Database version: 3.4
+        <br />
+        Package: dds.mongo.mid
+        <br />
+        Storage space: 10 GB
+        <br />
+        Replication factor: 3
+        <br />
+        Region: East China 1<br />
+      </a-descriptions-item>
+    </a-descriptions>
+    <div class="box1"></div>
+    <div class="progess">
+        <div class="bar"></div>
+    </div>
+    <div class="cir">
+    </div>
+    <div class="squre">
+      <div class="insider"></div>
+    </div>
   </div>
 </template>
 
@@ -145,6 +148,68 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.squre {
+  width: 300px;
+  height: 300px;
+  border: 1px solid gray;
+  position: relative;
+  .insider {
+    background-color: red;
+
+  }
+}
+.squre:hover {
+  // 一方向
+  // .insider {
+  //   width: 100%;
+  //   height: 5px;
+  //   transform-origin: left;
+  //   animation: 3s slidein linear;
+  // }
+  // 二方向
+  // .insider {
+  //   width: 5px;
+  //   height: 100%;
+  //   position: absolute;
+  //   right: 0px;
+  //   animation: 3s slidiny linear;
+  //   transform-origin: top;
+  // }
+  // 三方向
+  // .insider {
+  //   width: 100%;
+  //   height: 5px;
+  //   position: absolute;
+  //   bottom: 0px;
+  //   transform-origin: right;
+  //   animation: 3s slidein linear;
+  // }
+  // 四方向
+  .insider {
+    width: 5px;
+    height: 100%;
+    transform-origin: bottom;
+    background-color: red;
+    animation: 3s slidiny linear;
+  }
+}
+@keyframes slidein {
+  from {
+    transform: scaleX(0);
+   }
+  to   {
+    transform: scaleX(1);
+  }
+}
+@keyframes slidiny {
+  from {
+    transform: scaleY(0);
+   }
+  to   {
+    transform: scaleY(1);
+  }
+}
+
   .cir {
     width: 200px;
     height: 200px;
