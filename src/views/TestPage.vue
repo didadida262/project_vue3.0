@@ -1,49 +1,9 @@
 <template>
   <div class="test">
     <p>test</p>
-    <a-button @click="debounce">click</a-button>
-    <a-descriptions title="User Info" bordered>
-      <a-descriptions-item label="Product">
-        Cloud Database
-      </a-descriptions-item>
-      <a-descriptions-item label="Billing Mode">
-        Prepaid
-      </a-descriptions-item>
-      <a-descriptions-item label="Automatic Renewal">
-        YES
-      </a-descriptions-item>
-      <a-descriptions-item label="Order time">
-        2018-04-24 18:00:00
-      </a-descriptions-item>
-      <a-descriptions-item label="Usage Time" :span="2">
-        2019-04-24 18:00:00
-      </a-descriptions-item>
-      <a-descriptions-item label="Status" :span="3">
-        <a-badge status="processing" text="Running" />
-      </a-descriptions-item>
-      <a-descriptions-item label="Negotiated Amount">
-        $80.00
-      </a-descriptions-item>
-      <a-descriptions-item label="Discount">
-        $20.00
-      </a-descriptions-item>
-      <a-descriptions-item label="Official Receipts">
-        $60.00
-      </a-descriptions-item>
-      <a-descriptions-item label="Config Info">
-        Data disk type: MongoDB
-        <br />
-        Database version: 3.4
-        <br />
-        Package: dds.mongo.mid
-        <br />
-        Storage space: 10 GB
-        <br />
-        Replication factor: 3
-        <br />
-        Region: East China 1<br />
-      </a-descriptions-item>
-    </a-descriptions>
+    <p>{{ watchDate }}</p>
+    <p>{{ tx }}</p>
+    <a-button @click="test">click</a-button>
     <div class="box1"></div>
     <div class="progess">
         <div class="bar"></div>
@@ -57,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, reactive, toRefs } from 'vue'
+import { computed, defineComponent, ref, reactive, toRefs, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 // import { useStore } from '@/vuex/index'
 import { log } from '../weapons/index'
@@ -93,15 +53,16 @@ export default defineComponent({
   setup () {
     const imgurl = ref('')
     const fileList = ref([])
-    const f = function () {
-      let timer = null as any
-      return function () {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-          console.log('click')
-        }, 1000)
-      }
+    const watchDate = ref(1)
+    const test = () => {
+      watchDate.value++
     }
+    watch(watchDate, () => {
+      log('值变化')
+    })
+    const tx = computed(() => {
+      return watchDate.value + 1
+    })
     const handleChange = (info: FileInfo) => {
       if (info.file.status !== 'uploading') {
         console.log('uploading', info.file, info.fileList)
@@ -112,11 +73,7 @@ export default defineComponent({
         message.error(`${info.file.name} file upload failed.`)
       }
     }
-    const debounce = f()
-    const test = () => {
-      console.log('imgurl.value:', imgurl.value)
-      window.location.href = imgurl.value
-    }
+
     const upload = (file: any) => {
       const params = new FormData()
       console.log('file1:', file)
@@ -134,13 +91,15 @@ export default defineComponent({
         })
       })
     }
+
     return {
-      debounce,
       fileList,
       handleChange,
       upload,
       imgurl,
-      test
+      test,
+      watchDate,
+      tx
     }
   }
 })

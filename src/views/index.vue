@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader from '../components/GlobalHeader.vue'
 import Login from 'Login.vue'
@@ -37,6 +37,9 @@ import Loader from '../components/Loader.vue'
 import SideNav from '../components/SideNav.vue'
 import { useRoute } from 'vue-router'
 import { log } from '../weapons/index'
+import router from '@/router/router'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
 
 export default defineComponent({
   name: 'index',
@@ -71,7 +74,14 @@ export default defineComponent({
       const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
       middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight - 10 + 'px'
     })
-
+    watch(() => router.fullPath, () => {
+      console.log('路由变化')
+    })
+    NProgress.configure({ showSpinner: false })
+    NProgress.start()
+    onMounted(() => {
+      NProgress.done()
+    })
     return {
       inputRef,
       store,

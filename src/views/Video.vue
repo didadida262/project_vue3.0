@@ -2,7 +2,7 @@
   <div class="Video">
     <div class="videoo">
       <div>
-        <video controls width="596" id="video" ref="videoRef">
+        <video controls width="1000" id="video" ref="videoRef">
             <source src="/media/cc0-videos/flower.webm"
                     type="video/webm">
             <source src="/media/cc0-videos/flower.mp4"
@@ -14,8 +14,11 @@
         <canvas ref="canvasRef" width="300" height="200"></canvas>
       </div>
     </div>
-    <button class="btn btn-success mb-3" @click="photograph">截图</button>
-    <button class="btn btn-success mb-3" style="margin-left: 10px">录像</button>
+    <div class="control">
+      <button class="btn btn-success mb-3" @click="photograph">截图</button>
+      <button class="btn btn-success mb-3" style="margin-left: 10px" @click="download">下载</button>
+      <button class="btn btn-success mb-3" style="margin-left: 10px">录像</button>
+    </div>
   </div>
 </template>
 
@@ -30,6 +33,7 @@ export default defineComponent({
     let ctx = canvasRef.value?.getContext('2d')
     const constraints = { audio: true, video: { width: 300, height: 200 } }
     const test = navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+      console.log('stream:', stream)
       /* 使用这个stream stream */
       const video = document.querySelector('video') as any
       video.srcObject = stream
@@ -39,11 +43,13 @@ export default defineComponent({
     }).catch((err) => {
       console.log('err:', err)
     })
+
     const photograph = () => {
       ctx = canvasRef.value.getContext('2d')
       // 把当前视频帧内容渲染到canvas上
       ctx.drawImage(videoRef.value, 0, 0, 300, 200)
-      // /**------------后面是下载功能----------*/
+    }
+    const download = () => {
       // // 转base64格式、图片格式转换、图片质量压缩---支持两种格式image/jpeg+image/png
       const imgBase64 = canvasRef.value.toDataURL('image/jpeg', 0.7)
       console.log(imgBase64)
@@ -65,17 +71,19 @@ export default defineComponent({
       photograph,
       canvasRef,
       videoRef,
-      ctx
+      ctx,
+      download
     }
   }
 })
 </script>
 
 <style>
-  .videoo {
+  .Video {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
   }
 
 </style>
