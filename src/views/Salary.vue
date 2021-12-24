@@ -2,7 +2,7 @@
     <h1>工资计算器</h1>
     <a-form ref="formRef"
       :model="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }" @submit="calculate">
-      <a-form-item label="税前（元）" ref="salary">
+      <a-form-item label="税前（元）">
         <a-input v-model:value="form.salary" placeholder="请输入税前工资"/>
       </a-form-item>
       <a-form-item label="社保基数（元）">
@@ -23,12 +23,12 @@
 
   <div class="result">
     <div class="data" style="margin-top:10px">
-      <p>个人五险：{{ resData.personalWu}}</p>
-      <p>公司五险：{{ resData.companyWu}}</p>
-      <p>个人、公司一金：{{ resData.personalJin}}</p>
-      <p>扣税{{ resData.tax}}</p>
-      <p>实际到手{{ resData.actualGetMoney}}</p>
-      <p>五险一金总额{{ resData.all}}</p>
+      <h2>个人五险：{{ resData.personalWu}}</h2>
+      <h2>公司五险：{{ resData.companyWu}}</h2>
+      <h2>个人、公司一金：{{ resData.personalJin}}</h2>
+      <h2>扣税{{ resData.tax}}</h2>
+      <h2>实际到手{{ resData.actualGetMoney}}</h2>
+      <h2>五险一金总额{{ resData.all}}</h2>
     </div>
 
   </div>
@@ -41,7 +41,6 @@ import { log } from '../weapons/index'
 export default defineComponent({
   name: 'Salary',
   setup () {
-    const formRef = ref()
     const form = reactive({
         salary: 0,
         sbasic: 0,
@@ -60,14 +59,17 @@ export default defineComponent({
       all: 0
     })
     const calculate = () => {
-      log('form', form)
-      for (const key in form) {
-        form[key].value = Number(form[key].value)
-      }
+      // for (const key in form) {
+      //   form[key].value = Number(form[key].value)
+      // }
+      log(JSON.parse(JSON.stringify(form)))
       log('calculate.....')
       // 个人五险缴纳
       resData.personalWu = form.sbasic * spercent.reduce((a, b) => { return a + b })
+      resData.personalWu = Math.round(resData.personalWu * 100) / 100
       resData.companyWu = form.sbasic * spercentcomp.reduce((a, b) => { return a + b })
+      resData.companyWu = Math.round(resData.companyWu * 100) / 100
+
       // 个人、公司一金
       resData.personalJin = form.gbasic * form.gpercent
       // 应纳税
@@ -94,7 +96,6 @@ export default defineComponent({
     }
 
     return {
-      formRef,
       form,
       calculate,
       resData

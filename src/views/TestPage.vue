@@ -2,7 +2,6 @@
   <div class="test">
     <p>test</p>
     <p>{{ watchDate }}</p>
-    <p>{{ tx }}</p>
     <a-button @click="test">click</a-button>
     <div class="box1"></div>
     <div class="progess">
@@ -55,7 +54,7 @@ export default defineComponent({
     const fileList = ref([])
     const watchDate = ref(1)
     const test = () => {
-      watchDate.value++
+      console.log('change')
     }
     watch(watchDate, () => {
       log('值变化')

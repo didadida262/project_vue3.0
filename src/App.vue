@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 export default defineComponent({
   name: 'App',
   setup () {
-    console.log('---appp----')
+    console.log('---app--starting--')
   }
 })
 

@@ -36,3 +36,12 @@ export const uploadFile = (file: any) =>
     method: 'post',
     data: file
   })
+
+export const sendPic = (imgDate: string) =>
+  axios({
+    url: '/sendImg',
+    method: 'post',
+    data: {
+      imgDate: imgDate
+    }
+  })

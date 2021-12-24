@@ -44,6 +44,9 @@
       <a-menu-item key="echart">
           <span>Echarts</span>
       </a-menu-item>
+      <a-menu-item key="parent">
+          <span>Parent</span>
+      </a-menu-item>
     </a-menu>
   </div>
 </template>
