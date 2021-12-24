@@ -3,7 +3,7 @@
     Parent
     <p>{{ user.name }}</p>
     <p>{{ user.cars }}</p>
-    <Child :msg='user' @getData="getData"></Child>
+    <Child :msg="user" @getData="getData"></Child>
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 <template>
   <div class="Child">
-    <p>我是儿子</p>
+    <h1>我是儿子</h1>
+    <p>{{msg.name}}</p>
     <a-button @click="change">Click</a-button>
   </div>
 </template>
@@ -12,10 +13,19 @@ import { log } from '../weapons/index'
 
 export default defineComponent({
   name: 'Child',
+  props: {
+    msg: {
+      type: Object,
+      required: true
+    }
+  },
+  emits: ['getData'],
   setup (props, context) {
-    console.log('child')
+    console.log('child-->')
     const change = () => {
-      console.log(props.msg)
+      const data = props.msg
+      data.name += '+++'
+      context.emit('getData', data)
     }
     return {
       change
