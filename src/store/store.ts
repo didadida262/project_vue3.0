@@ -12,6 +12,9 @@ const store = createStore({
     loading: false
   },
   mutations: {
+    testMut (state) {
+      state.age++
+    },
     addAge (state, data) {
       state.age = data
     },
@@ -37,6 +40,11 @@ const store = createStore({
       setTimeout(() => {
         commit('addAge', data)
       }, 2000)
+    }
+  },
+  getters: {
+    getUser: (state) => {
+      return `geter-->${state.user}`
     }
   }
 })
