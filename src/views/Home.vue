@@ -20,16 +20,11 @@
         </div>
       </a-col>
     </a-row>
-
-    <audio
-     class="audio"
-     loop
-     :src="audioUrl" controls="controls" autoplay></audio>
   </div>
 </template>
 
 <script lang='ts'>
-import { getStart, getImg, getMusic } from '@/api/common'
+import { getStart, getImg } from '@/api/common'
 import { useStore } from 'vuex'
 import { onMounted, ref } from 'vue'
 import { _arrayBufferToBase64 } from '@/utils/utils'
@@ -60,11 +55,10 @@ export default {
 
     const init = () => {
       console.log('开始并性请求数据--->')
-      axios.all([getStart(), getImg(), getMusic()])
-        .then(axios.spread((word: any, img: any, music: any) => {
+      axios.all([getStart(), getImg()])
+        .then(axios.spread((word: any, img: any) => {
           world.value = word.words
           imgUrl.value = 'data:image/jpg;base64,' + _arrayBufferToBase64(img)
-          audioUrl.value = 'data:audio/mp3;base64,' + _arrayBufferToBase64(music)
         }))
     }
     onMounted(() => {

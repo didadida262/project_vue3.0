@@ -24,7 +24,7 @@
         </a-menu-item>
       </a-sub-menu>
       <a-menu-item key="testpage">
-          <span>Testpage</span>
+          <span>样式篇</span>
       </a-menu-item>
       <a-menu-item key="imgmark">
           <span>Imgmark</span>

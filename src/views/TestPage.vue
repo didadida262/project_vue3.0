@@ -1,6 +1,10 @@
 <template>
+  <div @click="c1" style="width:100px;border: 1px solid red">
+    <div @click="c2">
+      <div @click="c3">时间顺序测试</div>
+    </div>
+  </div>
   <div class="test">
-    <p>test</p>
     <p>{{ watchDate }}</p>
     <a-button @click="test">click</a-button>
     <div class="box1"></div>
@@ -12,6 +16,20 @@
     <div class="squre">
       <div class="insider"></div>
     </div>
+
+    <div ref="ul" class="test-url">
+      <a-button @click="addChildren">add</a-button>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <a-input></a-input>
+    <a-button @click="generateQ">一键生成</a-button>
+    <canvas id="canvas"></canvas>
   </div>
 </template>
 
@@ -25,6 +43,7 @@ import { message } from 'ant-design-vue'
 import { UploadOutlined } from '@ant-design/icons-vue'
 import { uploadFile, getImg } from '@/api/common'
 import { _arrayBufferToBase64 } from '@/utils/utils'
+import QRCode from 'qrcode'
 
 interface SelectProtected {
     readonly wrapperElement: HTMLDivElement;
@@ -50,6 +69,18 @@ interface DataProps {
 export default defineComponent({
   name: 'TestPage',
   setup () {
+    const generateQ = () => {
+      console.log('生成q')
+      const qrcode = new QRCode(document.getElementById('canvas'), {
+        // text: document.getElementById("input").value,
+        text: 'sssss',
+        width: 200,
+        height: 200,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode?.CorrectLevel?.H
+      })
+    }
     const imgurl = ref('')
     const fileList = ref([])
     const watchDate = ref(1)
@@ -90,15 +121,34 @@ export default defineComponent({
         })
       })
     }
-
+    const ul = ref([])
+    const addChildren = () => {
+      console.log('add!')
+      console.log('ul:', ul.value)
+    }
+    const c1 = () => {
+      console.log(1)
+    }
+    const c2 = () => {
+      console.log(2)
+    }
+    const c3 = () => {
+      console.log(3)
+    }
     return {
+      c1,
+      c3,
+      c2,
       fileList,
       handleChange,
       upload,
       imgurl,
       test,
       watchDate,
-      tx
+      tx,
+      addChildren,
+      ul,
+      generateQ
     }
   }
 })
@@ -106,6 +156,7 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+
 .squre {
   width: 300px;
   height: 300px;
@@ -220,6 +271,10 @@ export default defineComponent({
           transform: scale(1);
           opacity: 1;
       }
+  }
+  .test-url {
+    border: 1px solid red;
+    width: 100px;
   }
 
 </style>

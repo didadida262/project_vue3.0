@@ -12,9 +12,11 @@ const useClickOutside = (dropdownRef: Ref<null | HTMLElement>) => {
     }
   }
   onMounted(() => {
+    console.log('hook加载成功')
     document.addEventListener('click', handleToggle)
   })
   onUnmounted(() => {
+    console.log('hook卸载成功')
     document.removeEventListener('click', handleToggle)
   })
   return isClickOutside

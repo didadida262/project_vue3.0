@@ -7,7 +7,7 @@
           <a href="#" class="icon-love"></a>
         </div>
         <div class="center">
-          <img src="../assets/icon.png" width="80" height="80" id="logo">
+          <img src="../assets/icon.png" width="80" height="80" id="logo" ref="logoRef">
         </div>
         <div class="right">
           <a href="#" class="icon-model"></a>
@@ -18,11 +18,12 @@
         </div>
       </div>
       <div class="controls">
-        <div class="current">00:00</div>
+        <div class="current">{{ timer }}</div>
+        <!-- <div class="current">{{ timer }}</div> -->
         <div class="play-controls">
           <a href="#" class="icon-back"></a>
-          <a href="#" class="icon-play"></a>
-          <a href="#" class="icon-pause icon-hide"></a>
+          <a href="#" class="icon-play" @click="playSong" ref="playRef"></a>
+          <a href="#" class="icon-pause" style="display: none" @click="stopSong" ref="pauseRef"></a>
           <a href="#" class="icon-next"></a>
         </div>
 
@@ -36,34 +37,65 @@
       </div>
     </div>
   </div>
+  <audio
+     class="audio"
+     style="display: none"
+     loop
+     @timeupdate="updateTime"
+     :src="audioUrl" controls="controls"></audio>
 </template>
 <script lang="ts">
-import { computed, defineComponent, ref, reactive, toRefs, onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent, ref, onMounted, computed, watch } from 'vue'
+import { getMusic } from '@/api/common'
 // import { useStore } from '@/vuex/index'
+import { _arrayBufferToBase64 } from '@/utils/utils'
+
 import { log, e } from '../weapons/index'
 
 export default defineComponent({
   name: 'Music',
   setup () {
+    const logoRef = ref<null | HTMLElement>(null)
+    const pauseRef = ref<null | HTMLElement>(null)
+    const playRef = ref<null | HTMLElement>(null)
+    const audioUrl = ref('')
+    const timer = ref<null | any>(null)
+    getMusic()
+    .then((music) => {
+      audioUrl.value = 'data:audio/mp3;base64,' + _arrayBufferToBase64(music)
+    })
     let musicBox = null as any
     const songs: any[] = []
     const addSong = (name: string) => {
       songs.push('./media/' + name)
     }
-    const playSong = (index: number) => {
-      musicBox.src = songs[index]
+    const playSong = () => {
       musicBox.play()
+      pauseRef.value.style.display = 'inline-block'
+      playRef.value.style.display = 'none'
+      logoRef.value.style.animationPlayState = 'running'
+    }
+    const stopSong = () => {
+      musicBox.pause()
+      playRef.value.style.display = 'inline-block'
+      pauseRef.value.style.display = 'none'
+      logoRef.value.style.animationPlayState = 'paused'
+    }
+    const updateTime = () => {
+      // timer = 分:秒
+      log(typeof musicBox.currentTime)
+      const min = Math.floor(musicBox.currentTime / 60)
+      const sec = (musicBox.currentTime - (min * 60)).toFixed(0)
+      log('min:', min)
+      log('sec:', sec)
+      timer.value = min + ':' + sec
     }
     // 初始化播放器
     const initMusic = () => {
+      logoRef.value.style.animationPlayState = 'paused'
       musicBox = e('audio')
-      const par = document.getElementById('music') as any
-      console.log('par:', par)
       console.log('musicBox:', musicBox)
-      // par.appendChild(musicBox)
-      // musicBox.src = 'https://link.zhihu.com/?target=http%3A//music.163.com/song/media/outer/url%3Fid%3D1880886636.mp3'
-      // musicBox.play()
+      musicBox.src = audioUrl.value
       log('musicBox:', musicBox)
       // addSong('诚如神之所说.mp3')
       // addSong('小姐.mp3')
@@ -74,7 +106,15 @@ export default defineComponent({
       // songUrl = URL.createObjectURL('../media/诚如神之所说.mp3')
     })
     return {
-      musicBox
+      musicBox,
+      audioUrl,
+      playSong,
+      pauseRef,
+      playRef,
+      stopSong,
+      logoRef,
+      timer,
+      updateTime
     }
   }
 })
@@ -204,8 +244,7 @@ export default defineComponent({
 }
 
 .icon-hide{
-  display: none !important;
-
+  display: none;
 }
 
 .icon-volume-up{

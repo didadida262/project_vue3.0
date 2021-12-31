@@ -21,11 +21,11 @@ export default defineComponent({
     }
   },
   setup () {
+    console.log('dropdown加载成功')
     const isOpen = ref(false)
     const dropdownRef = ref<null | HTMLElement>(null)
     const isClickOutside = useClickOutside(dropdownRef)
     // 只执行一次
-    log('isClickOutside111:', isClickOutside.value)
     watch(isClickOutside, () => {
       log('isClickOutside:', isClickOutside)
       if (isOpen.value && isClickOutside.value) {

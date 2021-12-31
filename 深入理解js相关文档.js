@@ -182,8 +182,8 @@
     // console.log('res:',res)
 
     // 3）：注意两件事，第一个，this指向调用他的对象作用域 第二个，尖头函数不改变，指向其外层环境
-    // var name = 'window'
-    // var obj1 = {
+    // const name = 'window'
+    // const obj1 = {
     //   name: 'obj1',
     //   foo: function () {
     //     this.name = 'nima'
@@ -202,7 +202,6 @@
     //     }
     //   }
     // }
-    
     // obj1.foo()()
     // obj2.foo()()
     // var 声明的才是全局
@@ -694,16 +693,3 @@
     // xml.send()
 
 
-    const Parent = function(name, age) {
-        this.name = name
-        this.age = age
-      }
-  
-      const myNew = function (...args) {
-          const obj = Object.create(args[0].prototype)
-          const res = args[0].call(obj, ...args.splice(1))
-          return obj
-      }
-      const child = new Parent('alice', 12)
-      const child2 = myNew(Parent, 'alice', 12)
-      console.log('obj:', child2)
