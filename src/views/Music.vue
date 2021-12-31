@@ -28,11 +28,11 @@
         </div>
 
         <div class="volume-level">
-          <a href="#" class="icon-volume-down"></a>
+          <a href="#" class="icon-volume-down" @click="minusVol"></a>
           <div class="volume-progress">
             <span class="jp-volume-bar"></span>
           </div>
-          <a href="#" class="icon-volume-up"></a>
+          <a href="#" class="icon-volume-up" @click="addVol"></a>
         </div>
       </div>
     </div>
@@ -83,12 +83,17 @@ export default defineComponent({
     }
     const updateTime = () => {
       // timer = 分:秒
-      log(typeof musicBox.currentTime)
       const min = Math.floor(musicBox.currentTime / 60)
+      let minl = ''
       const sec = (musicBox.currentTime - (min * 60)).toFixed(0)
-      log('min:', min)
-      log('sec:', sec)
-      timer.value = min + ':' + sec
+      let secl = ''
+      if (min < 10) {
+        minl = '0'
+      }
+      if (Number(sec) < 10) {
+        secl = '0'
+      }
+      timer.value = minl + min + ':' + secl + sec
     }
     // 初始化播放器
     const initMusic = () => {
@@ -100,6 +105,14 @@ export default defineComponent({
       // addSong('诚如神之所说.mp3')
       // addSong('小姐.mp3')
       // playSong(0)
+    }
+    const addVol = () => {
+      console.log(musicBox.volume)
+      musicBox.vloume = musicBox.volume + 0.1
+    }
+    const minusVol = () => {
+      console.log(musicBox.volume)
+      musicBox.vloume = musicBox.volume - 0.1
     }
     onMounted(() => {
       initMusic()
@@ -114,7 +127,9 @@ export default defineComponent({
       stopSong,
       logoRef,
       timer,
-      updateTime
+      updateTime,
+      addVol,
+      minusVol
     }
   }
 })
