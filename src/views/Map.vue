@@ -1,6 +1,7 @@
 <template>
   <div class="mapPage">
-    <strong>map</strong> <a-button @click="test">test</a-button>
+    <span class="title">Map</span>
+    <a-button @click="test">test</a-button>
     <div id="map"></div>
     <div id="popup" class="flag">
     </div>
@@ -72,6 +73,7 @@ export default defineComponent({
           console.log('layers:', layers)
         })
         const coordinate = [e.coordinate[0], e.coordinate[1]]
+        // const coordinate = [e.coordinate[0], e.coordinate[1]]
         log('coordinate:', coordinate)
         // log('click2:', transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'))
         const container = document.getElementById('popup') as HTMLElement
@@ -177,21 +179,29 @@ export default defineComponent({
 })
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="less">
   .mapPage {
-    width: 100%;
     height: 100%;
+    border: 1px solid red;
+    .title {
+      width: 120px;
+      display: block;
+      margin: 10px auto;
+      font-size: 60px;
+      text-align: center;
+      border-bottom: 10px solid black;
+    }
   }
   #map {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 85%;
     border: 1px solid gainsboro;
   }
   .flag {
     width: 10px;
     height: 10px;
     background-color: red;
-    border-radius: 10px;
+    // border-radius: 10px;
     display: none;
   }
 </style>

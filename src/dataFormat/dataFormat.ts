@@ -8,6 +8,11 @@ export interface PostProps {
   columnId?: number;
 }
 
+export interface SloganProps {
+  content: string,
+  createTime: string
+}
+
 // 专栏格式
 export interface ColumnProps {
   id: number;

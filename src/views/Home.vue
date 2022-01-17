@@ -35,7 +35,6 @@ export default {
   setup () {
     const store = useStore()
     const world = ref('')
-    const audioUrl = ref('')
     const imgUrl = ref('')
     const articles = [
       {
@@ -69,7 +68,6 @@ export default {
     return {
       world,
       imgUrl,
-      audioUrl,
       articles,
       init
     }

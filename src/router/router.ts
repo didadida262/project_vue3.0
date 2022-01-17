@@ -7,6 +7,7 @@ import SideNav from '../components/SideNav.vue'
 import Article from '../components/Article.vue'
 import BeautifulNewWorld from '../views/BeautifulNewWorld.vue'
 import Diary from '../views/Diary.vue'
+import Slogan from '../views/Slogan.vue'
 import Video from '../views/Video.vue'
 import TestPage from '../views/TestPage.vue'
 import Imagemark from '../views/Imagemark.vue'
@@ -54,6 +55,11 @@ const router = createRouter({
           path: '/diary',
           name: 'Diary',
           component: Diary
+        },
+        {
+          path: 'slogan',
+          name: 'Slogan',
+          component: Slogan
         },
         {
           path: '/video',

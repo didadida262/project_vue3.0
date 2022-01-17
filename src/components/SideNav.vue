@@ -1,7 +1,7 @@
 <template>
   <div class="SideNav">
     <a-menu
-      style="width: 256px"
+      style="width: 256px;"
       :default-selected-keys="current"
       mode="inline"
       @click="handleClick"
@@ -11,6 +11,9 @@
       </a-menu-item>
       <a-menu-item key="diary">
         <span>Diary</span>
+      </a-menu-item>
+      <a-menu-item key="slogan">
+        <span>Slogan</span>
       </a-menu-item>
       <a-menu-item key="video">
         <span>Video</span>
@@ -84,4 +87,5 @@ export default defineComponent({
 </script>
 
 <style>
+
 </style>

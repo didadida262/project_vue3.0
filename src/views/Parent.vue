@@ -1,9 +1,19 @@
 <template>
   <div class="Parent">
-    Parent
-    <p>{{ user.name }}</p>
-    <p>{{ user.cars }}</p>
-    <Child :msg="user" @getData="getData"></Child>
+    <div class="box">
+      <div class="slide-con">
+        <ul class="slide">
+          <!-- <li><a href="#"><img src="../assets/imgs/t1.png" alt="huan"></a></li> -->
+          <!-- <li><a href="#"><img src="@/assets/imgs/t2.png" alt="huan"></a></li>
+          <li><a href="#"><img src="@/assets/imgs/t3.png" alt="huan"></a></li>
+          <li><a href="#"><img src="@/assets/imgs/t4.png" alt="huan"></a></li> -->
+        </ul>
+        <ul class="points">
+        </ul>
+      </div>
+      <!-- <div class="prev"><img src="@/assets/imgs/timg2.png" alt=""></div>
+      <div class="next"><img src="@/assets/imgs/timg2.png" alt=""></div> -->
+    </div>
   </div>
 </template>
 
@@ -11,25 +21,13 @@
 import { computed, defineComponent, ref, reactive, toRefs, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { log } from '../weapons/index'
-import Child from '../components/Child.vue'
 
 export default defineComponent({
   name: 'Parent',
-  components: {
-    Child
-  },
   setup () {
     console.log('parent-->')
-    const user = reactive({
-      name: 'hhvcg',
-      cars: ['兰博基尼', '本田思域']
-    })
-    const getData = (userInfo: object) => {
-      console.log('儿子的值：', userInfo)
-    }
+
     return {
-      user,
-      getData
     }
   }
 })

@@ -1,14 +1,8 @@
 <template>
   <div class="Diary">
-    <div class="row ">
-      <articel-item :data="testData"></articel-item>
-    </div>
-    <div class="row">
-      <articel-item :data="testData"></articel-item>
-    </div>
-    <div class="row">
-      <articel-item :data="testData"></articel-item>
-    </div>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
   </div>
 </template>
 
@@ -39,8 +33,5 @@ export default defineComponent({
 </script>
 
 <style>
-  .Diary {
-    background-color: rgb(241, 243, 244);
-    padding: 25px;
-  }
+
 </style>

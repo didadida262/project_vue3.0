@@ -139,9 +139,9 @@ export default defineComponent({
 <style scoped>
 #music {
   margin: 10px auto;
-  background: #eee url('../assets/back-image.jpg') no-repeat center;
-  width: 700px;
-  height: 500px;
+  background: url('../assets/back-image.jpg') no-repeat center;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

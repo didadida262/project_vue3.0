@@ -1,30 +1,28 @@
 <template>
-  <div class="ArticelItem">
-    <div class="img">
-      <img :src="post.image" alt="" width="188" height="120">
-    </div>
+  <div class="SloganItem">
     <div class="content">
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.content }}</p>
+      <span>{{ post.content}}</span>
+    </div>
+    <div class="time">
+      <span>{{ post.createTime }}</span>
     </div>
   </div>
 </template>
 
 <script lang='ts'>
 import { defineComponent, PropType, reactive } from 'vue'
-import { PostProps } from '../dataFormat/dataFormat'
+import { SloganProps } from '../dataFormat/dataFormat'
 
 export default defineComponent({
-  name: 'ArticelItem',
+  name: 'SloganItem',
   props: {
     data: {
-      type: Object as PropType<PostProps>,
+      type: Object as PropType<SloganProps>,
       required: true
     }
   },
   setup (props) {
     const post = reactive(props.data)
-    console.log(post)
     return {
       post
     }
@@ -32,21 +30,24 @@ export default defineComponent({
 })
 </script>
 
-<style>
-  .ArticelItem {
+<style scoped lang="less">
+  .SloganItem {
     border: 1px solid #ececec;
     box-shadow: 1px 1px 4px gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 190px;
+    height: 100px;
     margin-bottom: 20px;
     border-radius: 3px;
     background: #fff;transition: all .2s ease;
     padding: 30px;
-  }
-  .ArticelItem .content {
-    flex: 1;
-    margin-left: 20px;
+    .content {
+      height: 80%;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+    }
+    .time {
+      text-align: right;
+      color: gray;
+    }
   }
 </style>
