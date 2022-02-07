@@ -39,15 +39,15 @@ export default {
     const articles = [
       {
         date: '12月11号',
-        description: '我们走着看！！！！！！！'
+        description: 'dadadadadad！！！！！！！'
       },
       {
         date: '12月11号',
-        description: '我们走着看！！！！！！！'
+        description: 'dadadadadad！！！！！！！'
       },
       {
         date: '12月11号',
-        description: '我们走着看！！！！！！！'
+        description: 'dadadadadad！！！！！！！'
       }
     ]
     store.commit('handelLoading', true)

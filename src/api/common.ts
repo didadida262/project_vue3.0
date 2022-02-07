@@ -45,3 +45,9 @@ export const sendPic = (imgDate: string) =>
       imgDate: imgDate
     }
   })
+
+export const getData = () =>
+  axios({
+    url: '/getPd',
+    method: 'get'
+  })

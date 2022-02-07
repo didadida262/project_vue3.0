@@ -41,12 +41,10 @@ export default defineComponent({
     }
   },
   setup (props) {
-    console.log('globak-------->:', props.user)
     const store = useStore()
     // const name = props.user.userName
     // eslint-disable-next-line vue/no-setup-props-destructure
     const { user } = props
-    console.log('user:', user)
     const quit = () => {
       store.commit('loginOut')
       localStorage.userInfo = JSON.stringify({})

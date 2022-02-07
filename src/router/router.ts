@@ -19,7 +19,7 @@ import Map from '../views/Map.vue'
 import Threejs from '../views/Threejs.vue'
 import Echart from '../views/echart/index.vue'
 import Music from '../views/Music.vue'
-import Parent from '../views/Parent.vue'
+import Parent from '../views/testKeep/Parent.vue'
 import { log } from '../weapons/index'
 import Notfound from '../views/Notfound.vue'
 const routerHitory = createWebHistory()
@@ -128,8 +128,6 @@ const router = createRouter({
   ]
 })
 router.beforeEach((to, from, next) => {
-  log('router:to', to)
-  log('router:from', from)
   if (to.path === '/login') {
     next()
   } else if (!window.sessionStorage.getItem('token')) {

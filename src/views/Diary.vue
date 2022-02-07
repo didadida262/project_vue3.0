@@ -3,6 +3,16 @@
     <articel-item :data="testData"></articel-item>
     <articel-item :data="testData"></articel-item>
     <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
+    <articel-item :data="testData"></articel-item>
   </div>
 </template>
 

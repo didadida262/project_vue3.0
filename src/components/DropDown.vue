@@ -21,7 +21,6 @@ export default defineComponent({
     }
   },
   setup () {
-    console.log('dropdown加载成功')
     const isOpen = ref(false)
     const dropdownRef = ref<null | HTMLElement>(null)
     const isClickOutside = useClickOutside(dropdownRef)
