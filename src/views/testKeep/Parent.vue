@@ -2,7 +2,10 @@
   <div class="Parent">
     parent
   </div>
-  <child :data='data'/>
+  <child
+   :data="data"
+   @update:data="data = $emit"
+   />
 </template>
 
 <script lang="ts">
@@ -19,10 +22,10 @@ export default defineComponent({
   },
   setup () {
     console.log('parent-->')
-    let data = '测试'
-    getData().then((res: any) => {
-      data = res
-    })
+    const data = '测试'
+    // getData().then((res: any) => {
+    //   data = res
+    // })
     return {
       data
     }

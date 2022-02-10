@@ -10,7 +10,7 @@
           <side-nav></side-nav>
         </div>
         <div class="view">
-          <router-view ></router-view>
+          <router-view></router-view>
         </div>
       </div>
       <footer class="text-center py-4 text-secondary bg-light mt-6 footer" ref="footerRef">
@@ -71,6 +71,7 @@ export default defineComponent({
     }
     autoHeight()
     onMounted(() => {
+      console.log('index-mounted')
       const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
       middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight - 10 + 'px'
     })

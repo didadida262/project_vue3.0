@@ -3,6 +3,7 @@
     child
   </div>
   <span>{{ data }}</span>
+  <a-button>改变data</a-button>
 </template>
 
 <script lang="ts">
@@ -20,14 +21,6 @@ export default defineComponent({
   },
   setup (props) {
     console.log('child-->:', props.data)
-    const show = ref(props.data)
-    watch(props.data, (newV, oldV) => {
-      console.log('newV:', newV)
-      console.log('oldV:', oldV)
-    })
-    return {
-      show
-    }
   }
 })
 </script>

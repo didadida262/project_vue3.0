@@ -55,7 +55,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import router from '../router/router'
 import { log } from '../weapons/index'
 export default defineComponent({
@@ -76,6 +76,9 @@ export default defineComponent({
     const titleClick = (e: any) => {
       log('e:', e)
     }
+    onMounted(() => {
+      console.log('导航mounted')
+    })
     return {
       handleClick,
       dropdown,
