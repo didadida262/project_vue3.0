@@ -39,6 +39,9 @@ const router = createRouter({
     {
       path: '/',
       name: 'index',
+      redirect: {
+        name: 'Home'
+      },
       component: index,
       children: [
         {

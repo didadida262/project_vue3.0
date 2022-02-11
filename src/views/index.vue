@@ -71,7 +71,6 @@ export default defineComponent({
     }
     autoHeight()
     onMounted(() => {
-      console.log('index-mounted')
       const clientHeight = document.documentElement.clientHeight || document.body.clientHeight
       middleRef.value.style.height = clientHeight - headerRef.value?.clientHeight - footerRef.value?.clientHeight - 10 + 'px'
     })
@@ -81,6 +80,7 @@ export default defineComponent({
     NProgress.configure({ showSpinner: false })
     NProgress.start()
     onMounted(() => {
+      console.log('index----mounted!!!')
       NProgress.done()
     })
     return {
