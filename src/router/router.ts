@@ -21,6 +21,7 @@ import Echart from '../views/echart/index.vue'
 import Music from '../views/Music.vue'
 import Parent from '../views/testKeep/Parent.vue'
 import { log } from '../weapons/index'
+import Tadpole from '../views/Tadpole/Tadpole.vue'
 import Notfound from '../views/Notfound.vue'
 const routerHitory = createWebHistory()
 const router = createRouter({
@@ -125,6 +126,11 @@ const router = createRouter({
           path: '/parent',
           name: 'Parent',
           component: Parent
+        },
+        {
+          path: '/tadpole',
+          name: 'Tadpole',
+          component: Tadpole
         }
       ]
     }

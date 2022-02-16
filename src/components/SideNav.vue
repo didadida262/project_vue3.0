@@ -50,6 +50,9 @@
       <a-menu-item key="parent">
           <span>Parent</span>
       </a-menu-item>
+      <a-menu-item key="tadpole">
+          <span>Tadpole</span>
+      </a-menu-item>
     </a-menu>
   </div>
 </template>
