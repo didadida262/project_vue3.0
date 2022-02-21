@@ -14,14 +14,17 @@ import { message } from 'ant-design-vue'
 export default defineComponent({
   name: 'Tadpole',
   setup () {
-    // 随机圆
-    const updateDrawing = () => {
+    // 测试paper特性函数
+    const testDrawing = () => {
       // Now, draw your things based on component state.
-      const path = new paper.Path.Circle({
+      paper.setup(document.getElementById('main-canvas'))
+      const path = new paper.Path.Star({
         center: paper.view.center,
-        radius: 300,
-        strokeColor: 'black',
-        fillColor: 'black'
+        points: 300,
+        radius1: 100,
+        radius2: 100,
+        strokeColor: 'red'
+        // fillColor: 'red'
       })
       window.onresize = () => {
         log('窗口大小变化！')
@@ -30,6 +33,7 @@ export default defineComponent({
     }
     const ini = () => {
       paper.setup(document.getElementById('main-canvas'))
+      const direct = [] as any
       let myPath = null as any
       const tool = new paper.Tool()
       tool.onMouseDown = (e: any) => {
@@ -40,7 +44,8 @@ export default defineComponent({
         myPath.add(e.point)
       }
       tool.onMouseUp = () => {
-        console.log('抬起')
+        direct.push(myPath)
+        console.log('当前路径库:', direct)
       }
       tool.onMouseDrag = (e: any) => {
         console.log('mouse--drag')
@@ -59,7 +64,7 @@ export default defineComponent({
     }
     onMounted(() => {
       log('This is Tad--Pole!!!')
-      // updateDrawing()
+      // testDrawing()
       // initialize()
       ini()
     })
