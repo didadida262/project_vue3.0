@@ -83,10 +83,10 @@ export default defineComponent({
         userPd: formState.password
       }
       console.log('提交用户信息:', params)
+      // 打点
       login(params).then((res: any) => {
-        console.log('登陆成功--->:', res)
         window.sessionStorage.setItem('token', res.token)
-        window.sessionStorage.setItem('userInfo', JSON.stringify(res.userInfo))
+        window.sessionStorage.setItem('userInfo', JSON.stringify(params))
         router.push('/home')
       })
     }

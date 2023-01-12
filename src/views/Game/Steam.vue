@@ -81,7 +81,7 @@ export default defineComponent({
     }
     const cirArr = [] as any
 
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 5000; i++) {
       // 随机半径
       cirArr.push(new Cir(randomArea([10, 390]), randomArea([10, 590]), randomArea([1, 10]), Math.random() * 1, Math.random() * 1, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
       // 半径加速度写死
@@ -111,10 +111,7 @@ export default defineComponent({
     const initCanvas = () => {
       const canvas: any = document.querySelector('canvas')
       c = canvas.getContext('2d')
-      // drawR(x, y)
       canvas.onmousemove = (e: any) => {
-        log('move')
-        // log('111', canvas.getBoundingClientRect())
         moveInfo.x = e.x
         moveInfo.y = e.y
         moveInfo.actualX = moveInfo.x - canvas.getBoundingClientRect().left
