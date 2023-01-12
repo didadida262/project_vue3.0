@@ -1,4 +1,17 @@
+/*
+ * @Author: Hhvcg
+ * @Date: 2022-02-16 18:13:14
+ * @LastEditors: -_-
+ * @Description:
+ */
 import axios from '@/api/axios'
+
+export const getTestImg = () =>
+  axios({
+    url: '/getTestImg',
+    method: 'get',
+    responseType: 'blob'
+  })
 
 export const getStart = () =>
   axios({
