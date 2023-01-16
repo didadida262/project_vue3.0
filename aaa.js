@@ -1,3 +1,9 @@
+/*
+ * @Author: Hhvcg
+ * @Date: 2022-02-16 18:13:14
+ * @LastEditors: -_-
+ * @Description: vue配置文件
+ */
 import { chalk } from 'chalk'
 import { path } from 'path'
 import { webpack } from 'webpack'
