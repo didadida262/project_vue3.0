@@ -17,9 +17,9 @@ app.use(store)
 app.mount('#app')
 
 // 子组件错误处理钩子
-// app.config.errorHandler = (err) => {
-//   /* 处理错误 */
-// }
+app.config.errorHandler = (err) => {
+  console.log('err>>', err)
+}
 
 // 挂在公共组件
 // app.component('TodoDeleteButton', TodoDeleteButton)
