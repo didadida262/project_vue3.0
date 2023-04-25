@@ -46,7 +46,7 @@ export default defineComponent({
     const drawData = () => {
       for (let i = 0; i < 100; i++) {
         const position = getRandomPoint(WIDTH.value, HEIGHT.value)
-        const boid = new Boid(position)
+        const boid = new Boid(position, { width: WIDTH.value, heigth: HEIGHT.value })
         BoidsResp.push(boid)
       }
     }

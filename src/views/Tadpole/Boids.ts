@@ -5,6 +5,10 @@
  * Boids类
  */
 import paper from 'paper'
+interface SIZECanvas {
+  width: number;
+  heigth: number;
+}
 
 export class Boid {
   position: paper.Point
@@ -14,11 +18,13 @@ export class Boid {
   tailAmount: number
   neckAmount: number
   vector: paper.Point
-  constructor (position: paper.Point) {
+  canvasWH: SIZECanvas
+  constructor (position: paper.Point, size: SIZECanvas) {
     this.position = position
     this.neckAmount = 3
     this.tailAmount = 10
     this.vector = new paper.Point(0)
+    this.canvasWH = size
     this.createBoid()
   }
 
