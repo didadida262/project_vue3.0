@@ -1,6 +1,15 @@
+<!--
+ * @Author: Hhvcg
+ * @Date: 2022-02-16 18:10:26
+ * @LastEditors: Hhvcg
+-->
 <template>
   <div class="Tadpole">
-    <canvas resize id="main-canvas" class="main-canvas"></canvas>
+    <canvas
+      ref="canvas"
+      resize
+      id="main-canvas"
+      class="main-canvas"></canvas>
   </div>
 </template>
 
@@ -10,66 +19,33 @@ import paper from 'paper'
 import { useStore } from 'vuex'
 import { log } from '../../weapons/index'
 import { message } from 'ant-design-vue'
+import { Boid } from './Boids'
 
 export default defineComponent({
   name: 'Tadpole',
   setup () {
-    // 测试paper特性函数
-    const testDrawing = () => {
-      // Now, draw your things based on component state.
-      paper.setup(document.getElementById('main-canvas'))
-      const path = new paper.Path.Star({
-        center: paper.view.center,
-        points: 300,
-        radius1: 100,
-        radius2: 100,
-        strokeColor: 'red'
-        // fillColor: 'red'
-      })
-      window.onresize = () => {
-        log('窗口大小变化！')
-        path.position = paper.view.center
-      }
+    const onFrame = (e: any) => {
+      console.log('frame!!')
     }
-    const ini = () => {
-      paper.setup(document.getElementById('main-canvas'))
-      const direct = [] as any
-      let myPath = null as any
-      const tool = new paper.Tool()
-      tool.onMouseDown = (e: any) => {
-        myPath = new paper.Path()
-        myPath.strokeColor = 'red' as any
-        myPath.strokeWidth = 20 as any
-        // console.log('mouse--down')
-        myPath.add(e.point)
-      }
-      tool.onMouseUp = () => {
-        direct.push(myPath)
-        console.log('当前路径库:', direct)
-      }
-      tool.onMouseDrag = (e: any) => {
-        console.log('mouse--drag')
-        myPath.add(e.point)
-      }
+    const initWorld = () => {
+      const paperScope = paper as any
+      paperScope.setup(document.getElementById('main-canvas'))
+      paperScope.project.name = 'tadpole'
+      paperScope.view.onFrame = onFrame
+      paperScope.view.setCenter(0)
+    }
+    const drawData = () => {
+      // for (let i = 0; i < 100; i++) {
+        const boids = new Boid(new paper.Point(0))
+      // }
     }
     // 蝌蚪军
-    const boids = []
     // ready！
-    const initialize = () => {
-      // 创建蝌军团
-      for (let i = 0; i < 300; i++) {
-        const position = (paper.Point.random() as any) * (paper.view.viewSize as any)
-        // boids.push(new Boid(position, 10, 0.05));
-      }
-    }
     onMounted(() => {
-      log('This is Tad--Pole!!!')
-      // testDrawing()
-      // initialize()
-      ini()
+      initWorld()
+      drawData()
     })
     return {
-      paper
     }
   }
 })
