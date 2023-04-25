@@ -17,27 +17,38 @@
 import { computed, defineComponent, ref, reactive, toRefs, watch, onMounted } from 'vue'
 import paper from 'paper'
 import { useStore } from 'vuex'
-import { log } from '../../weapons/index'
+import { getRandomPoint } from '../../weapons/index'
 import { message } from 'ant-design-vue'
 import { Boid } from './Boids'
 
 export default defineComponent({
   name: 'Tadpole',
   setup () {
+    const BoidsResp: Array = []
+    const canvas = ref(null)
+    const WIDTH = ref(0)
+    const HEIGHT = ref(0)
     const onFrame = (e: any) => {
-      console.log('frame!!')
+      // console.log('frame!!', BoidsResp.value)
+      BoidsResp.forEach((boid: Boid) => {
+        boid.run()
+      })
     }
+
     const initWorld = () => {
+      WIDTH.value = canvas.value.clientWidth
+      HEIGHT.value = canvas.value.clientHeight
       const paperScope = paper as any
-      paperScope.setup(document.getElementById('main-canvas'))
+      paperScope.setup(canvas.value)
       paperScope.project.name = 'tadpole'
       paperScope.view.onFrame = onFrame
-      paperScope.view.setCenter(0)
     }
     const drawData = () => {
-      // for (let i = 0; i < 100; i++) {
-        const boids = new Boid(new paper.Point(0))
-      // }
+      for (let i = 0; i < 100; i++) {
+        const position = getRandomPoint(WIDTH.value, HEIGHT.value)
+        const boid = new Boid(position)
+        BoidsResp.push(boid)
+      }
     }
     // 蝌蚪军
     // ready！
@@ -46,6 +57,7 @@ export default defineComponent({
       drawData()
     })
     return {
+      canvas
     }
   }
 })
