@@ -61,6 +61,17 @@ export class Boid {
 
   updatePosition () {
     const newP = this.position.add(this.vector.add(this.acceleration))
+    if (newP.x >= this.canvasWH.width) {
+      newP.x = 0
+    } else if (newP.x < 0) {
+      newP.x = this.canvasWH.width
+    }
+    if (newP.y <= 0) {
+      newP.y = this.canvasWH.heigth
+    } else if (newP.y > this.canvasWH.heigth) {
+      newP.y = 0
+    }
+
     this.position = newP.clone()
   }
 
