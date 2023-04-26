@@ -31,7 +31,7 @@ export default defineComponent({
     const onFrame = (e: any) => {
       // console.log('frame!!', BoidsResp.value)
       BoidsResp.forEach((boid: Boid) => {
-        boid.run(BoidsResp)
+        // boid.run(BoidsResp)
       })
     }
 
@@ -44,7 +44,7 @@ export default defineComponent({
       paperScope.view.onFrame = onFrame
     }
     const drawData = () => {
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 50; i++) {
         const position = getRandomPoint(WIDTH.value, HEIGHT.value)
         const boid = new Boid(position, { width: WIDTH.value, heigth: HEIGHT.value }, 10, 0.05)
         BoidsResp.push(boid)

@@ -13,8 +13,8 @@ interface SIZECanvas {
 export class Boid {
   position: paper.Point
   head: any
-  shortPath: paper.Path | undefined
-  path: paper.Path | undefined
+  shortPath!: paper.Path;
+  path!: paper.Path;
   tailAmount: number
   neckAmount: number
   maxSpeed: number
@@ -47,11 +47,17 @@ export class Boid {
       strokWidth: 2,
       strokeCap: 'round'
     })
+    for (let i = 0; i < this.neckAmount; i++) {
+      this.path.add(new paper.Point())
+    }
     this.shortPath = new paper.Path({
       strokeColor: 'white',
       strokWidth: 4,
       strokeCap: 'round'
     })
+    for (let i = 0; i < this.tailAmount; i++) {
+      this.shortPath.add(new paper.Point())
+    }
   }
 
   updateVector () {
@@ -79,11 +85,27 @@ export class Boid {
     this.head.position = this.position
   }
 
+  drawNeck () {
+    const segmentsNeck: Array<paper.Segment> = this.shortPath.segments
+    const segmentsTail: Array<paper.Segment> = this.path.segments
+    segmentsNeck[0].point = this.position.clone()
+    // const v = this.vector.normalize(1)
+
+    // segmentsTail[0].point = this.position.clone()
+    for (let i = 1; i < this.neckAmount; i++) {
+      const vector = segmentsNeck[i].point.subtract(this.position)
+      const curP = this.position.subtract(v.multiply(i))
+      segmentsNeck[i].point = curP
+    }
+    // this.shortPath.smooth()
+  }
+
   run (boids: Array<Boid>) {
     // this.flock(boids)
     // this.updateVector()
     this.updatePosition()
     this.moveHead()
+    this.drawNeck()
   }
 
   separate (boids: Array<Boid>) {
