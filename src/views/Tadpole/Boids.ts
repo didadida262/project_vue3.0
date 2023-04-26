@@ -17,13 +17,21 @@ export class Boid {
   path: paper.Path | undefined
   tailAmount: number
   neckAmount: number
+  maxSpeed: number
+  maxForce: number
   vector: paper.Point
+  acceleration: paper.Point
   canvasWH: SIZECanvas
-  constructor (position: paper.Point, size: SIZECanvas) {
+  constructor (position: paper.Point, size: SIZECanvas, maxSpeed: number, maxForce: number) {
     this.position = position
+    this.maxSpeed = maxSpeed
+    this.maxForce = maxForce
     this.neckAmount = 3
     this.tailAmount = 10
-    this.vector = new paper.Point(0)
+    // 方向
+    this.vector = paper.Point.random().multiply(2).subtract(new paper.Point(1, 1))
+    // 步数
+    this.acceleration = paper.Point.random().multiply(2)
     this.canvasWH = size
     this.createBoid()
   }
@@ -47,11 +55,12 @@ export class Boid {
   }
 
   updateVector () {
-    this.vector = paper.Point.random()
+    // this.vector = this.acceleration
+    console.log('this.vector>>', this.vector)
   }
 
   updatePosition () {
-    const newP = this.position.add(this.vector)
+    const newP = this.position.add(this.vector.add(this.acceleration))
     this.position = newP.clone()
   }
 
@@ -59,9 +68,111 @@ export class Boid {
     this.head.position = this.position
   }
 
-  run () {
-    this.updateVector()
+  run (boids: Array<Boid>) {
+    // this.flock(boids)
+    // this.updateVector()
     this.updatePosition()
     this.moveHead()
+  }
+
+  separate (boids: Array<Boid>) {
+    const desiredSeperation = 60
+    // 引导steer
+    // new point 生成一个各个属性均为0的向量
+    let steer = new paper.Point()
+    let count = 0
+    // For every boid in the system, check if it's too close
+    for (let i = 0; i < boids.length; i++) {
+      const other = boids[i]
+      const vector = this.position.subtract(other.position)
+      const distance = vector.length
+      if (distance > 0 && distance < desiredSeperation) {
+        // Calculate vector pointing away from neighbor
+        steer = steer.add(vector.normalize(1 / distance))
+        count++
+      }
+    }
+    // Average -- divide by how many
+    if (count > 0) { steer = steer.divide(count) }
+    if (!steer.isZero()) {
+      // Implement Reynolds: Steering = Desired - Velocity
+      steer.length = this.maxSpeed
+      steer = steer.subtract(this.vector)
+      steer.length = Math.min(steer.length, this.maxForce)
+    }
+    return steer
+  }
+
+  align (boids: Array<Boid>) {
+    const neighborDist = 25
+    let steer = new paper.Point()
+    let count = 0
+    for (let i = 0, l = boids.length; i < l; i++) {
+      const other = boids[i]
+      const distance = this.position.getDistance(other.position)
+      if (distance > 0 && distance < neighborDist) {
+        steer = steer.add(other.vector)
+        count++
+      }
+    }
+
+    if (count > 0) { steer = steer.divide(count) }
+    if (!steer.isZero()) {
+      // Implement Reynolds: Steering = Desired - Velocity
+      steer.length = this.maxSpeed
+      steer = steer.subtract(this.vector)
+      steer.length = Math.min(steer.length, this.maxForce)
+    }
+    return steer
+  }
+
+  cohesion (boids: Array<Boid>) {
+    const neighborDist = 100
+    let sum = new paper.Point()
+    let count = 0
+    for (let i = 0, l = boids.length; i < l; i++) {
+      const other = boids[i]
+      const distance = this.position.getDistance(other.position)
+      if (distance > 0 && distance < neighborDist) {
+        sum = sum.add(other.position) // Add location
+        count++
+      }
+    }
+    if (count > 0) {
+      sum = sum.divide(count)
+      // Steer towards the location
+      return this.steer(sum, false)
+    }
+    return sum
+  }
+
+  steer (target: paper.Point, slowdown: boolean) {
+    let steer = null
+    const desired = target.subtract(this.position)
+    const distance = desired.length
+    // Two options for desired vector magnitude
+    // (1 -- based on distance, 2 -- maxSpeed)
+    if (slowdown && distance < 100) {
+      // This damping is somewhat arbitrary:
+      desired.length = this.maxSpeed * (distance / 100)
+    } else {
+      desired.length = this.maxSpeed
+    }
+    steer = desired.subtract(this.vector)
+    steer.length = Math.min(this.maxForce, steer.length)
+    return steer
+  }
+
+  flock (boids: Array<Boid>) {
+    // 分离
+    const separation = this.separate(boids).multiply(3)
+    // 对齐
+    const alignment = this.align(boids)
+    // 凝聚力
+    const cohesion = this.cohesion(boids)
+    this.acceleration = this.acceleration.add(separation)
+    this.acceleration = this.acceleration.add(alignment)
+    this.acceleration = this.acceleration.add(cohesion)
+    // 此处三个向量更新acceleration属性值，严重关系到电子蝌蚪的活力
   }
 }

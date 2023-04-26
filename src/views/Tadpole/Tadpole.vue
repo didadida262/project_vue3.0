@@ -31,7 +31,7 @@ export default defineComponent({
     const onFrame = (e: any) => {
       // console.log('frame!!', BoidsResp.value)
       BoidsResp.forEach((boid: Boid) => {
-        boid.run()
+        boid.run(BoidsResp)
       })
     }
 
@@ -46,7 +46,7 @@ export default defineComponent({
     const drawData = () => {
       for (let i = 0; i < 100; i++) {
         const position = getRandomPoint(WIDTH.value, HEIGHT.value)
-        const boid = new Boid(position, { width: WIDTH.value, heigth: HEIGHT.value })
+        const boid = new Boid(position, { width: WIDTH.value, heigth: HEIGHT.value }, 10, 0.05)
         BoidsResp.push(boid)
       }
     }
