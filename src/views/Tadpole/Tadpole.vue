@@ -49,7 +49,7 @@ export default defineComponent({
         const boid = new Boid(position, { width: WIDTH.value, heigth: HEIGHT.value }, 10, 0.05)
         BoidsResp.push(boid)
       }
-      // console.log('BoidsResp>>', BoidsResp)
+      console.log('BoidsResp>>', BoidsResp)
     }
     const testMatrix = () => {
       const t = new paper.Path.Circle({

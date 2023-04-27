@@ -105,8 +105,8 @@ export class Boid {
     // this.flock(boids)
     // this.updateVector()
     this.updatePosition()
-    this.moveHead()
     this.updateNeckAndTail()
+    this.moveHead()
   }
 
   separate (boids: Array<Boid>) {
