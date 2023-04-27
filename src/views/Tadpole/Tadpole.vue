@@ -31,7 +31,7 @@ export default defineComponent({
     const onFrame = (e: any) => {
       // console.log('frame!!', BoidsResp.value)
       BoidsResp.forEach((boid: Boid) => {
-        // boid.run(BoidsResp)
+        boid.run(BoidsResp)
       })
     }
 
@@ -49,12 +49,33 @@ export default defineComponent({
         const boid = new Boid(position, { width: WIDTH.value, heigth: HEIGHT.value }, 10, 0.05)
         BoidsResp.push(boid)
       }
+      // console.log('BoidsResp>>', BoidsResp)
+    }
+    const testMatrix = () => {
+      const t = new paper.Path.Circle({
+        center: new paper.Point(500, 500),
+        radius: 15,
+        fillColor: 'red'
+      })
+      const path = new paper.Path({
+        // strokeColor: 'green',
+        strokeWidth: 10,
+        selected: true
+      })
+      path.add(new paper.Point(100, 100))
+      path.add(new paper.Point(200, 200))
+      path.add(new paper.Point(300, 300))
+      path.add(new paper.Point(400, 400))
+      setTimeout(() => {
+        path.segments[3].point = new paper.Point(300, 400)
+      }, 2000)
     }
     // 蝌蚪军
     // ready！
     onMounted(() => {
       initWorld()
       drawData()
+      // testMatrix()
     })
     return {
       canvas

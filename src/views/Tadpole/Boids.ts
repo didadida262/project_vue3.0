@@ -47,16 +47,17 @@ export class Boid {
       strokWidth: 2,
       strokeCap: 'round'
     })
-    for (let i = 0; i < this.neckAmount; i++) {
-      this.path.add(new paper.Point())
+    for (let i = 0; i < this.tailAmount; i++) {
+      this.path.add(new paper.Point(0, 0))
     }
     this.shortPath = new paper.Path({
       strokeColor: 'white',
-      strokWidth: 4,
+      strokeWidth: 5,
       strokeCap: 'round'
+      // selected: true
     })
-    for (let i = 0; i < this.tailAmount; i++) {
-      this.shortPath.add(new paper.Point())
+    for (let i = 0; i < this.neckAmount; i++) {
+      this.shortPath.add(new paper.Point(0, 0))
     }
   }
 
@@ -77,7 +78,6 @@ export class Boid {
     } else if (newP.y > this.canvasWH.heigth) {
       newP.y = 0
     }
-
     this.position = newP.clone()
   }
 
@@ -85,17 +85,18 @@ export class Boid {
     this.head.position = this.position
   }
 
-  drawNeck () {
+  updateNeckAndTail () {
     const segmentsNeck: Array<paper.Segment> = this.shortPath.segments
     const segmentsTail: Array<paper.Segment> = this.path.segments
     segmentsNeck[0].point = this.position.clone()
-    // const v = this.vector.normalize(1)
-
-    // segmentsTail[0].point = this.position.clone()
+    segmentsTail[0].point = this.position.clone()
     for (let i = 1; i < this.neckAmount; i++) {
-      const vector = segmentsNeck[i].point.subtract(this.position)
-      const curP = this.position.subtract(v.multiply(i))
+      const curP = this.position.subtract(this.vector.normalize(1).multiply(i * 5))
       segmentsNeck[i].point = curP
+    }
+    for (let i = 1; i < this.tailAmount; i++) {
+      const curP = this.position.subtract(this.vector.normalize(1).multiply(i * 5))
+      segmentsTail[i].point = curP
     }
     // this.shortPath.smooth()
   }
@@ -105,7 +106,7 @@ export class Boid {
     // this.updateVector()
     this.updatePosition()
     this.moveHead()
-    this.drawNeck()
+    this.updateNeckAndTail()
   }
 
   separate (boids: Array<Boid>) {
