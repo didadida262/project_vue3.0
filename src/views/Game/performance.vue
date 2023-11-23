@@ -1,6 +1,5 @@
 <template>
   <div class="steam">
-    <canvas width="600" height="500"></canvas>
   </div>
 </template>
 
@@ -83,16 +82,18 @@ export default defineComponent({
           c.stroke()
     }
     const initCanvas = () => {
-      const canvas: any = document.querySelector('canvas')
+      const parentDiv: HTMLDivElement = document.getElementsByClassName('steam')[0]
+      const canvas: any = document.createElement('canvas')
+      canvas.width = parentDiv.clientWidth
+      canvas.height = parentDiv.clientHeight
+      parentDiv.appendChild(canvas)
       c = canvas.getContext('2d')
       canvas.onmousemove = (e: any) => {
         console.log('move', e)
-        moveInfo.x = e.x
-        moveInfo.y = e.y
-        const canvasX = moveInfo.x - canvas.getBoundingClientRect().left
-        const canvasY = moveInfo.x - canvas.getBoundingClientRect().top
-        moveInfo.actualX = canvasX
-        moveInfo.actualY = canvasY
+        console.log('w', canvas.offsetWidth)
+        console.log('h', canvas.offsetHeight)
+        const canvasX = e.x - canvas.offsetWidth
+        const canvasY = e.y - canvas.offsetHeight
         console.log('canvasX', canvasX)
         console.log('canvasY', canvasY)
         drawCursor(canvasX, canvasY)
@@ -122,21 +123,5 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     position: relative;
-    #role {
-      width: 61px;
-      height: 100px;
-      border: 1px solid red;
-      background-size: contain;
-      background-repeat: no-repeat;
-      border: 1px solid black;
-      position: absolute;
-      top: 10px;
-      left: 10px;
-    }
-    canvas {
-      display: block;
-      border: 1px solid black;
-      margin: 10px auto;
-    }
   }
 </style>
