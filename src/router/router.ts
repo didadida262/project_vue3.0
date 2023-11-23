@@ -14,6 +14,7 @@ import Imagemark from '../views/Imagemark.vue'
 import Game from '../views/Game/Game.vue'
 import Steam from '../views/Game/Steam.vue'
 import Zombie from '../views/Game/Zombie.vue'
+import performance from '../views/Game/performance.vue'
 import Salary from '../views/Salary.vue'
 import Map from '../views/Map.vue'
 import Threejs from '../views/Threejs.vue'
@@ -83,6 +84,11 @@ const router = createRouter({
               path: 'zombie',
               name: 'Zombie',
               component: Zombie
+            },
+            {
+              path: 'performance',
+              name: 'performance',
+              component: performance
             }
           ]
         },

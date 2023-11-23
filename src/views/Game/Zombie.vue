@@ -1,25 +1,22 @@
 <template>
-  <div class="zombie">
-    <h1 class="game-title-st">Zombie</h1>
+  <div class="zombie" ref="zoomDiv">
     <!-- 僵尸 -->
     <div class="info">
       <span class="font-st">炮手: {{ name }}</span>
       <span class="font-st">得分: {{ score }}</span>
       <span class="font-st">血量: {{ blood }}</span>
-      <a-divider/>
     </div>
     <div class="canvasDiv">
-      <canvas class="canvasRole" width="400" height="600"></canvas>
-      <canvas class="canvasBackg" width="400" height="600"></canvas>
+      <canvas class="canvasRole"></canvas>
     </div>
-    <a-button @click="changeWeapon" style="margin: 10px auto;display: block">切换武器</a-button>
+    <div class="operation-st">
+      <a-button @click="changeWeapon" style="margin: 10px auto;display: block">切换武器</a-button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive, toRefs, onRenderTracked, onRenderTriggered, toRef } from 'vue'
-import { log } from '../../weapons/index'
-import { getImg } from '@/api/common'
+import { nextTick, defineComponent, onMounted, ref, reactive, toRefs, onRenderTracked, onRenderTriggered, toRef } from 'vue'
 import { _arrayBufferToBase64 } from '@/utils/utils'
 import { Role } from './game_utils'
 
@@ -29,28 +26,8 @@ export default defineComponent({
     const WIDTH = 400
     const HEIGHT = 600
     // 游戏地图
-    const img = new Image()
-    getImg().then((res) => {
-      let url = 'data:image/jpeg;base64,'
-      url = url + _arrayBufferToBase64(res)
-      img.src = url
-      // 加载背景图
-      img.onload = () => {
-        log('picture_ready!!!')
-      }
-    })
     let weaponCir = Math.PI * 2
-    let cRole: CanvasRenderingContext2D
-    // 第二块画布
-    let cAmmun: CanvasRenderingContext2D
-    const drawBckg = () => {
-      // cAmmun.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);]
-      cAmmun.drawImage(img, 0, 0, 400, 600)
-    }
-
-    const npcFire = () => {
-      log('fire')
-    }
+    let canvasContent: CanvasRenderingContext2D
     const npc: Role = {
       name: 'Satein',
       x: 200,
@@ -71,15 +48,14 @@ export default defineComponent({
     })
     // 绘制npc
     const drawNpc = () => {
-      cRole.fillStyle = 'green'
-      cRole.fillRect(npc.x, npc.y, 20, 20)
+      canvasContent.fillStyle = 'green'
+      canvasContent.fillRect(npc.x, npc.y, 20, 20)
     }
     // 命中npc
     const shutDown = () => {
       npc.x = Math.random() * 380
       npc.y = Math.random() * 580
       role.score += 1
-      log('role:', role)
       drawNpc()
     }
     // 弹药库
@@ -103,16 +79,16 @@ export default defineComponent({
         this.radius = radius
         this.direction = direction
       }
-      // 根据当前弹药对象的基本数据，绘制操作
 
+      // 根据当前弹药对象的基本数据，绘制操作
       draw () {
-        cRole.strokeStyle = 'white'
-        cRole.fillStyle = 'gray'
-        cRole.beginPath()
-        // cRole.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-        cRole.arc(this.x, this.y, this.radius, 0, weaponCir, false)
-        cRole.stroke()
-        cRole.fill()
+        canvasContent.strokeStyle = 'white'
+        canvasContent.fillStyle = 'gray'
+        canvasContent.beginPath()
+        // canvasContent.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        canvasContent.arc(this.x, this.y, this.radius, 0, weaponCir, false)
+        canvasContent.stroke()
+        canvasContent.fill()
       }
 
       // 让弹药以设定速度往人物方向运动
@@ -198,19 +174,18 @@ export default defineComponent({
     }
     // 画出炮筒
     const drawPao = () => {
-      console.log('坦克方向:', role.direction)
       switch (role.direction) {
         case 'up':
-          cRole.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 4, 8)
+          canvasContent.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 4, 8)
           break
         case 'right':
-          cRole.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 8, 4)
+          canvasContent.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 8, 4)
           break
         case 'bottom':
-          cRole.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 4, 8)
+          canvasContent.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 4, 8)
           break
         case 'left':
-          cRole.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 8, 4)
+          canvasContent.fillRect(getAmmunPix().paoX, getAmmunPix().paoY, 8, 4)
           break
       }
     }
@@ -218,15 +193,14 @@ export default defineComponent({
     const drawRole = (x: number, y: number) => {
       if (role.x - role.step < -10 || role.x + role.step > 410 || role.y - role.step < -10 || role.y + role.step > 810) {
         // alert('越界')
-        log('越界')
       } else {
         role.x = x
         role.y = y
-        cRole.clearRect(0, 0, WIDTH, HEIGHT)
+        canvasContent.clearRect(0, 0, WIDTH, HEIGHT)
         drawNpc()
-        cRole.fillStyle = 'black'
+        canvasContent.fillStyle = 'black'
         drawPao()
-        cRole.fillRect(x, y, 20, 20)
+        canvasContent.fillRect(x, y, 20, 20)
       }
     }
     // 切换武器
@@ -236,7 +210,7 @@ export default defineComponent({
     // 空格键触发射击动作，全屏幕清除，再分别绘制人物和弹药
     const drawShot = () => {
       cancelAnimationFrame(handle)
-      cRole.clearRect(0, 0, WIDTH, HEIGHT)
+      canvasContent.clearRect(0, 0, WIDTH, HEIGHT)
       drawRole(role.x, role.y)
       drawPao()
       for (let i = 0; i < ammuniResp.length; i++) {
@@ -278,6 +252,7 @@ export default defineComponent({
     }
     // 全局监听按键触发对应操作
     document.onkeydown = (e) => {
+      e.stopPropagation()
       const target = Number(e.which)
       switch (target) {
         case 37:
@@ -299,19 +274,22 @@ export default defineComponent({
     }
     // 初始化游戏世界
     const initCanvas = () => {
-      const canvasRole: any = document.getElementsByClassName('canvasRole')[0]
-      const canvasAmmun: any = document.getElementsByClassName('canvasBackg')[0]
-      cAmmun = canvasAmmun.getContext('2d')
-      cRole = canvasRole.getContext('2d')
-      drawBckg()
-      drawRole(role.x, role.y)
+        const canvas: any = document.getElementsByClassName('canvasRole')[0]
+        const zombieDiv: any = document.getElementsByClassName('zombie')[0]
+        const width = zombieDiv.clientWidth
+        const height = zombieDiv.clientHeight - 80 - 50
+        canvas.setAttribute('width', width)
+        canvas.setAttribute('height', height)
+        canvasContent = canvas.getContext('2d')
     }
     onMounted(() => {
-      initCanvas()
-      requestAnimationFrame(npcFire)
+      nextTick(() => {
+        initCanvas()
+        drawRole(role.x, role.y)
+      })
+      // requestAnimationFrame()
     })
     return {
-      drawBckg,
       initCanvas,
       drawRole,
       drawNpc,
@@ -329,44 +307,35 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
   .zombie {
-      height: 100%;
-      background-image: linear-gradient(120deg,#995a11,#4a3299);
-      .game-title-st {
-        margin: 2px auto;
-        display: block;
-        width: 100px;
-        height: 80px;
-        font-size: 100px;
+    height: 100%;
+    background-image: linear-gradient(120deg,#995a11,#4a3299);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    .info {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      .font-st {
+        font-size: 20px;
+        font-weight: bold;
+        margin-right: 20px;
       }
-      .info {
-          margin-bottom: 10px;
-          .font-st {
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: 20px;
-          }
+    }
+    .canvasDiv {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 80px - 50px);
+      .canvasRole {
+        border: 1px solid gainsboro;
       }
-      .canvasDiv {
-        width: 400px;
-        box-sizing: content-box;
-        margin: 10px auto;
-        // border: 1px solid gainsboro;
-        height: 700px;
-        position: relative;
-        .canvasRole {
-          box-sizing: content-box;
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          border: 1px solid gainsboro;
-        }
-        .canvasBackg {
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          box-sizing: content-box;
-          z-index: -100;
-        }
+    }
+    .operation-st {
+      width: 100%;
+      height: 80px;
     }
 
   }

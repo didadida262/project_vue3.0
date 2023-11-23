@@ -1,6 +1,6 @@
 <template>
   <div class="steam">
-    <canvas width="360" height="520"></canvas>
+    <canvas width="600" height="500"></canvas>
   </div>
 </template>
 
@@ -22,7 +22,6 @@ export default defineComponent({
     }
 
     let c: CanvasRenderingContext2D
-
     class Cir {
         x: number;
         y: number;
@@ -71,39 +70,46 @@ export default defineComponent({
     }
 
     const cirArr = [] as any
-
-    const run = () => {
-      // do something
-      requestAnimationFrame(run)
-      c.clearRect(0, 0, 400, 600)
-      for (let i = 0; i < cirArr.length; i++) {
-        cirArr[i].update()
-      }
+    const drawCursor = (x: number, y: number) => {
+      // c.clearRect(0, 0, 400, 600)
+      // for (let i = 0; i < cirArr.length; i++) {
+      //   cirArr[i].update()
+      // }
+          c.strokeStyle = 'white'
+          c.fillStyle = 'red'
+          c.beginPath()
+          c.arc(x, y, 10, 0, Math.PI * 2, false)
+          c.fill()
+          c.stroke()
     }
     const initCanvas = () => {
       const canvas: any = document.querySelector('canvas')
       c = canvas.getContext('2d')
       canvas.onmousemove = (e: any) => {
+        console.log('move', e)
         moveInfo.x = e.x
         moveInfo.y = e.y
-        moveInfo.actualX = moveInfo.x - canvas.getBoundingClientRect().left
-        moveInfo.actualY = moveInfo.y - canvas.getBoundingClientRect().top
+        const canvasX = moveInfo.x - canvas.getBoundingClientRect().left
+        const canvasY = moveInfo.x - canvas.getBoundingClientRect().top
+        moveInfo.actualX = canvasX
+        moveInfo.actualY = canvasY
+        console.log('canvasX', canvasX)
+        console.log('canvasY', canvasY)
+        drawCursor(canvasX, canvasY)
       }
     }
     const createCircles = () => {
       for (let i = 0; i < 1000; i++) {
-        cirArr.push(new Cir(randomArea([10, 390]), randomArea([10, 590]), randomArea([1, 10]), Math.random() * 1, Math.random() * 1, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
+        cirArr.push(new Cir(randomArea([10, 590]), randomArea([10, 490]), randomArea([1, 10]), Math.random() * 1, Math.random() * 1, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
       }
     }
     onMounted(() => {
       initCanvas()
       createCircles()
-      run()
     })
     return {
       cirArr,
       initCanvas,
-      run,
       absDistance
     }
   }
