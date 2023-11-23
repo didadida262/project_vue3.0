@@ -1,87 +1,80 @@
 <template>
   <div class="steam">
-    <!-- 僵尸 -->
-    <!-- <div id="role"> </div> -->
     <canvas width="360" height="520"></canvas>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from 'vue'
-import { log } from '../../weapons/index'
-
+import { absDistance } from './steam'
+// import Circle from './Circle.ts'
 export default defineComponent({
   name: 'Steam',
   setup () {
     const colors = ['orange', 'black', 'rgb(38,47,49)', 'rgb(222,235,242)', 'rgb(156,189,202)']
     const minRadius = 10
     const maxRadius = 50
-    const moveInfo: Point = {
+    const moveInfo = {
       x: 0,
       y: 0,
       actualX: 0,
       actualY: 0
     }
-    const person: Role = reactive({
-      name: 'tony',
-      blood: 100
-    })
+
     let c: CanvasRenderingContext2D
-    // 计算绝对距离
-    const absDistance = (pointOne: number[], pointTwo: number[]) => {
-      return Math.sqrt(Math.pow(pointTwo[0] - pointOne[0], 2) + Math.pow(pointTwo[1] - pointOne[1], 2))
-    }
+
     const randomArea = (arr: number[]) => {
       return Math.random() * (arr[1] - arr[0]) + arr[0]
     }
     class Cir {
-      x: number;
-      y: number;
-      radius: number;
-      dx: number;
-      dy: number;
-      color: string;
-      constructor (x: number, y: number, radius: number, dx: number, dy: number, color: string) {
-        this.x = x
-        this.y = y
-        this.radius = radius
-        this.dx = dx
-        this.dy = dy
-        this.color = color
-      }
-
-      draw () {
-        c.strokeStyle = 'white'
-        c.fillStyle = this.color
-        c.beginPath()
-        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-        c.fill()
-        c.stroke()
-      }
-
-      update () {
-        if (this.x + this.radius > 360 || this.x - this.radius < 0) {
-          this.dx = -this.dx
+        x: number;
+        y: number;
+        radius: number;
+        dx: number;
+        dy: number;
+        color: string;
+        constructor (x: number, y: number, radius: number, dx: number, dy: number, color: string) {
+          this.x = x
+          this.y = y
+          this.radius = radius
+          this.dx = dx
+          this.dy = dy
+          this.color = color
         }
-        if (this.y + this.radius > 520 || this.y - this.radius < 0) {
-          this.dy = -this.dy
+
+        draw () {
+          c.strokeStyle = 'white'
+          c.fillStyle = this.color
+          c.beginPath()
+          c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+          c.fill()
+          c.stroke()
         }
-        this.x += this.dx
-        this.y += this.dy
-        // if (Math.abs(this.x - moveInfo.actualX) < 5 && Math.abs(this.y - moveInfo.actualY) < 5) {
-        if (absDistance([this.x, this.y], [moveInfo.actualX, moveInfo.actualY]) < this.radius) {
-          if (this.radius < maxRadius) {
-            this.radius += 3
+
+        update () {
+          if (this.x + this.radius > 360 || this.x - this.radius < 0) {
+            this.dx = -this.dx
           }
-        } else if (this.radius > minRadius) {
-          this.radius -= 3
+          if (this.y + this.radius > 520 || this.y - this.radius < 0) {
+            this.dy = -this.dy
+          }
+          this.x += this.dx
+          this.y += this.dy
+          // if (Math.abs(this.x - moveInfo.actualX) < 5 && Math.abs(this.y - moveInfo.actualY) < 5) {
+          if (absDistance([this.x, this.y], [moveInfo.actualX, moveInfo.actualY]) < this.radius) {
+            if (this.radius < maxRadius) {
+              this.radius += 3
+            }
+          } else if (this.radius > minRadius) {
+            this.radius -= 3
+          }
+          this.draw()
         }
-        this.draw()
-      }
     }
+
     const cirArr = [] as any
 
-    for (let i = 0; i < 5000; i++) {
+    for (let i = 0; i < 50; i++) {
       // 随机半径
       cirArr.push(new Cir(randomArea([10, 390]), randomArea([10, 590]), randomArea([1, 10]), Math.random() * 1, Math.random() * 1, colors[parseInt(Math.random() * (colors.length + 1) as any)]))
       // 半径加速度写死
@@ -123,7 +116,6 @@ export default defineComponent({
       initCanvas()
     })
     return {
-      person,
       cirArr,
       initCanvas,
       drawR,
@@ -135,9 +127,7 @@ export default defineComponent({
 })
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-  // @import '../../css/Steam.less';
   .steam {
     width: 100%;
     height: 100%;
@@ -148,12 +138,10 @@ export default defineComponent({
       border: 1px solid red;
       background-size: contain;
       background-repeat: no-repeat;
-      // background-image: url('../assets/jiang.jpg');
       border: 1px solid black;
       position: absolute;
       top: 10px;
       left: 10px;
-      // background-color: red;
     }
     canvas {
       display: block;

@@ -20,8 +20,7 @@ import Threejs from '../views/Threejs.vue'
 import Echart from '../views/echart/index.vue'
 import Music from '../views/Music.vue'
 import Parent from '../views/testKeep/Parent.vue'
-import { log } from '../weapons/index'
-import Tadpole from '../views/Tadpole/Tadpole.vue'
+// import Tadpole from '../views/Tadpole/Tadpole.vue'
 import Notfound from '../views/Notfound.vue'
 const routerHitory = createWebHistory()
 const router = createRouter({
@@ -87,51 +86,51 @@ const router = createRouter({
             }
           ]
         },
-        {
-          path: '/testpage',
-          name: 'Testpage',
-          component: TestPage
-        },
-        {
-          path: '/imgmark',
-          name: 'Imagemark',
-          component: Imagemark
-        },
-        {
-          path: '/salary',
-          name: 'Salary',
-          component: Salary
-        },
-        {
-          path: '/map',
-          name: 'Map',
-          component: Map
-        },
-        {
-          path: '/threejs',
-          name: 'Threejs',
-          component: Threejs
-        },
-        {
-          path: '/music',
-          name: 'Music',
-          component: Music
-        },
-        {
-          path: '/echart',
-          name: 'Echart',
-          component: Echart
-        },
-        {
-          path: '/parent',
-          name: 'Parent',
-          component: Parent
-        },
-        {
-          path: '/tadpole',
-          name: 'Tadpole',
-          component: Tadpole
-        }
+        // {
+        //   path: '/testpage',
+        //   name: 'Testpage',
+        //   component: TestPage
+        // },
+        // {
+        //   path: '/imgmark',
+        //   name: 'Imagemark',
+        //   component: Imagemark
+        // },
+        // {
+        //   path: '/salary',
+        //   name: 'Salary',
+        //   component: Salary
+        // },
+        // {
+        //   path: '/map',
+        //   name: 'Map',
+        //   component: Map
+        // },
+        // {
+        //   path: '/threejs',
+        //   name: 'Threejs',
+        //   component: Threejs
+        // },
+        // {
+        //   path: '/music',
+        //   name: 'Music',
+        //   component: Music
+        // },
+        // {
+        //   path: '/echart',
+        //   name: 'Echart',
+        //   component: Echart
+        // },
+        // {
+        //   path: '/parent',
+        //   name: 'Parent',
+        //   component: Parent
+        // },
+        // {
+        //   path: '/tadpole',
+        //   name: 'Tadpole',
+        //   component: Tadpole
+        // }
       ]
     }
   ]
